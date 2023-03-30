@@ -1,0 +1,35 @@
+footer{
+  padding-top: 50px;
+  background: #1577FF;
+  p{
+    color: rgba(255, 255, 255, 0.74);
+    font-size: 13px;
+  }
+  .btm-footer{
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .f-list{
+
+    h5{
+      margin-bottom: 40px;
+    }
+    p{
+      cursor: pointer;
+      color: #FFFFFF !important;
+    }
+  }
+
+  @media only screen and (max-width: 990px) {
+    padding: 50px 16px 0;
+
+    .row {
+      row-gap: 20px;
+      margin-bottom: 24px;
+
+      h5 {
+        margin-bottom: 20px;
+      }
+    }
+  }
+}
