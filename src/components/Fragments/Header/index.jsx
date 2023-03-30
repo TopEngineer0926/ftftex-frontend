@@ -212,26 +212,46 @@ const Header = () => {
       </nav>
       {isMobile && (
         <div className="m-menu d-flex justify-content-between">
-          <NavLink className="mb-0" exact to="" activeClassName="selected">
+          <NavLink
+            className={({ isActive }) => (isActive ? "mb-0 selected" : "mb-0")}
+            exact
+            to=""
+          >
             <span className="material-symbols-outlined">home</span>
             {t("Home")}
           </NavLink>
-          {/* <a className="mb-0" to="/exchanges" activeClassName="selected"><span className="material-symbols-outlined">monitoring</span>{{"Exchanges")}</a> */}
-          <NavLink className="mb-0" to="/news" activeClassName="selected">
+          {/* <NavLink className={({ isActive }) =>
+                isActive ? "mb-0 selected" : "mb-0"
+              } to="/exchanges"><span className="material-symbols-outlined">monitoring</span>{{"Exchanges")}</NavLink> */}
+          <NavLink
+            className={({ isActive }) => (isActive ? "mb-0 selected" : "mb-0")}
+            to="/news"
+          >
             <span className="material-symbols-outlined">newspaper</span>
             {t("News")}
           </NavLink>
           {LoggedIn[0] && (
-            <NavLink className="mb-0" to="/wallet" activeClassName="selected">
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "mb-0 selected" : "mb-0"
+              }
+              to="/wallet"
+            >
               <span className="material-symbols-outlined">wallet</span>
               {t("Wallet")}
             </NavLink>
           )}
-          <NavLink className="mb-0" to="/community" activeClassName="selected">
+          <NavLink
+            className={({ isActive }) => (isActive ? "mb-0 selected" : "mb-0")}
+            to="/community"
+          >
             <span className="material-symbols-outlined">people</span>
             {t("Community")}
           </NavLink>
-          <NavLink className="mb-0" to="/account-m" activeClassName="selected">
+          <NavLink
+            className={({ isActive }) => (isActive ? "mb-0 selected" : "mb-0")}
+            to="/account-m"
+          >
             <span className="material-symbols-outlined">account_circle</span>
             {t("Account")}
           </NavLink>

@@ -1,0 +1,16 @@
+.wt-box {
+  padding: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  .wt-box {
+    padding: 7px;
+  }
+
+  .sub-menu-btn {
+    font-size: 13px;
+    padding-right: 5px !important;
+    padding-left: 5px !important;
+    flex-grow: 1;
+  }
+}
