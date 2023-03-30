@@ -1,52 +1,243 @@
-import { useContext } from "react";
-import { useMediaQuery, useTheme } from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import { ColorModeContext } from "App";
+import "./index.scss";
+import { useContext, useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { ColorModeContext, FTFTexContext } from "App";
 import { useTranslation } from "react-i18next";
-import { changeLanguage } from "services/dataService";
+import { changeLanguage, getLoggedIn, getTheme } from "utils";
+import ApiService from "services/apiService";
+import LogoImage from "assets/images/logo.svg";
 
 const Header = () => {
-  const theme = useTheme();
   const colorMode = useContext(ColorModeContext);
+  const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
+  const [isMobile, setIsMobile] = useState(false);
   const { t, i18n } = useTranslation();
+  const [GlobalData, setGlobalData] = useState({});
+  const [LoggedIn, setLoggedIn] = useState({ 0: "" });
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
+  const changeLang = (val) => {
+    i18n.changeLanguage(val);
+    changeLanguage(val);
+  };
+  useEffect(() => {
+    ApiService.getGlobalData().then((res) => {
+      const data = JSON.parse(res.response["Result: "])?.data;
+      setGlobalData(data);
+    });
 
-  function handleChange(event) {
-    i18n.changeLanguage(event.target.value);
-    changeLanguage(event.target.value);
-  }
+    if (getTheme() === "light") {
+      document.body.classList.remove("dark-theme");
+    } else {
+      document.body.classList.add("dark-theme");
+    }
+
+    setLoggedIn({ 0: getLoggedIn() });
+    setIsMobile(ftftexValue.isMobile);
+  }, []);
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-        bgcolor: "background.default",
-        color: "text.primary",
-        borderRadius: 1,
-        p: 3,
-      }}
-    >
-      {theme.palette.mode} mode
-      <IconButton
-        sx={{ ml: 1 }}
-        onClick={colorMode.toggleColorMode}
-        color="inherit"
-      >
-        {theme.palette.mode === "dark" ? (
-          <Brightness7Icon />
-        ) : (
-          <Brightness4Icon />
-        )}
-      </IconButton>
-      <select onChange={handleChange}>
-        <option value="en">English</option>
-        <option value="ch">Chinese</option>
-      </select>
-    </Box>
+    <>
+      {!isMobile && (
+        <div className="top-bar">
+          <div className="container-lg">
+            <div className="d-flex justify-content-between h-ticker">
+              <p className="mb-0">
+                {t("Cryptos")}: {GlobalData?.total_cryptocurrencies}
+              </p>
+              <p className="mb-0">
+                {t("Exchanges")}: {GlobalData?.total_exchanges}
+              </p>
+              <p className="mb-0">
+                {t("Pairs")}: {GlobalData?.active_market_pairs}
+              </p>
+              <p className="mb-0">
+                {t("Market Cap")}: $ {GlobalData?.quote?.USD?.total_market_cap}
+              </p>
+              <p className="mb-0">
+                {t("24h Vol")}: $ {GlobalData?.quote?.USD?.total_volume_24h}
+              </p>
+              <p className="mb-0">
+                {t("Dominance")}:
+                <span> BTC: {GlobalData?.btc_dominance}% </span>
+                <span className="ml-3">ETH: {GlobalData?.eth_dominance} %</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container d-flex">
+          <a className="navbar-brand" href="/">
+            <img src={LogoImage} height="40" />
+          </a>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav mr-auto ml-5">
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/">
+                  {t("Home")}
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/coins">
+                  {t("Currencies")}
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/exchanges">
+                  {t("Exchange")}
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/news">
+                  {t("News")}
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/community/feed">
+                  {t("Community")}
+                </NavLink>
+              </li>
+              {LoggedIn[0] && (
+                <li className="nav-item">
+                  <NavLink className="nav-link" to="/wallet">
+                    {t("Wallet")}
+                  </NavLink>
+                </li>
+              )}
+              {/* <li className="nav-item">
+       <a className="nav-link" to="https://faq.ftftx.com">{t("FAQ")}</a>
+     </li> */}
+            </ul>
+          </div>
+          <ul
+            className="navbar-nav ml-auto d-lg-flex flex-row d-none"
+            style={{ height: 25 }}
+          >
+            <li
+              className="nav-item dropdown cu-p"
+              onClick={colorMode.toggleColorMode}
+            >
+              <span
+                className="material-symbols-outlined align-self-center"
+                style={{ fontSize: 25 }}
+              >
+                dark_mode
+              </span>
+            </li>
+          </ul>
+          <ul className="navbar-nav mx-auto d-lg-flex d-none flex-row">
+            <li className="nav-item ">
+              <a className="nav-link" onClick={() => changeLang("ch")}>
+                中文
+              </a>
+            </li>
+            <li className="nav-item ">
+              <a className="nav-link">|</a>
+            </li>
+            <li className="nav-item ">
+              <a className="nav-link" onClick={() => changeLang("en")}>
+                ENG
+              </a>
+            </li>
+          </ul>
+          {!LoggedIn[0] && (
+            <ul
+              className="navbar-nav ml-auto d-lg-block d-none"
+              style={{ height: 38 }}
+            >
+              <li className="nav-item ">
+                <a className="nav-link" to="/login">
+                  {t("Login")}
+                </a>
+              </li>
+            </ul>
+          )}
+          {isMobile && (
+            <ul
+              className="navbar-nav ml-auto d-flex flex-row"
+              style={{ height: 38 }}
+            >
+              <li className="nav-item ">
+                <a className="nav-link" onClick={() => changeLang("ch")}>
+                  中文
+                </a>
+              </li>
+              <li className="nav-item ">
+                <a className="nav-link">|</a>
+              </li>
+              <li className="nav-item ">
+                <a className="nav-link" onClick={() => changeLang("en")}>
+                  ENG
+                </a>
+              </li>
+              <li className="nav-item ">
+                <a className="nav-link" to="/about/product-introduction">
+                  <span
+                    className="material-symbols-outlined"
+                    style={{ opacity: 0.5 }}
+                  >
+                    info
+                  </span>
+                </a>
+              </li>
+              <li className="nav-item" onClick={colorMode.toggleColorMode}>
+                <a className="nav-link">
+                  <span
+                    className="material-symbols-outlined align-self-center"
+                    style={{ fontSize: 25 }}
+                  >
+                    {getTheme() === "light" ? "dark_mode" : "light_mode"}
+                  </span>
+                </a>
+              </li>
+            </ul>
+          )}
+          {LoggedIn[0] && (
+            <ul
+              className="navbar-nav ml-auto d-lg-flex flex-row d-none"
+              style={{ height: 35 }}
+            >
+              <li className="nav-item dropdown cu-p" to="/account-m">
+                <span
+                  className="material-symbols-outlined align-self-center"
+                  style={{ fontSize: 35 }}
+                >
+                  account_circle
+                </span>
+              </li>
+            </ul>
+          )}
+        </div>
+      </nav>
+      {isMobile && (
+        <div className="m-menu d-flex justify-content-between">
+          <NavLink className="mb-0" exact to="" activeClassName="selected">
+            <span className="material-symbols-outlined">home</span>
+            {t("Home")}
+          </NavLink>
+          {/* <a className="mb-0" to="/exchanges" activeClassName="selected"><span className="material-symbols-outlined">monitoring</span>{{"Exchanges")}</a> */}
+          <NavLink className="mb-0" to="/news" activeClassName="selected">
+            <span className="material-symbols-outlined">newspaper</span>
+            {t("News")}
+          </NavLink>
+          {LoggedIn[0] && (
+            <NavLink className="mb-0" to="/wallet" activeClassName="selected">
+              <span className="material-symbols-outlined">wallet</span>
+              {t("Wallet")}
+            </NavLink>
+          )}
+          <NavLink className="mb-0" to="/community" activeClassName="selected">
+            <span className="material-symbols-outlined">people</span>
+            {t("Community")}
+          </NavLink>
+          <NavLink className="mb-0" to="/account-m" activeClassName="selected">
+            <span className="material-symbols-outlined">account_circle</span>
+            {t("Account")}
+          </NavLink>
+        </div>
+      )}
+    </>
   );
 };
 

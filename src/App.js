@@ -1,16 +1,16 @@
-import './App.css';
+import "./App.scss";
 import { useMemo, useState, createContext, useEffect } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useMediaQuery, useTheme } from "@mui/material";
-import { RouterProvider } from "react-router-dom";
 import { I18nextProvider, initReactI18next } from "react-i18next";
 import i18n from "i18next";
 import enTranslation from "assets/i18n/en.json";
 import chTranslation from "assets/i18n/ch.json";
-import router from "routes";
+import RoutesComponent from "routes";
 import Header from "components/Fragments/Header";
 import Footer from "components/Fragments/Footer";
-import { changeTheme, getLanguage, getTheme } from "services/dataService";
+import { changeTheme, getLanguage, getTheme } from "utils";
+import { BrowserRouter as Router } from "react-router-dom";
 
 export const FTFTexContext = createContext();
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
@@ -28,11 +28,11 @@ i18n.use(initReactI18next).init({
 });
 
 function App() {
-  // const deviceTheme = useTheme();
-  // const matches = useMediaQuery(deviceTheme.breakpoints.down('md'));
-  // const [ftftexValue, setFtftexValue] = useState({
-  //   isMobile: matches,
-  // });
+  const deviceTheme = useTheme();
+  const matches = useMediaQuery(deviceTheme.breakpoints.down("md"));
+  const [ftftexValue, setFtftexValue] = useState({
+    isMobile: matches,
+  });
 
   const [mode, setMode] = useState(getTheme());
   const colorMode = useMemo(
@@ -60,15 +60,21 @@ function App() {
   }, []);
 
   return (
-    <ColorModeContext.Provider value={colorMode}>
-      <I18nextProvider i18n={i18n}>
-        <ThemeProvider theme={theme}>
-          <Header />
-          <RouterProvider router={router} />
-          <Footer />
-        </ThemeProvider>
-      </I18nextProvider>
-    </ColorModeContext.Provider>
+    <FTFTexContext.Provider value={[ftftexValue, setFtftexValue]}>
+      <ColorModeContext.Provider value={colorMode}>
+        <I18nextProvider i18n={i18n}>
+          <ThemeProvider theme={theme}>
+            <Router>
+              <Header />
+              <div className="main">
+                <RoutesComponent />
+              </div>
+              <Footer />
+            </Router>
+          </ThemeProvider>
+        </I18nextProvider>
+      </ColorModeContext.Provider>
+    </FTFTexContext.Provider>
   );
 }
 

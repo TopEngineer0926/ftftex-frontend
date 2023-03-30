@@ -26,3 +26,10 @@ export const getLanguage = () => {
     return "en";
   }
 };
+
+export const getLoggedIn = () => {
+  if (localStorage.getItem("usr")) {
+    const parsed = JSON.parse(localStorage.getItem("usr"));
+    return parsed;
+  }
+};
