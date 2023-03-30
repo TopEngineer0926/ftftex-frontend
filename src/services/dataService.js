@@ -12,3 +12,17 @@ export const getTheme = () => {
     return "dark";
   }
 };
+
+export const changeLanguage = (value) => {
+  localStorage.setItem("lang", value);
+};
+
+export const getLanguage = () => {
+  if (localStorage.getItem("lang")) {
+    let lang = localStorage.getItem("lang");
+    return lang;
+  } else {
+    localStorage.setItem("lang", "en");
+    return "en";
+  }
+};
