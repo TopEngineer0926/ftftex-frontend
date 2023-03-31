@@ -23,7 +23,7 @@ const Header = () => {
   };
   useEffect(() => {
     ApiService.getGlobalData().then((res) => {
-      const data = JSON.parse(res.response["Result: "])?.data;
+      const data = JSON.parse(res.data.response["Result: "])?.data;
       setGlobalData(data);
     });
 
@@ -36,6 +36,11 @@ const Header = () => {
     setLoggedIn({ 0: getLoggedIn() });
     setIsMobile(ftftexValue.isMobile);
   }, []);
+
+  const numberWithCommas = (number) => {
+    return number ? number.toLocaleString() : "";
+  };
+
   return (
     <>
       {!isMobile && (
@@ -43,24 +48,34 @@ const Header = () => {
           <div className="container-lg">
             <div className="d-flex justify-content-between h-ticker">
               <p className="mb-0">
-                {t("Cryptos")}: {GlobalData?.total_cryptocurrencies}
+                {t("Cryptos")}:{" "}
+                {numberWithCommas(GlobalData?.total_cryptocurrencies)}
               </p>
               <p className="mb-0">
-                {t("Exchanges")}: {GlobalData?.total_exchanges}
+                {t("Exchanges")}:{" "}
+                {numberWithCommas(GlobalData?.total_exchanges)}
               </p>
               <p className="mb-0">
-                {t("Pairs")}: {GlobalData?.active_market_pairs}
+                {t("Pairs")}:{" "}
+                {numberWithCommas(GlobalData?.active_market_pairs)}
               </p>
               <p className="mb-0">
-                {t("Market Cap")}: $ {GlobalData?.quote?.USD?.total_market_cap}
+                {t("Market Cap")}: ${" "}
+                {numberWithCommas(GlobalData?.quote?.USD?.total_market_cap)}
               </p>
               <p className="mb-0">
-                {t("24h Vol")}: $ {GlobalData?.quote?.USD?.total_volume_24h}
+                {t("24h Vol")}: ${" "}
+                {numberWithCommas(GlobalData?.quote?.USD?.total_volume_24h)}
               </p>
               <p className="mb-0">
                 {t("Dominance")}:
-                <span> BTC: {GlobalData?.btc_dominance}% </span>
-                <span className="ml-3">ETH: {GlobalData?.eth_dominance} %</span>
+                <span>
+                  {" "}
+                  BTC: {numberWithCommas(GlobalData?.btc_dominance)} %{" "}
+                </span>
+                <span className="ml-3">
+                  ETH: {numberWithCommas(GlobalData?.eth_dominance)} %
+                </span>
               </p>
             </div>
           </div>

@@ -7,7 +7,7 @@ const AboutUs = () => {
   return (
     <div className="min-h-full ">
       <div className="container">
-        <div className="wt-box my-5">
+        <div className="wt-box my-5" style={{ padding: 30 }}>
           <div className="d-flex flex-wrap mt-4 mt-md-0">
             <NavLink
               className={({ isActive }) =>
