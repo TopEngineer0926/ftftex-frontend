@@ -137,7 +137,7 @@ const Header = () => {
                 className="material-symbols-outlined align-self-center"
                 style={{ fontSize: 25 }}
               >
-                dark_mode
+                {getTheme() === "light" ? "dark_mode" : "light_mode"}
               </span>
             </li>
           </ul>
