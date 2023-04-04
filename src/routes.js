@@ -10,6 +10,7 @@ import Feed from "components/Community/Feed";
 import Notifications from "components/Community/Notifications";
 import Post from "components/Community/Post";
 import Profile from "components/Community/Profile";
+import News from "components/News";
 
 const RoutesComponent = () => {
   return (
@@ -28,6 +29,7 @@ const RoutesComponent = () => {
         <Route path="post/:id" Component={Post} />
         <Route path="profile" Component={Profile} />
       </Route>
+      <Route path="news" Component={News} />
     </Routes>
   );
 };

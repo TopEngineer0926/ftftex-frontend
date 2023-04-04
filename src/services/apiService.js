@@ -20,6 +20,14 @@ class ApiService {
       { limit: limit, start: 1 }
     );
   }
+
+  GetNews(query) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/newsApi/news`, {
+      language: "en",
+      country: "us",
+      q: query,
+    });
+  }
 }
 
 export default new ApiService();
