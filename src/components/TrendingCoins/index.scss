@@ -1,0 +1,40 @@
+.t-head {
+  span {
+    font-size: 40px !important;
+  }
+}
+
+.t-head-widget {
+  font-size: 23px;
+
+  h2 {
+    font-size: 23px;
+  }
+}
+
+.table-widget {
+  font-size: 14px;
+
+  .cu-p {
+    img {
+      height: 30px !important;
+    }
+  }
+
+}
+
+@media only screen and (max-width: 600px) {
+  .t-head {
+    flex-wrap: wrap;
+    margin-bottom: 15px !important;
+
+    span {
+      font-size: 22px !important;
+    }
+
+    h2 {
+      font-size: 22px !important;
+
+    }
+  }
+}
