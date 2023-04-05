@@ -1,0 +1,21 @@
+.select-box {
+  padding: 10px;
+  display: flex;
+  border-radius: 8px;
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  margin-bottom: 5px;
+
+  .acc-box-i {
+    font-size: 38px;
+  }
+}
+
+.disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.select-box:hover {
+  background: #fafafa;
+}

@@ -1,0 +1,31 @@
+.txt-green {
+  font-weight: 700;
+}
+
+.grp-clr {
+  filter: invert(37%) sepia(66%) saturate(4667%) hue-rotate(208deg) brightness(103%) contrast(102%)
+}
+
+.t-head {
+  margin-top: 40px;
+}
+
+@media only screen and (max-width: 600px) {
+  .t-head {
+    flex-wrap: wrap;
+
+    h2 {
+      font-size: 22px !important;
+      width: 100%;
+      margin-bottom: 15px !important;
+    }
+  }
+
+  .td-rank {
+    max-width: 30px;
+  }
+
+  .chart-line {
+    height: 30px;
+  }
+}

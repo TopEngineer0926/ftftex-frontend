@@ -1,0 +1,37 @@
+.matrix-pg {
+  .wt-box {
+    h3 {
+      font-weight: 800;
+    }
+
+    .spark {
+      margin: -5px;
+    }
+
+    background: rgb(233, 233, 233);
+    background: linear-gradient(0deg, #999cff 0%, rgba(255, 255, 255, 1) 100%);
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .matrix-pg {
+    p {
+      font-size: 16px;
+    }
+
+    .wt-box {
+      h3 {
+        font-weight: 800;
+        font-size: 20px;
+        white-space: nowrap;
+      }
+
+      .spark {
+        margin: -5px;
+      }
+
+      background: rgb(233, 233, 233);
+      background: linear-gradient(0deg, #999cff 0%, rgba(255, 255, 255, 1) 100%);
+    }
+  }
+}

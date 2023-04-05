@@ -1,0 +1,10 @@
+body.dark-theme {
+    --wht: #161D32FF;
+    color: #FFFFFF;
+
+    .ui-chart-default-tooltip-content {
+        table {
+            color: #161D32FF;
+        }
+    }
+}

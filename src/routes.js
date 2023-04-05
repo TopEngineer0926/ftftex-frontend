@@ -11,6 +11,8 @@ import Notifications from "components/Community/Notifications";
 import Post from "components/Community/Post";
 import Profile from "components/Community/Profile";
 import News from "components/News";
+import CoinAll from "components/CoinAll";
+import SingleCoin from "components/SingleCoin";
 
 const RoutesComponent = () => {
   return (
@@ -30,6 +32,8 @@ const RoutesComponent = () => {
         <Route path="profile" Component={Profile} />
       </Route>
       <Route path="news" Component={News} />
+      <Route path="coins" Component={CoinAll} />
+      <Route path="coin/:id/:slug" Component={SingleCoin} />
     </Routes>
   );
 };
