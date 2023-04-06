@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { getTheme } from "utils";
 
-let TradingView;
+let TradingView = window.TradingView;
 
 const TradingViewTdChart = ({ COIN, PAIR, EXCHANGE, chartType }) => {
   let HideBar = false;

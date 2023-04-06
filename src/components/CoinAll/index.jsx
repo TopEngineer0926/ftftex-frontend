@@ -123,10 +123,44 @@ const CoinAll = () => {
 
   useEffect(() => {
     const sortedCoins = CoinData.sort((a, b) => {
-      const fieldA =
-        order.field === "name" ? a[order.field] : a.quote.USD.price;
-      const fieldB =
-        order.field === "name" ? b[order.field] : b.quote.USD.price;
+      let fieldA = a["cmc_rank"];
+      let fieldB = b["cmc_rank"];
+
+      switch (order.field) {
+        case "name":
+          fieldA = a.name;
+          fieldB = b.name;
+          break;
+        case "quote.USD.price":
+          fieldA = a.quote.USD.price;
+          fieldB = b.quote.USD.price;
+          break;
+        case "quote.USD.percent_change_1h":
+          fieldA = a.quote.USD.percent_change_1h;
+          fieldB = b.quote.USD.percent_change_1h;
+          break;
+        case "quote.USD.percent_change_2h":
+          fieldA = a.quote.USD.percent_change_2h;
+          fieldB = b.quote.USD.percent_change_2h;
+          break;
+        case "quote.USD.percent_change_7d":
+          fieldA = a.quote.USD.percent_change_7d;
+          fieldB = b.quote.USD.percent_change_7d;
+          break;
+        case "quote.USD.market_cap":
+          fieldA = a.quote.USD.market_cap;
+          fieldB = b.quote.USD.market_cap;
+          break;
+        case "quote.USD.volume_24h":
+          fieldA = a.quote.USD.volume_24h;
+          fieldB = b.quote.USD.volume_24h;
+          break;
+        case "total_supply":
+          fieldA = a.total_supply;
+          fieldB = b.total_supply;
+          break;
+      }
+
       if (fieldA < fieldB) {
         return order.reversed ? 1 : -1;
       }

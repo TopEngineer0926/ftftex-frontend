@@ -110,10 +110,24 @@ const TrendingCoins = ({ ViewType }) => {
 
   useEffect(() => {
     const sortedCoins = CoinData.sort((a, b) => {
-      const fieldA =
-        order.field === "name" ? a[order.field] : a.quote.USD.price;
-      const fieldB =
-        order.field === "name" ? b[order.field] : b.quote.USD.price;
+      let fieldA = a["name"];
+      let fieldB = b["name"];
+
+      switch (order.field) {
+        case "quote.USD.price":
+          fieldA = a.quote.USD.price;
+          fieldB = b.quote.USD.price;
+          break;
+        case "quote.USD.percent_change_24h":
+          fieldA = a.quote.USD.percent_change_24h;
+          fieldB = b.quote.USD.percent_change_24h;
+          break;
+        case "quote.USD.volume_24h":
+          fieldA = a.quote.USD.volume_24h;
+          fieldB = b.quote.USD.volume_24h;
+          break;
+      }
+
       if (fieldA < fieldB) {
         return order.reversed ? 1 : -1;
       }

@@ -13,6 +13,8 @@ import Profile from "components/Community/Profile";
 import News from "components/News";
 import CoinAll from "components/CoinAll";
 import SingleCoin from "components/SingleCoin";
+import SingleExchange from "components/Exchanges/SingleExchange";
+import Exchanges from "components/Exchanges";
 
 const RoutesComponent = () => {
   return (
@@ -34,6 +36,8 @@ const RoutesComponent = () => {
       <Route path="news" Component={News} />
       <Route path="coins" Component={CoinAll} />
       <Route path="coin/:id/:slug" Component={SingleCoin} />
+      <Route path="exchanges" Component={Exchanges} />
+      <Route path="exchange/:id/:slug" Component={SingleExchange} />
     </Routes>
   );
 };

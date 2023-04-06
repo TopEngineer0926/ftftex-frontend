@@ -92,6 +92,41 @@ class ApiService {
       { id: id, slug: slug }
     );
   }
+
+  GetExchangesList(category, page, limit) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/cmcApi/getExchangeLeatest`,
+      {
+        category: category,
+        start: (page - 1) * limit + 1,
+        limit: limit,
+        sort: "exchange_score",
+        sort_dir: "desc",
+      }
+    );
+  }
+
+  GetSingleExchange(id, slug) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/cmcApi/getExchange`,
+      {
+        id: id,
+      }
+    );
+  }
+
+  GetExchangePairs(id, slug, category, limit) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/cmcApi/getExchangeMarketPrice`,
+      {
+        id: id,
+        limit: limit,
+        slug: slug,
+        category: category,
+        start: 1,
+      }
+    );
+  }
 }
 
 export default new ApiService();

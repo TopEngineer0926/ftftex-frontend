@@ -1,0 +1,16 @@
+.grp-clr {
+  filter: invert(37%) sepia(66%) saturate(4667%) hue-rotate(208deg) brightness(103%) contrast(102%)
+}
+
+@media only screen and (max-width: 768px) {
+  .t-head {
+    flex-wrap: wrap;
+    margin-top: 20px;
+
+    h2 {
+      font-size: 22px !important;
+      width: 100%;
+      margin-bottom: 15px !important;
+    }
+  }
+}
