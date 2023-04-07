@@ -15,6 +15,7 @@ import CoinAll from "components/CoinAll";
 import SingleCoin from "components/SingleCoin";
 import SingleExchange from "components/Exchanges/SingleExchange";
 import Exchanges from "components/Exchanges";
+import TradingPortal from "components/TradingPortal";
 
 const RoutesComponent = () => {
   return (
@@ -38,6 +39,8 @@ const RoutesComponent = () => {
       <Route path="coin/:id/:slug" Component={SingleCoin} />
       <Route path="exchanges" Component={Exchanges} />
       <Route path="exchange/:id/:slug" Component={SingleExchange} />
+      <Route path="trade" Component={TradingPortal} />
+      <Route path="trade/:symbol" Component={TradingPortal} />
     </Routes>
   );
 };

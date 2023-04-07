@@ -32,4 +32,5 @@ export const getLoggedIn = () => {
     const parsed = JSON.parse(localStorage.getItem("usr"));
     return parsed;
   }
+  return { 0: "" };
 };

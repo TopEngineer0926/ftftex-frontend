@@ -88,7 +88,7 @@ const TradingViewTdChart = ({ COIN, PAIR, EXCHANGE, chartType }) => {
         });
       }
     }
-  }, []);
+  }, [COIN, PAIR, EXCHANGE, chartType]);
   return <div class="d-block" id="technical-analysis"></div>;
 };
 

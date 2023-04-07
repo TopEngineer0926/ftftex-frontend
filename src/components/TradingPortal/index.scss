@@ -1,0 +1,172 @@
+.container-fluid {
+  max-width: 1650px;
+
+  table td,
+  table tr {
+    color: black;
+    border: none;
+    font-size: 12px;
+  }
+}
+
+
+.card {
+  background: #ffffff;
+  color: black;
+  padding: 8px;
+  border: 1px solid rgba(206, 206, 206, 0.48);
+  border-radius: 0;
+}
+
+.table th {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+.card-title {
+  font-weight: 600;
+}
+
+.s-bld {
+  font-weight: 900;
+}
+
+
+.card-pair {}
+
+.card-ask-and-bit {
+
+  td {
+    padding: 3px;
+  }
+}
+
+.fixed-header {
+  position: sticky;
+  top: -1px;
+  background: #ffffff;
+}
+
+tr:hover:not(.bidder-r, .bidder-g, .fixed-header) {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.t-filters {
+  display: flex;
+
+  .f-btn {
+    font-size: 13px;
+    padding: 6px 4px;
+    cursor: pointer;
+  }
+
+  .f-btn-s {
+    color: #000000;
+    font-weight: bold;
+  }
+}
+
+.bidder-r {
+  background-size: 2px 100%;
+  background: url("../../assets/images/red.png") no-repeat fixed right;
+}
+
+.bidder-g {
+  background-image: url("../../assets/images/green.png");
+  background-repeat: no-repeat;
+  background-size: 2px 100%;
+  background-position: right;
+}
+
+.fw-bold {}
+
+td {
+  font-weight: 900;
+}
+
+.m-r-arr {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.buy-btn {
+  background: #4d8457;
+  border: none;
+}
+
+.sell-btn {
+  background: #ff3847;
+  border: none;
+}
+
+.form-control {
+  font-weight: 600;
+  height: 40px;
+  border-radius: 0;
+  font-size: 14px;
+}
+
+.ticker-detail {
+  .ti-head {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .ti-cont {
+    font-size: 13px;
+  }
+}
+
+.switch-btns {
+  .btn {
+    color: #7b7b7b;
+    border-radius: 0;
+    border: none;
+  }
+
+  .btn-s {
+    color: #000000;
+    border-bottom: 3px solid #1577FF;
+  }
+}
+
+.p-select-cont {
+  font-size: 11px;
+  font-weight: 400;
+  cursor: pointer;
+
+  .p-select:first-child {
+    border-left: 1px solid #e2e2e2;
+  }
+
+  .p-select {
+    flex-grow: 1;
+    text-align: center;
+    padding: 5px;
+    border-right: 1px solid #e2e2e2;
+    border-bottom: 1px solid #e2e2e2;
+  }
+}
+
+@media (min-width: 992px) {
+  .card-pair {
+    max-height: 422px;
+    min-height: 422px;
+    overflow-y: auto;
+  }
+
+  .card-ask-and-bit {
+    max-height: 405px;
+    min-height: 405px;
+    overflow-y: auto;
+
+    td {
+      padding: 3px;
+    }
+  }
+
+}

@@ -32,6 +32,25 @@ function App() {
   const matches = useMediaQuery(deviceTheme.breakpoints.down("md"));
   const [ftftexValue, setFtftexValue] = useState({
     isMobile: matches,
+    Assets: {
+      ordered: [],
+      coins: {
+        usdt: 0,
+        eth: 0,
+        bnb: 0,
+        btc: 0,
+        sol: 0,
+        ada: 0,
+        dot: 0,
+        doge: 0,
+        shib: 0,
+        matic: 0,
+        uni: 0,
+        ltc: 0,
+        trx: 0,
+        xrp: 0,
+      },
+    },
   });
 
   const [mode, setMode] = useState(getTheme());
@@ -57,6 +76,14 @@ function App() {
 
   useEffect(() => {
     i18n.changeLanguage(getLanguage());
+
+    if (localStorage.getItem("asts")) {
+      const parsed = JSON.parse(localStorage.getItem("asts"));
+      setFtftexValue({
+        ...ftftexValue,
+        Assets: parsed,
+      });
+    }
   }, []);
 
   return (

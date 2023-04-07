@@ -1,6 +1,10 @@
 import axios from "axios";
 
 class ApiService {
+  ChangeAssets(value) {
+    localStorage.setItem("asts", JSON.stringify(value));
+  }
+
   getGlobalData() {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/cmcApi/getQuotesLeatest`,
@@ -125,6 +129,27 @@ class ApiService {
         category: category,
         start: 1,
       }
+    );
+  }
+
+  getOrderHistory(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getOrderHistory`,
+      params
+    );
+  }
+
+  getTradeAvailableBalance(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getTradeAvailableBalance`,
+      params
+    );
+  }
+
+  createTradeOrder(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/createTradeOrder`,
+      params
     );
   }
 }
