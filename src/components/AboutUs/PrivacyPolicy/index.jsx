@@ -136,19 +136,19 @@ const PrivacyPolicy = () => {
         personal information.
       </p>
       <h3>7. DATA OWNER RIGHTS</h3>
-      <p class="s-bld">7.1. Your legal rights</p>
+      <p className="s-bld">7.1. Your legal rights</p>
       <p>
         Under the provisions of the law, you are provided with the following
         rights concerning the processing of your data. To exercise your rights
         under the law, you may be required to authenticate yourself with
         adequate proof of identity.
       </p>
-      <p class="s-bld">7.2. Right to Enquire</p>
+      <p className="s-bld">7.2. Right to Enquire</p>
       <p>
         You have the right to request and obtain information on the personal
         data that we hold and the purpose for which it is held.
       </p>
-      <p class="s-bld">7.3. Right to Object</p>
+      <p className="s-bld">7.3. Right to Object</p>
       <p>
         You have the right to object to being contacted by us for direct
         marketing purposes. On receipt of such objection, we will ensure that
@@ -157,7 +157,7 @@ const PrivacyPolicy = () => {
         at any time through the contact form on the website or directly reply to
         the messages or ads.
       </p>
-      <p class="s-bld">
+      <p className="s-bld">
         7.4. Right to Demand Rectification, Blocking, or Erasure
       </p>
       <p>
@@ -166,7 +166,7 @@ const PrivacyPolicy = () => {
         and if the information is incorrect, incomplete, or not updated, or if
         the processing thereof is illegal.
       </p>
-      <p class="s-bld">7.5. Right to Withdraw Consent</p>
+      <p className="s-bld">7.5. Right to Withdraw Consent</p>
       <p>
         You have the right to withdraw the consent provided at any time after
         giving consent. Withdrawal of consent will apply to future use of
@@ -176,7 +176,7 @@ const PrivacyPolicy = () => {
         provided by FTFTex may result in our inability to continue providing
         those services.
       </p>
-      <p class="s-bld">7.6. Right to Complain</p>
+      <p className="s-bld">7.6. Right to Complain</p>
       <p>
         You may submit a complaint to the Authority if you have reason to
         believe that any violation of the provisions of this privacy law has

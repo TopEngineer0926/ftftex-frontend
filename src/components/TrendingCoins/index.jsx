@@ -69,9 +69,7 @@ const TrendingCoins = ({ ViewType }) => {
       .map((x, i) => i + 1);
     setItems(tempItems);
 
-    syncData();
-
-    if (!isAppended) {
+    if (!isAppended && ViewType !== "full") {
       let script = document.createElement("script");
       script.type = `text/javascript`;
       script.src =
@@ -88,6 +86,9 @@ const TrendingCoins = ({ ViewType }) => {
       timeline.current.appendChild(script);
       setIsAppended(true);
     }
+
+    syncData();
+
   }, []);
 
   useEffect(() => {

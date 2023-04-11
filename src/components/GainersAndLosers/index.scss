@@ -1,0 +1,11 @@
+@media only screen and (max-width: 600px) {
+  .t-head {
+    flex-wrap: wrap;
+
+    h2 {
+      font-size: 22px !important;
+      width: 100%;
+      margin-bottom: 15px !important;
+    }
+  }
+}

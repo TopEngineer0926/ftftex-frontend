@@ -152,6 +152,27 @@ class ApiService {
       params
     );
   }
+
+  GetNews(query) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/newsApi/news`, {
+      language: "en",
+      country: "us",
+      q: query,
+    });
+  }
+
+  GainersAndLosers(sc, limit) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/cmcApi/getGainersAndLosers`,
+      {
+        sort_dir: sc,
+        limit: limit,
+        start: 1,
+        sort: "percent_change_24h",
+        time_period: "24h",
+      }
+    );
+  }
 }
 
 export default new ApiService();

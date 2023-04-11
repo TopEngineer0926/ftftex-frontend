@@ -1,7 +1,7 @@
 const { useRef, useEffect, useState } = require("react");
 const { getTheme } = require("utils");
 
-const TradingViewBuyAndSell = (props) => {
+const TradingViewBuyAndSell = ({ COIN }) => {
   const tradingview = useRef();
   const [isAppended, setIsAppended] = useState(false);
   const coins = [
@@ -27,8 +27,8 @@ const TradingViewBuyAndSell = (props) => {
 
   useEffect(() => {
     if (!isAppended) {
-      if (coins.includes(props.COIN)) {
-        const SYMBOL = "BINANCE:" + props.COIN.toUpperCase() + "USD";
+      if (coins.includes(COIN)) {
+        const SYMBOL = "BINANCE:" + COIN.toUpperCase() + "USD";
         const Settings = {
           interval: "1m",
           width: "100%",

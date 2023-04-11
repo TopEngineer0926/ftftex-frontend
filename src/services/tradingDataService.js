@@ -69,16 +69,6 @@ class TradingDataService {
     this.socket.onopen = () => {
       console.log("WebSocket connected!");
     };
-
-    // socket.onmessage = (event) => {
-    //   const { data } = event;
-    //   console.log("received message:", data);
-    //   setMessages((prevMessages) => [...prevMessages, data]);
-    // };
-
-    // return () => {
-    //   socket.close();
-    // };
   }
 }
 
