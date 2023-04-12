@@ -1,0 +1,68 @@
+.modal-body {
+  .coin-list-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 10px;
+    //&:hover {
+    //  background: #1e253d;
+    //}
+  }
+
+  .transfer-currency {
+    display: flex;
+    gap: 5px;
+    background: #1e253d;
+    padding: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    color: white
+  }
+
+  .transfer-trading {
+    background: #1e253d;
+    flex-direction: column;
+  }
+
+  .from-to {
+    padding: 10px;
+    margin-bottom: 10px;
+    gap: 5px;
+    align-items: center;
+  }
+
+  ;
+
+  .ma {
+    background: #5ee5ae;
+    font-size: 9px;
+    color: #000000FF;
+    padding: 0 2px;
+  }
+
+  .ta {
+    background: #009fe3;
+  }
+
+  .available {
+    color: #5ee5ae;
+  }
+
+  .transfer-input {
+    border: none;
+    border-bottom: 1px solid gray;
+    background: transparent;
+    width: 70%;
+    color: gray;
+    box-shadow: none;
+
+    &:focus-visible {
+      box-shadow: none;
+    }
+  }
+
+  .topBottom {
+    flex-direction: column-reverse;
+  }
+}

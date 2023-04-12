@@ -1,0 +1,12 @@
+.deposit-network-main {
+  display: flex;
+  flex-direction: column;
+  background: #1e253d;
+  padding: 5px 10px;
+  border-radius: 8px;
+  word-break: break-all;
+
+  .address {
+    color: white;
+  }
+}

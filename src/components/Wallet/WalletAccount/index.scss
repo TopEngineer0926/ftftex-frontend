@@ -1,0 +1,78 @@
+.pairs-sec {
+  max-height: 71vh;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+.buy-btn {
+  background: #4d8457;
+  border: none;
+}
+
+.sell-btn {
+  background: #ff3847;
+  border: none;
+}
+
+.tab-btn {
+  padding: 15px;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 0;
+  font-weight: 600;
+  color: #767676;
+}
+
+.action-btn {
+  border-radius: 50%;
+  height: 55px;
+  width: 55px;
+  margin-bottom: 10px;
+
+  span {
+    font-size: 30px;
+    line-height: 42px;
+    text-align: center;
+  }
+}
+
+.tab-btn-selected {
+  border-bottom: 5px solid #0563e5;
+  color: black;
+}
+
+.address-ar {
+  padding: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.09);
+  border-radius: 22px;
+  width: fit-content;
+  margin: auto;
+  display: flex;
+
+  span {
+    cursor: pointer;
+  }
+}
+
+.bg-pattern {
+  background: url("../../../assets/images/subscribe-art.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.a-button {
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.a-button:hover {
+  background: #f9f9f9;
+}
+
+.a-button-selected {
+  background: #ededed;
+}
+
+.form-control {
+  font-weight: 600;
+}

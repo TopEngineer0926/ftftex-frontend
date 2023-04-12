@@ -16,6 +16,10 @@ import SingleCoin from "components/SingleCoin";
 import SingleExchange from "components/Exchanges/SingleExchange";
 import Exchanges from "components/Exchanges";
 import TradingPortal from "components/TradingPortal";
+import Wallet from "components/Wallet";
+import WalletAccount from "components/Wallet/WalletAccount";
+import WalletMain from "components/WalletMain";
+import PurchaseCrypto from "components/PurchaseCrypto";
 
 const RoutesComponent = () => {
   return (
@@ -41,6 +45,10 @@ const RoutesComponent = () => {
       <Route path="exchange/:id/:slug" Component={SingleExchange} />
       <Route path="trade" Component={TradingPortal} />
       <Route path="trade/:symbol" Component={TradingPortal} />
+      <Route path="wallet" Component={Wallet} />
+      <Route path="wallet/account" Component={WalletAccount} />
+      <Route path="wallet/main" Component={WalletMain} />
+      <Route path="wallet/purchase-crypto" Component={PurchaseCrypto} />
     </Routes>
   );
 };

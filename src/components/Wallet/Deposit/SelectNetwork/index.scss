@@ -1,0 +1,13 @@
+.network-list-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px;
+  cursor: pointer;
+  background: #1e253d;
+  margin-bottom: 10px;
+
+  span {
+    color: white;
+  }
+}

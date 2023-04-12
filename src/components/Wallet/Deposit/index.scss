@@ -1,0 +1,44 @@
+ul {
+  li {
+    a {
+      background: transparent;
+    }
+  }
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-body {
+  .sub-menu-btn {
+    //font-size: 10px;
+  }
+
+  .nav-tabs {
+    border-bottom: none;
+  }
+
+  .currency-history-item {
+    background: #1e253d;
+    border-radius: 8px;
+    padding: 5px 15px;
+    cursor: pointer;
+  }
+
+  .currency-list-item {
+    width: 100%;
+    background: #1e253d;
+    padding: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    color: white;
+
+    img {
+      width: 35px;
+    }
+  }
+}

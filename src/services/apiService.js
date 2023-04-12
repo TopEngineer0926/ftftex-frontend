@@ -173,6 +173,76 @@ class ApiService {
       }
     );
   }
+
+  getSubAccFoundBalance(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getSubAccFoundBalance`,
+      params
+    );
+  }
+
+  getSubAccTradeBalance(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getSubAccTradeBalance`,
+      params
+    );
+  }
+
+  createWithdrawal(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/createWithdrawal`,
+      params
+    );
+  }
+
+  fundsTransfer(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/createTransfer`,
+      params
+    );
+  }
+
+  getCurrencies(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getCurrencies`,
+      params
+    );
+  }
+
+  createDepositAddressForSubAccount(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/createDepositAddress`,
+      params
+    );
+  }
+
+  createSubAccount(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/createSubAccount`,
+      params
+    );
+  }
+
+  getSubAccountList(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getSubAccInfo`,
+      params
+    );
+  }
+
+  getSubAccBalance(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getSubAccBalance`,
+      params
+    );
+  }
+
+  walletSubscription(data) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}verification/subscribe`,
+      data
+    );
+  }
 }
 
 export default new ApiService();
