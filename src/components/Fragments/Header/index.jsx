@@ -33,7 +33,7 @@ const Header = () => {
       document.body.classList.add("dark-theme");
     }
 
-    setLoggedIn({ 0: getLoggedIn() });
+    setLoggedIn(getLoggedIn());
     setIsMobile(ftftexValue.isMobile);
   }, []);
 
@@ -83,9 +83,9 @@ const Header = () => {
       )}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container d-flex">
-          <a className="navbar-brand" href="/">
+          <NavLink className="navbar-brand" to="/">
             <img src={LogoImage} height="40" />
-          </a>
+          </NavLink>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav mr-auto ml-5">
               <li className="nav-item">
@@ -162,9 +162,9 @@ const Header = () => {
               style={{ height: 38 }}
             >
               <li className="nav-item ">
-                <a className="nav-link" to="/login">
+                <NavLink className="nav-link" to="/login">
                   {t("Login")}
-                </a>
+                </NavLink>
               </li>
             </ul>
           )}
@@ -187,24 +187,24 @@ const Header = () => {
                 </a>
               </li>
               <li className="nav-item ">
-                <a className="nav-link" to="/about/product-introduction">
+                <NavLink className="nav-link" to="/about/product-introduction">
                   <span
                     className="material-symbols-outlined"
                     style={{ opacity: 0.5 }}
                   >
                     info
                   </span>
-                </a>
+                </NavLink>
               </li>
               <li className="nav-item" onClick={colorMode.toggleColorMode}>
-                <a className="nav-link">
+                <NavLink className="nav-link">
                   <span
                     className="material-symbols-outlined align-self-center"
                     style={{ fontSize: 25 }}
                   >
                     {getTheme() === "light" ? "dark_mode" : "light_mode"}
                   </span>
-                </a>
+                </NavLink>
               </li>
             </ul>
           )}

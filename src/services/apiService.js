@@ -1,6 +1,82 @@
 import axios from "axios";
 
 class ApiService {
+  DialingCode = {
+    name: "United Arab Emirates",
+    dialCode: "+971",
+    isoCode: "AE",
+    flag: "https://cdn.kcak11.com/CountryFlags/countries/ae.svg",
+  };
+
+  LoginUser(data, type, dialcode) {
+    let fmData = { userId: "", password: data.password };
+    if (type === "email") {
+      fmData.userId = data.email;
+    }
+    if (type === "mobile") {
+      fmData.userId = dialcode + data.phone;
+    }
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/login`,
+      fmData
+    );
+  }
+
+  RegisterUser(data, type, dialcode) {
+    const DATA = {
+      email: data.email,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      password: data.password,
+      phone: dialcode + data.phone,
+      service: "register",
+      avatar: "avatar",
+      userName: `username${Date.now()}`,
+    };
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/saveUserInitially`,
+      DATA
+    );
+  }
+
+  VerifyUser(data) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/varifyUser`,
+      data
+    );
+  }
+
+  getUser(userId) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/getUserDetails`,
+      { userId }
+    );
+  }
+
+  ForgotPassword(data, type, dialcode) {
+    const fmData = {
+      email: type === "email" ? data.email : "",
+      phone: type === "mobile" ? dialcode + data.phone : "",
+    };
+
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/varifyEmail`,
+      fmData
+    );
+  }
+
+  changePassword(data, userId) {
+    const fmData = {
+      userId,
+      password: data.password,
+    };
+
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/changePassword`,
+      fmData
+    );
+  }
+
   ChangeAssets(value) {
     localStorage.setItem("asts", JSON.stringify(value));
   }

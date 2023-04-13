@@ -51,6 +51,13 @@ function App() {
         xrp: 0,
       },
     },
+    DialingCode: {
+      name: "United Arab Emirates",
+      dialCode: "+971",
+      isoCode: "AE",
+      flag: "https://cdn.kcak11.com/CountryFlags/countries/ae.svg",
+    },
+    Loggedin: {},
   });
 
   const [mode, setMode] = useState(getTheme());
@@ -82,6 +89,14 @@ function App() {
       setFtftexValue({
         ...ftftexValue,
         Assets: parsed,
+      });
+    }
+
+    if (localStorage.getItem("usr")) {
+      const loggedIn = JSON.parse(localStorage.getItem("usr"));
+      setFtftexValue({
+        ...ftftexValue,
+        Loggedin: loggedIn,
       });
     }
   }, []);

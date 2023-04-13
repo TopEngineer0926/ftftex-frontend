@@ -20,6 +20,10 @@ import Wallet from "components/Wallet";
 import WalletAccount from "components/Wallet/WalletAccount";
 import WalletMain from "components/WalletMain";
 import PurchaseCrypto from "components/PurchaseCrypto";
+import Login from "components/Login";
+import Register from "components/Login/Register";
+import ForgotPassword from "components/ForgotPassword";
+import SetPassword from "components/SetPassword";
 
 const RoutesComponent = () => {
   return (
@@ -49,6 +53,10 @@ const RoutesComponent = () => {
       <Route path="wallet/account" Component={WalletAccount} />
       <Route path="wallet/main" Component={WalletMain} />
       <Route path="wallet/purchase-crypto" Component={PurchaseCrypto} />
+      <Route path="login" Component={Login} />
+      <Route path="register" Component={Register} />
+      <Route path="forgot-password" Component={ForgotPassword} />
+      <Route path="set-password" Component={SetPassword} />
     </Routes>
   );
 };

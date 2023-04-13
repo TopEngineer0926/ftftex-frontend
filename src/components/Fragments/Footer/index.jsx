@@ -45,7 +45,7 @@ const Footer = () => {
                 <img src={TwitterIcon} height={40} />
               </a>
               <a
-                href="https://www.NavLinkedin.com/company/ftftx/"
+                href="https://www.linkedin.com/company/ftftx/"
                 target="_blank"
                 className="ml-4"
               >

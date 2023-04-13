@@ -407,7 +407,7 @@ const WalletAccount = () => {
                     <h2 className="s-bld align-self-center mr-3">My Wallet </h2>
                     <span
                       className="material-symbols-outlined align-self-center cu-p"
-                      style="font-size: 25px"
+                      style={{ fontSize: 25 }}
                     >
                       refresh
                     </span>
@@ -476,7 +476,7 @@ const WalletAccount = () => {
                       <thead>
                         <tr>
                           <th scope="col">Coin</th>
-                          <th scope="col" style="width: 100px"></th>
+                          <th scope="col" style={{ width: 100 }}></th>
                           {/* <!-- <th scope="col" style="width: 100px"></th>--> */}
                         </tr>
                       </thead>

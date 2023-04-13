@@ -1,0 +1,75 @@
+.bg-wt {
+  background: url("../../../assets/images/white-bg.jpg");
+}
+
+.fh-minus-100 {
+  min-height: calc(100vh - 100px);
+}
+
+.form-control {
+  height: 45px;
+  box-shadow: 1px 1px 12px 3px rgba(0, 0, 0, 0.1);
+  border: none !important;
+  border-radius: 15px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.btn-primary {
+  box-shadow: 1px 1px 12px 3px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+.btn-outline-primary {
+  color: #1577FF !important;
+  font-weight: 600;
+  border: none !important;
+  background: #FFFFFF !important;
+}
+
+label {
+  font-weight: 600;
+}
+
+.OTP-field {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.mobile-field {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.OTP-btn {
+  white-space: nowrap;
+  background: #1577FF !important;
+  color: #FFFFFF !important;
+  border-radius: 0 15px 15px 0;
+  height: 45px;
+}
+
+.agree-txt {
+  font-size: 15px;
+  color: #5a5a5a;
+  text-align: center;
+
+  a {
+    color: #1577FF !important;
+  }
+}
+
+.co-code-btn {
+  border-radius: 15px 0 0 15px;
+  box-shadow: 1px 1px 12px 3px rgba(0, 0, 0, 0.1);
+
+  img {
+    object-fit: contain;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .fh-minus-100 {
+    height: auto !important;
+  }
+}

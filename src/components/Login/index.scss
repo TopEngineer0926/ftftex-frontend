@@ -1,0 +1,45 @@
+.fh-minus-100 {
+  min-height: calc(100vh - 100px);
+}
+
+.form-control {
+  height: 45px;
+  box-shadow: 1px 1px 12px 3px rgba(0, 0, 0, 0.1);
+  border: none !important;
+  border-radius: 15px;
+  font-weight: 600;
+  color: #000000;
+}
+
+.btn-primary {
+  box-shadow: 1px 1px 12px 3px rgba(0, 0, 0, 0.1);
+}
+
+label {
+  font-weight: 600;
+}
+
+.OTP-field {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.mobile-field {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.co-code-btn {
+  border-radius: 15px 0 0 15px;
+  box-shadow: 1px 1px 12px 3px rgba(0, 0, 0, 0.1);
+
+  img {
+    object-fit: contain;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .fh-minus-100 {
+    height: auto !important;
+  }
+}
