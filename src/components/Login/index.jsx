@@ -149,7 +149,6 @@ const Login = () => {
                       <input
                         className="form-control"
                         placeholder="Email"
-                        formControlName="email"
                         value={Form.email}
                         onChange={(e) => handleChangeForm(e, "email")}
                       />
@@ -180,7 +179,6 @@ const Login = () => {
                           type="number"
                           className="form-control mobile-field"
                           placeholder="Mobile No"
-                          formControlName="phone"
                           value={Form.phone}
                           onChange={(e) => handleChangeForm(e, "phone")}
                         />
@@ -193,7 +191,6 @@ const Login = () => {
                     type="password"
                     className="form-control"
                     placeholder="Password"
-                    formControlName="password"
                     required
                     value={Form.password}
                     onChange={(e) => handleChangeForm(e, "password")}
@@ -232,7 +229,7 @@ const Login = () => {
         show={showRegistrationDoneModal}
         onHide={handleCloseRegistrationDoneModal}
         centered
-        ariaLabelledBy="modal-basic-title"
+        aria-labelledby="modal-basic-title"
       >
         <div className="modal-body">
           <img

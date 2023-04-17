@@ -8,6 +8,23 @@ class ApiService {
     flag: "https://cdn.kcak11.com/CountryFlags/countries/ae.svg",
   };
 
+  AvailableCoins = [
+    { id: 825, coin: "usdt" },
+    { id: 1027, coin: "eth" },
+    { id: 1, coin: "btc" },
+    { id: 1839, coin: "bnb" },
+    { id: 5426, coin: "sol" },
+    { id: 2010, coin: "ada" },
+    { id: 6636, coin: "dot" },
+    { id: 74, coin: "doge" },
+    { id: 5994, coin: "shib" },
+    { id: 3890, coin: "matic" },
+    { id: 7083, coin: "uni" },
+    { id: 2, coin: "ltc" },
+    { id: 1958, coin: "trx" },
+    { id: 52, coin: "xrp" },
+  ];
+
   LoginUser(data, type, dialcode) {
     let fmData = { userId: "", password: data.password };
     if (type === "email") {
@@ -317,6 +334,20 @@ class ApiService {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}verification/subscribe`,
       data
+    );
+  }
+
+  verifyKyc(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/verifyKyc`,
+      params
+    );
+  }
+
+  getUser(userId) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/getUserDetails`,
+      { userId }
     );
   }
 }

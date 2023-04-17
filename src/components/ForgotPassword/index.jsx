@@ -204,7 +204,7 @@ const ForgotPassword = () => {
         onHide={handleCloseEmailVerifyPopModal}
         centered
         backdrop="static"
-        ariaLabelledBy="modal-basic-title"
+        aria-labelledby="modal-basic-title"
       >
         <div className="modal-body">
           <span

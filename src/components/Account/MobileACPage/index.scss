@@ -1,0 +1,44 @@
+.acc-box {
+  padding: 10px;
+  display: flex;
+  border-radius: 8px;
+
+  .acc-box-i {
+    font-size: 38px;
+  }
+}
+
+.acc-box:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 600px) {
+  .vh-100 {
+    height: auto !important;
+  }
+
+  .wt-box {
+    box-shadow: none;
+  }
+
+  .acc-box {
+    padding: 10px;
+    display: flex;
+    border-radius: 8px;
+    font-size: 16px;
+
+    .sht-txt {
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .acc-box-i {
+      font-size: 25px;
+    }
+  }
+}
+
+.nav-link {
+  font-weight: 600;
+}

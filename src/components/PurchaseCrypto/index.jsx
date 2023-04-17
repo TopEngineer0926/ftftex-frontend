@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import "./index.scss";
 
-let simplexAsyncFunction = window.simplex;
+window.simplex = window.simplexAsyncFunction;
 
 const PurchaseCrypto = () => {
   useEffect(() => {

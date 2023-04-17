@@ -310,7 +310,7 @@ const Register = () => {
         onHide={() => setShowEmailVerifyPopModal(false)}
         centered
         backdrop="static"
-        ariaLabelledBy="modal-basic-title"
+        aria-labelledby="modal-basic-title"
       >
         <div className="modal-body">
           <span
@@ -357,7 +357,7 @@ const Register = () => {
         onHide={() => setShowMobileVerifyPopModal(false)}
         centered
         backdrop="static"
-        ariaLabelledBy="modal-basic-title"
+        aria-labelledby="modal-basic-title"
       >
         <div className="modal-body">
           <span
@@ -404,7 +404,7 @@ const Register = () => {
         show={showRegistrationDoneModal}
         onHide={() => setShowRegistrationDoneModal(false)}
         centered
-        ariaLabelledBy="modal-basic-title"
+        aria-labelledby="modal-basic-title"
       >
         <div className="modal-body">
           <img

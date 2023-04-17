@@ -1,0 +1,151 @@
+.wt-box {
+  overflow: inherit;
+}
+
+.drop-down-cc {
+  overflow: auto;
+  max-height: 300px;
+  width: 100%;
+
+  img {
+    height: 28px;
+    width: 28px;
+    object-fit: cover;
+    border-radius: 30px;
+  }
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.ddrop {
+  cursor: pointer;
+  font-weight: 600;
+
+  img {
+    height: 25px;
+    width: 25px;
+    object-fit: cover;
+    border-radius: 30px;
+  }
+}
+
+.dropdown-item {
+  font-weight: 600;
+  padding: 10px;
+}
+
+.acc-box {
+  padding: 20px;
+  display: flex;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.19);
+
+  h6 {
+    text-align: center;
+    color: #252525;
+  }
+
+
+  .acc-box-i {
+    font-size: 38px;
+  }
+}
+
+.acc-box:hover {
+  cursor: pointer;
+}
+
+.acc-box-selected {
+  h6 {
+    color: #1577FF;
+  }
+}
+
+.instructions {
+
+  p {
+    opacity: 0.6;
+    margin-bottom: 5px;
+    font-size: 16px;
+    display: flex;
+
+    span {
+      font-size: 16px;
+      line-height: 20px;
+      align-self: center;
+      margin-right: 10px;
+    }
+  }
+}
+
+.image-upload label {
+  background: rgba(0, 0, 0, 0.07);
+  width: 100%;
+  height: 120px;
+  display: flex;
+  border-radius: 8px;
+  cursor: pointer;
+
+  span {
+    font-size: 50px;
+    color: rgba(0, 0, 0, 0.27);
+    transition-duration: 0.2s;
+  }
+}
+
+.image-upload label:hover {
+  span {
+    color: rgba(0, 0, 0, 0.35);
+  }
+}
+
+.image-upload input {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .vh-100 {
+    height: auto !important;
+  }
+
+  .wt-box {
+    box-shadow: none;
+  }
+
+  .acc-box {
+    padding: 20px;
+    display: flex;
+    border-radius: 8px;
+    font-size: 18px;
+
+    .sht-txt {
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .acc-box-i {
+      font-size: 25px;
+    }
+  }
+}
+
+.nav-link {
+  font-weight: 600;
+}
+
+.progress-w {
+  width: 100%;
+
+  .filled {
+    background: #1577FF;
+    height: 5px;
+  }
+
+  .un-filled {
+    background: #dcdcdc;
+    height: 5px;
+  }
+}
