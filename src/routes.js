@@ -24,6 +24,12 @@ import Login from "components/Login";
 import Register from "components/Login/Register";
 import ForgotPassword from "components/ForgotPassword";
 import SetPassword from "components/SetPassword";
+import Account from "components/Account";
+import Settings from "components/Account/MobileACPage/Settings";
+import MobileACPage from "components/Account/MobileACPage";
+import KYC from "components/Account/KYC";
+import WalletAsset from "components/Account/WalletAsset";
+import Deposite from "components/Account/Deposite";
 
 const RoutesComponent = () => {
   return (
@@ -57,6 +63,13 @@ const RoutesComponent = () => {
       <Route path="register" Component={Register} />
       <Route path="forgot-password" Component={ForgotPassword} />
       <Route path="set-password" Component={SetPassword} />
+      <Route path="account" Component={Account} />
+      <Route path="account/settings" Component={Settings} />
+      <Route path="account-m" Component={MobileACPage} />
+      <Route path="account/verification" Component={KYC} />
+      <Route path="spot-wallet" Component={WalletAsset} />
+      <Route path="spot-wallet/deposit" Component={Deposite} />
+      <Route path="spot-wallet/buy" Component={PurchaseCrypto} />
     </Routes>
   );
 };

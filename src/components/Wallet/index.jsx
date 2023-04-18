@@ -116,7 +116,7 @@ const Wallet = () => {
               <div className="container">
                 <div className="row pg-main-sec">
                   <div className="col-md-6">
-                    <video width="100%" height="600" autoplay muted loop>
+                    <video width="100%" height="600" autoPlay muted loop>
                       <source src={WalletAnimVid} type="video/mp4" />
                     </video>
                   </div>

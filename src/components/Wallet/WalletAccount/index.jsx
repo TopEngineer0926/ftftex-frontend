@@ -522,7 +522,7 @@ const WalletAccount = () => {
         onHide={setShowModal(false)}
         centered
         size="lg"
-        ariaLabelledBy="modal-basic-title"
+        aria-labelledby="modal-basic-title"
       >
         <div className="modal-body p-0 overflow-hidden">
           <div className="">

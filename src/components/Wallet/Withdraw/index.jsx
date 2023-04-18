@@ -129,7 +129,7 @@ const Withdraw = ({ balances }) => {
         show={showModal}
         onHide={setShowModal(false)}
         centered
-        ariaLabelledBy="modal-basic-title"
+        aria-labelledby="modal-basic-title"
       >
         <div class="modal-body">
           <img src={CheckImg} class="mx-auto d-block mb-3 mt-5" height={60} />

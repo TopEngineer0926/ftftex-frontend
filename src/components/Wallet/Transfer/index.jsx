@@ -162,7 +162,7 @@ const Transfer = ({ balances, tradings }) => {
         show={showModal}
         onHide={setShowModal(false)}
         centered
-        ariaLabelledBy="modal-basic-title"
+        aria-labelledby="modal-basic-title"
       >
         <div className="modal-body">
           <img
