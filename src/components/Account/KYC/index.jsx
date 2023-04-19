@@ -15,7 +15,7 @@ const KYC = () => {
   const [search, setSearch] = useState("");
   const [Page, setPage] = useState(1);
   const [reference, setReference] = useState("");
-  const [LogginIn, setLogginIn] = useState({});
+  const [LogginIn, setLogginIn] = useState({ 0: "" });
   const [KYC, setKYC] = useState({
     first_name: "",
     middle_name: "",

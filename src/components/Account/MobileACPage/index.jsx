@@ -8,7 +8,7 @@ import "./index.scss";
 
 const MobileACPage = () => {
   const { t } = useTranslation();
-  const [LogginIn, setLogginIn] = useState({});
+  const [LogginIn, setLogginIn] = useState({ 0: "" });
   const [AvailableCoins, setAvailableCoins] = useState(
     ApiService.AvailableCoins
   );

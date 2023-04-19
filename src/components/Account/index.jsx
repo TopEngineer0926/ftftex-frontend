@@ -6,7 +6,7 @@ import "./index.scss";
 
 const Account = () => {
   const { t } = useTranslation();
-  const [LogginIn, setLogginIn] = useState({});
+  const [LogginIn, setLogginIn] = useState({ 0: "" });
   const navigate = useNavigate();
 
   useEffect(() => {

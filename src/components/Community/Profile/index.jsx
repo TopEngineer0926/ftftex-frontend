@@ -9,10 +9,10 @@ const Profile = () => {
 
   useEffect(() => {
     const data = getLoggedIn();
-    if (!data) {
+    if (!data[0]) {
       navigate("/login");
     } else {
-      setLoggedIn({ 0: getLoggedIn() });
+      setLoggedIn(data);
     }
   }, []);
 

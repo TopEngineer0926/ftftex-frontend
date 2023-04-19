@@ -14,7 +14,7 @@ const Withdraw = ({ balances }) => {
   const [amount, setAmount] = useState("");
   const [address, setAddress] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const [LogginIn, setLoggedIn] = useState({ 0: "" });
+  const [LogginIn, setLogginIn] = useState({ 0: "" });
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const Withdraw = ({ balances }) => {
     if (!data[0]) {
       navigate("/login");
     } else {
-      setLoggedIn(data);
+      setLogginIn(data);
     }
   }, []);
 

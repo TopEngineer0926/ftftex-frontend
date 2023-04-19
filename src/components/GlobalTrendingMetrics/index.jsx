@@ -140,7 +140,7 @@ const GlobalTrendingMetrics = () => {
                 rel="noopener"
                 target="_blank"
               >
-                <span className="blue-text">BTC_TXVOLUME rates</span>
+                <span className="blue-text">BTC_TXVOLUME rates </span>
               </a>
               by TradingView
             </div>
@@ -164,7 +164,7 @@ const GlobalTrendingMetrics = () => {
                 rel="noopener"
                 target="_blank"
               >
-                <span className="blue-text">USDT rates</span>
+                <span className="blue-text">USDT rates </span>
               </a>
               by TradingView
             </div>
@@ -188,7 +188,7 @@ const GlobalTrendingMetrics = () => {
                 rel="noopener"
                 target="_blank"
               >
-                <span className="blue-text">BTC.D rates</span>
+                <span className="blue-text">BTC.D rates </span>
               </a>
               by TradingView
             </div>
