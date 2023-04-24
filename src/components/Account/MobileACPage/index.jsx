@@ -69,7 +69,7 @@ const MobileACPage = () => {
           <div className="col-lg-6 offset-lg-3">
             <h4 className="s-bld mb-0 mt-3">{t("Account")}</h4>
             <hr />
-            <NavLink className="wt-box mt-3 p-lg-3" to={"/account"}>
+            <NavLink className="wt-box mt-3 ac-padding" to={"/account"}>
               <div className="acc-box mb-lg-0">
                 <span
                   className="material-symbols-outlined acc-box-i align-self-center mr-3"
@@ -89,7 +89,7 @@ const MobileACPage = () => {
                 </span>
               </div>
             </NavLink>
-            {/* <!--        <div className="wt-box mt-3 p-lg-3" [routerLink]="'/spot-wallet'">-->
+            {/* <!--        <div className="wt-box mt-3 ac-padding" [routerLink]="'/spot-wallet'">-->
 <!--          <div className="acc-box  mb-lg-0">-->
 <!--            <span className="material-symbols-outlined acc-box-i align-self-center mr-3" style="font-size: 35px">wallet</span>-->
 <!--            <div>-->
@@ -100,7 +100,11 @@ const MobileACPage = () => {
 <!--            <span className="material-symbols-outlined acc-box-i align-self-center  ml-auto" style="font-size: 35px; opacity: 0.6">arrow_forward_ios</span>-->
 <!--          </div>-->
 <!--        </div>--> */}
-            <NavLink className="wt-box mt-3 p-lg-3" to={"/account/settings"}>
+            <br />
+            <NavLink
+              className="wt-box mt-3 ac-padding"
+              to={"/account/settings"}
+            >
               <div className="acc-box  mb-lg-0">
                 <span
                   className="material-symbols-outlined acc-box-i align-self-center mr-3"

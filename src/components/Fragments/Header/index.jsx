@@ -14,13 +14,12 @@ const Header = () => {
   const { t, i18n } = useTranslation();
   const [GlobalData, setGlobalData] = useState({});
   const [LoggedIn, setLoggedIn] = useState({ 0: "" });
-  useEffect(() => {
-    setIsMobile(ftftexValue.isMobile);
-  }, [ftftexValue.isMobile]);
+
   const changeLang = (val) => {
     i18n.changeLanguage(val);
     changeLanguage(val);
   };
+
   useEffect(() => {
     ApiService.getGlobalData().then((res) => {
       const data = JSON.parse(res.data.response["Result: "])?.data;
@@ -32,10 +31,15 @@ const Header = () => {
     } else {
       document.body.classList.add("dark-theme");
     }
-
-    setLoggedIn(getLoggedIn());
-    setIsMobile(ftftexValue.isMobile);
   }, []);
+
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
+
+  useEffect(() => {
+    setLoggedIn(ftftexValue.Loggedin);
+  }, [ftftexValue.Loggedin]);
 
   const numberWithCommas = (number) => {
     return number ? number.toLocaleString() : "";
@@ -125,37 +129,41 @@ const Header = () => {
      </li> */}
             </ul>
           </div>
-          <ul
-            className="navbar-nav ml-auto d-lg-flex flex-row d-none"
-            style={{ height: 25 }}
-          >
-            <li
-              className="nav-item dropdown cu-p"
-              onClick={colorMode.toggleColorMode}
+          {!isMobile && (
+            <ul
+              className="navbar-nav ml-auto d-lg-flex flex-row d-none"
+              style={{ height: 25 }}
             >
-              <span
-                className="material-symbols-outlined align-self-center"
-                style={{ fontSize: 25 }}
+              <li
+                className="nav-item dropdown cu-p"
+                onClick={colorMode.toggleColorMode}
               >
-                {getTheme() === "light" ? "dark_mode" : "light_mode"}
-              </span>
-            </li>
-          </ul>
-          <ul className="navbar-nav mx-auto d-lg-flex d-none flex-row">
-            <li className="nav-item ">
-              <a className="nav-link" onClick={() => changeLang("ch")}>
-                中文
-              </a>
-            </li>
-            <li className="nav-item ">
-              <a className="nav-link">|</a>
-            </li>
-            <li className="nav-item ">
-              <a className="nav-link" onClick={() => changeLang("en")}>
-                ENG
-              </a>
-            </li>
-          </ul>
+                <span
+                  className="material-symbols-outlined align-self-center"
+                  style={{ fontSize: 25 }}
+                >
+                  {getTheme() === "light" ? "dark_mode" : "light_mode"}
+                </span>
+              </li>
+            </ul>
+          )}
+          {!isMobile && (
+            <ul className="navbar-nav mx-auto d-lg-flex d-none flex-row">
+              <li className="nav-item ">
+                <a className="nav-link" onClick={() => changeLang("ch")}>
+                  中文
+                </a>
+              </li>
+              <li className="nav-item ">
+                <a className="nav-link">|</a>
+              </li>
+              <li className="nav-item ">
+                <a className="nav-link" onClick={() => changeLang("en")}>
+                  ENG
+                </a>
+              </li>
+            </ul>
+          )}
           {!LoggedIn[0] && (
             <ul
               className="navbar-nav ml-auto d-lg-block d-none"
@@ -213,13 +221,15 @@ const Header = () => {
               className="navbar-nav ml-auto d-lg-flex flex-row d-none"
               style={{ height: 35 }}
             >
-              <li className="nav-item dropdown cu-p" to="/account-m">
-                <span
-                  className="material-symbols-outlined align-self-center"
-                  style={{ fontSize: 35 }}
-                >
-                  account_circle
-                </span>
+              <li className="nav-item dropdown cu-p">
+                <NavLink to="/account-m">
+                  <span
+                    className="material-symbols-outlined align-self-center"
+                    style={{ fontSize: 35 }}
+                  >
+                    account_circle
+                  </span>
+                </NavLink>
               </li>
             </ul>
           )}

@@ -12,6 +12,9 @@
   cursor: pointer;
 }
 
+.wt-box.mt-3.ac-padding {
+  padding: unset !important;
+}
 @media only screen and (max-width: 600px) {
   .vh-100 {
     height: auto !important;
