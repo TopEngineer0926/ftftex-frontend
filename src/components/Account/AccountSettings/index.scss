@@ -1,0 +1,21 @@
+.tab-text {
+    font-size: 11px;
+}
+
+.sub-menu-btn {
+    text-align: left;
+    padding: 15px;
+    font-size: 17px;
+    font-weight: 400;
+    display: flex;
+    border-radius: 0;
+
+    span {
+        align-self: center;
+    }
+}
+
+.sub-menu-btn:not(.sub-menu-btn-activate):hover {
+    background-color: #2568b0;
+    color: whitesmoke;
+}

@@ -30,6 +30,14 @@ import MobileACPage from "components/Account/MobileACPage";
 import KYC from "components/Account/KYC";
 import WalletAsset from "components/Account/WalletAsset";
 import Deposite from "components/Account/Deposite";
+import AccountSettings from "components/Account/AccountSettings";
+import SettingsAccount from "components/Account/SettingsAccount";
+import CommunitySettings from "components/Account/CommunitySettings";
+import Security from "components/Account/Security";
+import Privacy from "components/Account/Privacy";
+import Environment from "components/Account/Environment";
+import Support from "components/Account/Support";
+import TermsPolicies from "components/Account/TermsPolicies";
 
 const RoutesComponent = () => {
   return (
@@ -65,6 +73,19 @@ const RoutesComponent = () => {
       <Route path="set-password" Component={SetPassword} />
       <Route path="account" Component={Account} />
       <Route path="account/settings" Component={Settings} />
+      <Route path="/account-settings" Component={AccountSettings}>
+        <Route
+          path=""
+          element={<Navigate to="/account-settings/settings" replace />}
+        />
+        <Route path="settings" Component={SettingsAccount} />
+        <Route path="community-settings" Component={CommunitySettings} />
+        <Route path="security" Component={Security} />
+        <Route path="privacy" Component={Privacy} />
+        <Route path="environment" Component={Environment} />
+        <Route path="support" Component={Support} />
+        <Route path="terms-policies" Component={TermsPolicies} />
+      </Route>
       <Route path="account-m" Component={MobileACPage} />
       <Route path="account/verification" Component={KYC} />
       <Route path="spot-wallet" Component={WalletAsset} />
