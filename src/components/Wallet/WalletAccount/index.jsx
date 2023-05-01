@@ -81,7 +81,7 @@ const WalletAccount = () => {
   };
 
   useEffect(() => {
-    loadMarket();
+    loadMarket(SelectedExchange);
     loadTotal();
   }, []);
 
@@ -163,7 +163,10 @@ const WalletAccount = () => {
     setShowOrder(true);
     setTimeout(() => {
       setShowOrder(false);
-      this.BUY.Amount = 0;
+      setBUY({
+        ...BUY,
+        Amount: 0,
+      });
     }, 4000);
   };
 
@@ -519,7 +522,7 @@ const WalletAccount = () => {
 
       <Modal
         show={showModal}
-        onHide={setShowModal(false)}
+        onHide={() => setShowModal(false)}
         centered
         size="lg"
         aria-labelledby="modal-basic-title"

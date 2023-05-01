@@ -86,7 +86,7 @@ const SetPassword = () => {
       </div>
       <Modal
         show={showRegistrationDoneModal}
-        onHide={setShowRegistrationDoneModal(false)}
+        onHide={() => setShowRegistrationDoneModal(false)}
         centered
         aria-labelledby="modal-basic-title"
       >

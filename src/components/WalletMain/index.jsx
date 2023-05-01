@@ -32,8 +32,6 @@ const WalletMain = () => {
     const params = {
       subAcct: LogginIn[5],
     };
-    getSubAccTradeBalance();
-    getSubAccFoundBalance();
 
     // client.getSubAccountBalances(this.LogginIn[5]).then((res) => {
     //   console.log(res, 'res');
@@ -42,6 +40,13 @@ const WalletMain = () => {
     //   console.log(res, 'res');
     // })
   }, []);
+
+  useEffect(() => {
+    if (LogginIn[5]) {
+      getSubAccTradeBalance();
+      getSubAccFoundBalance();
+    }
+  }, [LogginIn]);
 
   const getSubAccTradeBalance = () => {
     const params = {
@@ -228,7 +233,7 @@ const WalletMain = () => {
       </div>
       <Modal
         show={showDipositModal}
-        onHide={setShowDipositModal(false)}
+        onHide={() => setShowDipositModal(false)}
         centered
         scrollable
       >
@@ -236,7 +241,7 @@ const WalletMain = () => {
       </Modal>
       <Modal
         show={showTransferModal}
-        onHide={setShowTransferModal(false)}
+        onHide={() => setShowTransferModal(false)}
         centered
         scrollable
       >
@@ -244,7 +249,7 @@ const WalletMain = () => {
       </Modal>
       <Modal
         show={showWithdrawalModal}
-        onHide={setShowWithdrawalModal(false)}
+        onHide={() => setShowWithdrawalModal(false)}
         centered
         scrollable
       >

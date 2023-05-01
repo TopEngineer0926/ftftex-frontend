@@ -127,7 +127,7 @@ const Withdraw = ({ balances }) => {
 
       <Modal
         show={showModal}
-        onHide={setShowModal(false)}
+        onHide={() => setShowModal(false)}
         centered
         aria-labelledby="modal-basic-title"
       >

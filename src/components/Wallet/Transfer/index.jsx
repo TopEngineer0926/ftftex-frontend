@@ -122,7 +122,7 @@ const Transfer = ({ balances, tradings }) => {
                   src={ArrowImg}
                   width="25"
                   alt=""
-                  onClick={setFromMain(!fromMain)}
+                  onClick={() => setFromMain(!fromMain)}
                 />
               </div>
               <div className="from-to d-flex">
@@ -160,7 +160,7 @@ const Transfer = ({ balances, tradings }) => {
 
       <Modal
         show={showModal}
-        onHide={setShowModal(false)}
+        onHide={() => setShowModal(false)}
         centered
         aria-labelledby="modal-basic-title"
       >
