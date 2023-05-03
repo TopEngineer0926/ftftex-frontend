@@ -18,8 +18,8 @@ import Exchanges from "components/Exchanges";
 import TradingPortal from "components/TradingPortal";
 import Wallet from "components/Wallet";
 import WalletAccount from "components/Wallet/WalletAccount";
-import WalletMain from "components/WalletMain";
-import PurchaseCrypto from "components/PurchaseCrypto";
+import WalletMain from "components/Wallet/WalletMain";
+import PurchaseCrypto from "components/Wallet/PurchaseCrypto";
 import Login from "components/Login";
 import Register from "components/Login/Register";
 import ForgotPassword from "components/ForgotPassword";
@@ -38,6 +38,10 @@ import Privacy from "components/Account/Privacy";
 import Environment from "components/Account/Environment";
 import Support from "components/Account/Support";
 import TermsPolicies from "components/Account/TermsPolicies";
+import PaymentGateway from "components/Wallet/PaymentGateway";
+import OKX from "components/Wallet/OKX";
+import Huobi from "components/Wallet/Huobi";
+import XT from "components/Wallet/XT";
 
 const RoutesComponent = () => {
   return (
@@ -63,10 +67,16 @@ const RoutesComponent = () => {
       <Route path="exchange/:id/:slug" Component={SingleExchange} />
       <Route path="trade" Component={TradingPortal} />
       <Route path="trade/:symbol" Component={TradingPortal} />
-      <Route path="wallet" Component={Wallet} />
+      <Route path="wallet" Component={Wallet}>
+        <Route path="" element={<Navigate to="/wallet/main" replace />} />
+        <Route path="main" Component={WalletMain} />
+        <Route path="purchase-crypto" Component={PurchaseCrypto} />
+        <Route path="payment-gateway" Component={PaymentGateway} />
+        <Route path="okx" Component={OKX} />
+        <Route path="huobi" Component={Huobi} />
+        <Route path="xt" Component={XT} />
+      </Route>
       <Route path="wallet/account" Component={WalletAccount} />
-      <Route path="wallet/main" Component={WalletMain} />
-      <Route path="wallet/purchase-crypto" Component={PurchaseCrypto} />
       <Route path="login" Component={Login} />
       <Route path="register" Component={Register} />
       <Route path="forgot-password" Component={ForgotPassword} />

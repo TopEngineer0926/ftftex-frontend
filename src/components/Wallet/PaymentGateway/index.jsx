@@ -1,9 +1,10 @@
 import { useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import "./index.scss";
 
 window.simplex = window.simplexAsyncFunction;
 
-const PurchaseCrypto = () => {
+const PaymentGateway = () => {
   useEffect(() => {
     const script = document.createElement("script");
     script.type = "text/javascript";
@@ -20,12 +21,22 @@ const PurchaseCrypto = () => {
   }, []);
 
   return (
-    <div id="simplex-wrapper">
-      <form id="simplex-form">
-        <div id="checkout-element"></div>
-      </form>
+    <div className="wt-box min-h-full">
+      <div id="simplex-wrapper">
+        <form id="simplex-form">
+          <div id="checkout-element"></div>
+        </form>
+      </div>
+      <span
+        className="mt-5 pointer buy-wrapper"
+        style={{ position: "absolute", bottom: 20 }}
+      >
+        <NavLink to={"/wallet"}>
+          <div className="card-name">Back</div>
+        </NavLink>
+      </span>
     </div>
   );
 };
 
-export default PurchaseCrypto;
+export default PaymentGateway;

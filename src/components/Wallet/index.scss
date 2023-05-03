@@ -50,9 +50,6 @@
 
 .buy-wrapper {
   //width: 100%;
-  border: 1px solid gray;
-  border-radius: 8px;
-  background: transparent;
   padding: 10px;
   color: white;
   cursor: pointer;
@@ -66,4 +63,30 @@
 
 .sub-account {
   padding: 10px;
+}
+.button-item {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.wallet-button-layout {
+  position: relative;
+  justify-content: center;
+  display: flex;
+}
+
+.wallet-button-group {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: -50px;
+  gap: 100px;
+}
+
+.disable-wallet-button {
+  background: linear-gradient(to right, rgb(189, 191, 193), rgb(226, 227, 228));
+  border-radius: 15px;
+  width: 50px;
+  height: 50px;
 }
