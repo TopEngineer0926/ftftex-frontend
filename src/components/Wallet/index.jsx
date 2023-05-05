@@ -324,14 +324,12 @@ const Wallet = () => {
                   </div>
                 </NavLink>
               </div>
-              <div style={{ position: "relative" }}>
-                <p
-                  className="tab-text m-0 mr-1"
-                  style={{ position: "absolute", bottom: -120 }}
-                >
-                  Version 1.0.0
-                </p>
-              </div>
+              <p
+                className="tab-text m-0 mr-1"
+                style={{ position: "absolute", bottom: 20 }}
+              >
+                Version 1.0.0
+              </p>
             </div>
             <div className="col-lg-8" style={{ overflow: "visible" }}>
               <Outlet />

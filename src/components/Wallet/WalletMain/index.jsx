@@ -1,10 +1,12 @@
 import { useTranslation } from "react-i18next";
 import "./index.scss";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getLoggedIn } from "utils";
 import ApiService from "services/apiService";
 import ReactApexChart from "react-apexcharts";
+import ContentLoader from "react-content-loader";
+import { FTFTexContext } from "App";
 
 const WalletMain = () => {
   const { t } = useTranslation();
@@ -12,6 +14,23 @@ const WalletMain = () => {
   const [tab, setTab] = useState("deposit");
   const [deposits, setDeposits] = useState([]);
   const [trading, setTrading] = useState([]);
+  const [order, setOrder] = useState({
+    field: "rank",
+    reversed: false,
+  });
+  const [walletData, setWalletData] = useState([
+    { id: 294, name: "OKX", total: "2,000", pro: "62.50" },
+    { id: 102, name: "Huobi", total: "1,200", pro: "37.50" },
+    { id: 525, name: "XT.com", total: "-", pro: "0.00" },
+  ]);
+  const [loader, setLoader] = useState(false);
+  const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
+  const [isMobile, setIsMobile] = useState(false);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
 
   const navigate = useNavigate();
 
@@ -59,6 +78,11 @@ const WalletMain = () => {
   };
 
   useEffect(() => {
+    const tempItems = Array(10)
+      .fill(0)
+      .map((x, i) => i + 1);
+    setItems(tempItems);
+
     const data = getLoggedIn();
     if (!data[0]) {
       navigate("/login");
@@ -73,6 +97,10 @@ const WalletMain = () => {
       getSubAccFoundBalance();
     }
   }, [LogginIn]);
+
+  const numberWithCommas = (number) => {
+    return number?.toLocaleString();
+  };
 
   const getSubAccTradeBalance = () => {
     const params = {
@@ -92,6 +120,71 @@ const WalletMain = () => {
       let tmpDeposits = JSON.parse(res.data["KYC Api resuult"])?.data;
       setDeposits(tmpDeposits);
     });
+  };
+
+  useEffect(() => {
+    const sortedWallets = walletData.sort((a, b) => {
+      let fieldA = a["rank"];
+      let fieldB = b["rank"];
+
+      switch (order.field) {
+        case "name":
+          fieldA = a.name;
+          fieldB = b.name;
+          break;
+        case "num_coins":
+          fieldA = a.num_coins;
+          fieldB = b.num_coins;
+          break;
+        case "num_market_pairs":
+          fieldA = a.num_market_pairs;
+          fieldB = b.num_market_pairs;
+          break;
+        case "quote.USD.effective_liquidity_24h":
+          fieldA = a.quote.USD.effective_liquidity_24h;
+          fieldB = b.quote.USD.effective_liquidity_24h;
+          break;
+        case "quote.USD.volume_24h":
+          fieldA = a.quote.USD.volume_24h;
+          fieldB = b.quote.USD.volume_24h;
+          break;
+        case "exchange_score":
+          fieldA = a.exchange_score;
+          fieldB = b.exchange_score;
+          break;
+      }
+
+      if (fieldA < fieldB) {
+        return order.reversed ? 1 : -1;
+      }
+      if (fieldA > fieldB) {
+        return order.reversed ? -1 : 1;
+      }
+      return 0;
+    });
+
+    setWalletData(sortedWallets);
+  }, [order]);
+
+  const doSort = (value) => {
+    if (order.field == value) {
+      if (order.reversed) {
+        setOrder({
+          ...order,
+          reversed: false,
+        });
+      } else {
+        setOrder({
+          ...order,
+          reversed: true,
+        });
+      }
+    } else {
+      setOrder({
+        reversed: false,
+        field: value,
+      });
+    }
   };
 
   return (
@@ -169,8 +262,144 @@ const WalletMain = () => {
           </div>
         </div>
       </div>
-      <div className="wt-box p-3" style={{ minHeight: 200 }}>
+      <div
+        className="wt-box p-3"
+        style={{ minHeight: 200, display: "grid", gap: 20 }}
+      >
         Wallet Composition
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col" className="cu-p" onClick={() => doSort("rank")}>
+                <div className="d-flex">
+                  #
+                  {order.field === "rank" && order.reversed === true && (
+                    <span className="material-symbols-outlined align-self-center">
+                      arrow_drop_up
+                    </span>
+                  )}
+                </div>
+              </th>
+              <th scope="col" className="cu-p" onClick={() => doSort("name")}>
+                <div className="d-flex">
+                  Wallet
+                  {order.field === "name" && order.reversed === true && (
+                    <span className="material-symbols-outlined align-self-center">
+                      arrow_drop_up
+                    </span>
+                  )}
+                  {order.field === "name" && order.reversed === false && (
+                    <span className="material-symbols-outlined align-self-center">
+                      arrow_drop_down
+                    </span>
+                  )}
+                </div>
+              </th>
+
+              <th
+                scope="col"
+                className="cu-p"
+                onClick={() => doSort("quote.USD.volume_24h")}
+              >
+                <div className="d-flex">
+                  Total
+                  {order.field === "quote.USD.volume_24h" &&
+                    order.reversed === true && (
+                      <span className="material-symbols-outlined align-self-center">
+                        arrow_drop_up
+                      </span>
+                    )}
+                  {order.field === "quote.USD.volume_24h" &&
+                    order.reversed === false && (
+                      <span className="material-symbols-outlined align-self-center">
+                        arrow_drop_down
+                      </span>
+                    )}
+                </div>
+              </th>
+
+              <th
+                scope="col"
+                className="cu-p"
+                onClick={() => doSort("quote.USD.volume_24h")}
+              >
+                <div className="d-flex">
+                  Agg.Wallet %
+                  {order.field === "quote.USD.volume_24h" &&
+                    order.reversed === true && (
+                      <span className="material-symbols-outlined align-self-center">
+                        arrow_drop_up
+                      </span>
+                    )}
+                  {order.field === "quote.USD.volume_24h" &&
+                    order.reversed === false && (
+                      <span className="material-symbols-outlined align-self-center">
+                        arrow_drop_down
+                      </span>
+                    )}
+                </div>
+              </th>
+            </tr>
+          </thead>
+          {loader === false && (
+            <tbody>
+              {walletData.map((dta, index) => (
+                <tr key={index}>
+                  <td className="s-bld">{index + 1}</td>
+                  <td className="font-weight-bold">
+                    <NavLink className="d-flex cu-p">
+                      <img
+                        className="align-self-center"
+                        loading="lazy"
+                        src={`https://s2.coinmarketcap.com/static/img/exchanges/64x64/${dta.id}.png`}
+                        height={30}
+                      />
+                      <div className="align-self-center ml-2">
+                        <p className="mb-0 s-bld"> {dta.name}</p>
+                      </div>
+                    </NavLink>
+                  </td>
+                  <td className="s-bld">{dta.total} USDT</td>
+                  <td className="s-bld">{dta.pro} %</td>
+                </tr>
+              ))}
+            </tbody>
+          )}
+        </table>
+        {loader === true && (
+          <table className="table">
+            <tbody>
+              {items.map((item, index) => (
+                <tr key={index}>
+                  <td>
+                    <ContentLoader
+                      backgroundColor="rgba(217,217,217,0.24)"
+                      foregroundColor="rgba(187,187,187,0.06)"
+                    >
+                      <rect x="0" y="0" rx="3" ry="3" width="250" height="60" />
+                    </ContentLoader>
+                  </td>
+                  <td>
+                    <ContentLoader
+                      backgroundColor="rgba(217,217,217,0.24)"
+                      foregroundColor="rgba(187,187,187,0.06)"
+                    >
+                      <rect x="0" y="0" rx="3" ry="3" width="500" height="60" />
+                    </ContentLoader>
+                  </td>
+                  <td>
+                    <ContentLoader
+                      backgroundColor="rgba(217,217,217,0.24)"
+                      foregroundColor="rgba(187,187,187,0.06)"
+                    >
+                      <rect x="0" y="0" rx="3" ry="3" width="500" height="60" />
+                    </ContentLoader>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
