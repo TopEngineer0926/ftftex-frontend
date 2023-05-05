@@ -42,6 +42,11 @@ import PaymentGateway from "components/Wallet/PaymentGateway";
 import OKX from "components/Wallet/OKX";
 import Huobi from "components/Wallet/Huobi";
 import XT from "components/Wallet/XT";
+import WalletDetails from "components/WalletDetails";
+import FundingAccount from "components/WalletDetails/FundingAccount";
+import TradingAccount from "components/WalletDetails/TradingAccount";
+import TradeHistory from "components/WalletDetails/TradeHistory";
+import TransactionHistory from "components/WalletDetails/TransactionHistory";
 
 const RoutesComponent = () => {
   return (
@@ -75,6 +80,15 @@ const RoutesComponent = () => {
         <Route path="okx" Component={OKX} />
         <Route path="huobi" Component={Huobi} />
         <Route path="xt" Component={XT} />
+      </Route>
+      <Route path="wallet/details" Component={WalletDetails}>
+        <Route path="funding-account/:type" Component={FundingAccount} />
+        <Route path="trading-account/:type" Component={TradingAccount} />
+        <Route path="trade-history/:type" Component={TradeHistory} />
+        <Route
+          path="transaction-history/:type"
+          Component={TransactionHistory}
+        />
       </Route>
       <Route path="wallet/account" Component={WalletAccount} />
       <Route path="login" Component={Login} />

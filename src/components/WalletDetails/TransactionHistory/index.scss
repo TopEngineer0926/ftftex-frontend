@@ -1,0 +1,38 @@
+.total-wrapper {
+  span {
+    padding: 10px;
+    border-radius: 12px;
+    color: gray;
+    font-size: 12px;
+    background: #1e253d;
+  }
+}
+
+.earn-wrapper {
+  span {
+    padding: 4px;
+    border-radius: 8px;
+    color: gray;
+    font-size: 10px;
+    background: #1e253d;
+  }
+}
+
+.gray {
+  color: gray;
+}
+
+.gap-3 {
+  gap: 3px;
+}
+
+.min-h-full {
+  min-height: 100%;
+}
+
+.purchase-button {
+  background: linear-gradient(to right, rgb(34 107 237), rgb(0 31 255));
+  border-radius: 15px;
+  width: 50px;
+  height: 50px;
+}

@@ -7,7 +7,7 @@ import ApiService from "services/apiService";
 import { ToastContainer, toast } from "react-toastify";
 import { Dropdown, Modal } from "react-bootstrap";
 
-const Withdraw = ({ balances, onClose }) => {
+const Withdraw = ({ type, balances, onClose }) => {
   const { t } = useTranslation();
   const [amount, setAmount] = useState("");
   const [address, setAddress] = useState("");
@@ -188,13 +188,30 @@ const Withdraw = ({ balances, onClose }) => {
   return (
     <>
       <div class="modal-header justify-content-center mt-3">
-        <img
-          className="align-self-center"
-          src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
-          height={30}
-        />
+        {type === "okx" && (
+          <img
+            className="align-self-center"
+            src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
+            height={30}
+          />
+        )}
+        {type === "huobi" && (
+          <img
+            className="align-self-center"
+            src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png"
+            height={30}
+          />
+        )}
+        {type === "xt" && (
+          <img
+            className="align-self-center"
+            src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/525.png"
+            height={30}
+          />
+        )}
         <span style={{ marginLeft: 10, alignSelf: "center", fontSize: 25 }}>
-          OKX Wallet Withdrawal
+          {type === "okx" ? "OKX" : type === "huobi" ? "Huobi" : "XT.com"}{" "}
+          Wallet Withdrawal
         </span>
       </div>
       <div class="modal-body">

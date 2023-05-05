@@ -1,0 +1,36 @@
+.filter-date {
+  color: blue;
+  white-space: nowrap;
+}
+
+.filter-date-selected {
+  padding: 5px;
+  background: blue;
+  color: white;
+  white-space: nowrap;
+  border-radius: 5px;
+}
+
+.filter-date-button-layout {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.date-picker-width {
+  width: auto;
+}
+
+.date-picker-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.flex {
+  display: flex;
+}
+
+.grid {
+  display: grid;
+}

@@ -95,7 +95,10 @@ const WalletMain = () => {
   };
 
   return (
-    <div style={{ display: "grid", gap: 30 }} className="col-lg-10">
+    <div
+      style={{ display: "grid", gap: 30, padding: "unset" }}
+      className="col-lg-10"
+    >
       <div className="wt-box p-3" style={{ gap: 10, display: "grid" }}>
         <div
           style={{

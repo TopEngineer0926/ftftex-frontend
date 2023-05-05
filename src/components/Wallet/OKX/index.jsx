@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "./index.scss";
 import ReactApexChart from "react-apexcharts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getLoggedIn } from "utils";
 import ApiService from "services/apiService";
 import { Modal } from "react-bootstrap";
@@ -9,6 +9,7 @@ import Deposit from "components/Wallet/Deposit";
 import Transfer from "components/Wallet/Transfer";
 import Withdraw from "components/Wallet/Withdraw";
 import { useTranslation } from "react-i18next";
+import { FTFTexContext } from "App";
 
 const OKX = () => {
   const { t } = useTranslation();
@@ -19,10 +20,16 @@ const OKX = () => {
   const [trading, setTrading] = useState([]);
   const [LogginIn, setLogginIn] = useState({ 0: "" });
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+  const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
+
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
 
   const seriesData = [
     {
-      name: "Sales",
+      name: "Amount",
       data: [30, 40, 45, 50, 49, 60, 70, 91, 125],
     },
   ];
@@ -111,10 +118,28 @@ const OKX = () => {
     setShowWithdrawalModal(true);
   };
 
+  const goToDetails = (event) => {
+    navigate("/wallet/details/funding-account/okx");
+  };
+
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className="row">
+    <div
+      className="row"
+      style={{
+        gap: 20,
+        flexDirection: isMobile ? "column" : "row",
+      }}
+    >
       <div style={{ display: "grid", gap: 30 }} className="col-lg-7">
-        <div className="wt-box p-3" style={{ gap: 10, display: "grid" }}>
+        <div
+          className="wt-box p-3"
+          style={{ gap: 10, display: "grid", cursor: "pointer" }}
+          onClick={goToDetails}
+        >
           <div
             style={{
               display: "flex",
@@ -122,7 +147,7 @@ const OKX = () => {
               gap: 15,
             }}
           >
-            <NavLink to={"/wallet/main"}>
+            <NavLink to={"/wallet/main"} onClick={stopPropagation}>
               <span class="material-symbols-outlined">arrow_left</span>
             </NavLink>
             <img
@@ -144,9 +169,14 @@ const OKX = () => {
             >
               <span
                 class="material-symbols-outlined"
-                style={{ position: "absolute", right: 30 }}
+                style={{
+                  position: isMobile ? "relative" : "absolute",
+                  right: isMobile ? 0 : 30,
+                }}
               >
-                <NavLink to={"/wallet/huobi"}>arrow_right</NavLink>
+                <NavLink to={"/wallet/huobi"} onClick={stopPropagation}>
+                  arrow_right
+                </NavLink>
               </span>
             </div>
           </div>
@@ -215,7 +245,7 @@ const OKX = () => {
           centered
           scrollable
         >
-          <Deposit />
+          <Deposit type="okx" />
         </Modal>
         <Modal
           show={showTransferModal}
@@ -224,6 +254,7 @@ const OKX = () => {
           scrollable
         >
           <Transfer
+            type="okx"
             balances={deposits}
             tradings={trading}
             onClose={() => setShowTransferModal(false)}
@@ -236,14 +267,17 @@ const OKX = () => {
           scrollable
         >
           <Withdraw
+            type="okx"
             balances={deposits}
             onClose={() => setShowWithdrawalModal(false)}
           />
         </Modal>
       </div>
       <div
-        className="wt-box col-lg-4 ml-4 p-4"
-        style={{ position: "sticky", top: 0 }}
+        className={
+          isMobile ? "wt-box col-lg-4 p-4" : "wt-box col-lg-4 ml-4 p-4"
+        }
+        style={{ position: "sticky", top: 0, margin: isMobile && "1rem" }}
       >
         <div className="d-flex align-items-center mb-2">
           <div className="d-flex flex-column">

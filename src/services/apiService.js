@@ -253,14 +253,6 @@ class ApiService {
     );
   }
 
-  GetNews(query) {
-    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/newsApi/news`, {
-      language: "en",
-      country: "us",
-      q: query,
-    });
-  }
-
   GainersAndLosers(sc, limit) {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/cmcApi/getGainersAndLosers`,
@@ -348,13 +340,6 @@ class ApiService {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/verifyKyc`,
       params
-    );
-  }
-
-  getUser(userId) {
-    return axios.post(
-      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/getUserDetails`,
-      { userId }
     );
   }
 }

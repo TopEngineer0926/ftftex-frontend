@@ -1,7 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "./index.scss";
 import ReactApexChart from "react-apexcharts";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getLoggedIn } from "utils";
 import ApiService from "services/apiService";
 import { Modal } from "react-bootstrap";
@@ -9,6 +9,7 @@ import Deposit from "components/Wallet/Deposit";
 import Transfer from "components/Wallet/Transfer";
 import Withdraw from "components/Wallet/Withdraw";
 import { useTranslation } from "react-i18next";
+import { FTFTexContext } from "App";
 
 const XT = () => {
   const { t } = useTranslation();
@@ -18,11 +19,18 @@ const XT = () => {
   const [deposits, setDeposits] = useState([]);
   const [trading, setTrading] = useState([]);
   const [LogginIn, setLogginIn] = useState({ 0: "" });
+  const [isMobile, setIsMobile] = useState(false);
+  const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
+
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
+
   const navigate = useNavigate();
 
   const seriesData = [
     {
-      name: "Sales",
+      name: "Amount",
       data: [30, 40, 45, 50, 49, 60, 70, 91, 125],
     },
   ];
@@ -111,10 +119,28 @@ const XT = () => {
     setShowWithdrawalModal(true);
   };
 
+  const goToDetails = (event) => {
+    navigate("/wallet/details/funding-account/xt");
+  };
+
+  const stopPropagation = (event) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className="row">
+    <div
+      className="row"
+      style={{
+        gap: 20,
+        flexDirection: isMobile ? "column" : "row",
+      }}
+    >
       <div style={{ display: "grid", gap: 30 }} className="col-lg-7">
-        <div className="wt-box p-3" style={{ gap: 10, display: "grid" }}>
+        <div
+          className="wt-box p-3"
+          style={{ gap: 10, display: "grid", cursor: "pointer" }}
+          onClick={goToDetails}
+        >
           <div
             style={{
               display: "flex",
@@ -122,7 +148,7 @@ const XT = () => {
               gap: 15,
             }}
           >
-            <NavLink to={"/wallet/huobi"}>
+            <NavLink to={"/wallet/huobi"} onClick={stopPropagation}>
               <span class="material-symbols-outlined">arrow_left</span>
             </NavLink>
             <img
@@ -198,7 +224,7 @@ const XT = () => {
           centered
           scrollable
         >
-          <Deposit />
+          <Deposit type="xt" />
         </Modal>
         <Modal
           show={showTransferModal}
@@ -207,6 +233,7 @@ const XT = () => {
           scrollable
         >
           <Transfer
+            type="xt"
             balances={deposits}
             tradings={trading}
             onClose={() => setShowTransferModal(false)}
@@ -219,14 +246,17 @@ const XT = () => {
           scrollable
         >
           <Withdraw
+            type="xt"
             balances={deposits}
             onClose={() => setShowWithdrawalModal(false)}
           />
         </Modal>
       </div>
       <div
-        className="wt-box col-lg-4 ml-4 p-4"
-        style={{ position: "sticky", top: 0 }}
+        className={
+          isMobile ? "wt-box col-lg-4 p-4" : "wt-box col-lg-4 ml-4 p-4"
+        }
+        style={{ position: "sticky", top: 0, margin: isMobile && "1rem" }}
       >
         <div className="d-flex align-items-center mb-2">
           <div className="d-flex flex-column">

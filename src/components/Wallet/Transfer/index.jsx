@@ -9,7 +9,7 @@ import TransferFrom from "assets/images/transfer-from.png";
 import TransferTo from "assets/images/transfer-to.png";
 import { ToastContainer, toast } from "react-toastify";
 
-const Transfer = ({ balances, tradings, onClose }) => {
+const Transfer = ({ type, balances, tradings, onClose }) => {
   const { t } = useTranslation();
   const [transferSuccess, setTransferSuccess] = useState(false);
   const [amount, setAmount] = useState("");
@@ -119,13 +119,30 @@ const Transfer = ({ balances, tradings, onClose }) => {
       {!transferSuccess ? (
         <>
           <div class="modal-header justify-content-center mt-3">
-            <img
-              className="align-self-center"
-              src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
-              height={30}
-            />
+            {type === "okx" && (
+              <img
+                className="align-self-center"
+                src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
+                height={30}
+              />
+            )}
+            {type === "huobi" && (
+              <img
+                className="align-self-center"
+                src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png"
+                height={30}
+              />
+            )}
+            {type === "xt" && (
+              <img
+                className="align-self-center"
+                src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/525.png"
+                height={30}
+              />
+            )}
             <span style={{ marginLeft: 10, alignSelf: "center", fontSize: 25 }}>
-              OKX Wallet Transfer
+              {type === "okx" ? "OKX" : type === "huobi" ? "Huobi" : "XT.com"}{" "}
+              Wallet Transfer
             </span>
           </div>
           <div class="modal-body">

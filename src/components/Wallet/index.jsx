@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import "./index.scss";
 import { getLoggedIn } from "utils";
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
@@ -10,6 +10,7 @@ import SecurityImg from "assets/images/security.png";
 import TrendingUpImg from "assets/images/trending-up.png";
 import EaseOfUseImg from "assets/images/ease-of-use.png";
 import SubscribeArtImg from "assets/images/subscribe-art.png";
+import { FTFTexContext } from "App";
 
 const Wallet = () => {
   const { t } = useTranslation();
@@ -19,7 +20,14 @@ const Wallet = () => {
   const [walletInfo, setWalletInfo] = useState();
   const [balance, setBalance] = useState();
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
+
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(false);
+  const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
+
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
 
   useEffect(() => {
     const res = getLoggedIn();
@@ -206,15 +214,24 @@ const Wallet = () => {
         <div className="container mt-4 mb-4" style={{ margin: "auto" }}>
           <div className="row">
             <div
-              className="col-lg-3 wt-box mr-4 p-4"
-              style={{ position: "sticky", top: 0 }}
+              className={
+                isMobile ? "col-lg-3 wt-box p-4" : "col-lg-3 wt-box mr-4 p-4"
+              }
+              style={{
+                position: "sticky",
+                top: 0,
+                margin: isMobile && "1rem",
+              }}
             >
               <div className="d-flex align-items-center mb-2">
                 <div className="d-flex flex-column">
                   <h4 className="s-bld">{t("My Wallet")}</h4>
                 </div>
               </div>
-              <div className="d-flex d-lg-block" style={{ minHeight: 600 }}>
+              <div
+                className={isMobile ? "d-lg-block" : "d-flex d-lg-block"}
+                style={{ minHeight: isMobile ? 150 : 600 }}
+              >
                 <div className="btn w-100 radius-10">
                   <div style={{ width: 30, height: 30 }}></div>
                   <div
@@ -254,6 +271,7 @@ const Wallet = () => {
                     <span style={{ color: "green" }}>●</span>
                   </div>
                 </NavLink>
+                <hr style={{ margin: "unset" }} />
                 <NavLink
                   className={({ isActive }) =>
                     isActive
@@ -279,6 +297,7 @@ const Wallet = () => {
                     <span style={{ color: "green" }}>●</span>
                   </div>
                 </NavLink>
+                <hr style={{ margin: "unset" }} />
                 <NavLink
                   className={({ isActive }) =>
                     isActive

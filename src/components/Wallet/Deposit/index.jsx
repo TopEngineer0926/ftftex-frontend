@@ -7,7 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.scss";
 
-const Deposit = () => {
+const Deposit = ({ type }) => {
   const [currencies, setCurrencies] = useState([]);
   const [chains, setChains] = useState([]);
   const [selectedCurrency, setSelectedCurrency] = useState("");
@@ -84,13 +84,30 @@ const Deposit = () => {
   return (
     <>
       <div class="modal-header justify-content-center mt-3">
-        <img
-          className="align-self-center"
-          src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
-          height={30}
-        />
+        {type === "okx" && (
+          <img
+            className="align-self-center"
+            src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
+            height={30}
+          />
+        )}
+        {type === "huobi" && (
+          <img
+            className="align-self-center"
+            src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png"
+            height={30}
+          />
+        )}
+        {type === "xt" && (
+          <img
+            className="align-self-center"
+            src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/525.png"
+            height={30}
+          />
+        )}
         <span style={{ marginLeft: 10, alignSelf: "center", fontSize: 25 }}>
-          OKX Wallet Deposit
+          {type === "okx" ? "OKX" : type === "huobi" ? "Huobi" : "XT.com"}{" "}
+          Wallet Deposit
         </span>
       </div>
       <div class="modal-body" style={{ minHeight: 350 }}>
