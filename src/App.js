@@ -101,6 +101,13 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    setFtftexValue({
+      ...ftftexValue,
+      isMobile: matches,
+    });
+  }, [matches]);
+
   return (
     <FTFTexContext.Provider value={[ftftexValue, setFtftexValue]}>
       <ColorModeContext.Provider value={colorMode}>
