@@ -116,16 +116,14 @@ const WalletDetails = () => {
               Transaction History
             </NavLink>
           </div>
-          <div style={{ position: "relative" }}>
-            <span
-              className="mt-5 pointer buy-wrapper"
-              style={{ position: "absolute", bottom: 20 }}
-            >
-              <NavLink to={`/wallet/${type}`}>
-                <div className="card-name">Back</div>
-              </NavLink>
-            </span>
-          </div>
+          <span
+            className="mt-5 pointer buy-wrapper"
+            style={{ position: "absolute", bottom: 20 }}
+          >
+            <NavLink to={`/wallet/${type}`}>
+              <div className="card-name">Back</div>
+            </NavLink>
+          </span>
         </div>
         <div className="col-lg-8" style={{ overflow: "visible" }}>
           <Outlet />
