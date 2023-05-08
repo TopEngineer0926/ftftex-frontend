@@ -25,10 +25,10 @@ const OKX = () => {
     field: "rank",
     reversed: false,
   });
-  const [walletData, setWalletData] = useState([
-    { id: 294, name: "OKX", total: "2,000", pro: "62.50" },
-    { id: 102, name: "Huobi", total: "1,200", pro: "37.50" },
-    { id: 525, name: "XT.com", total: "-", pro: "0.00" },
+  const [walletAssetData, setWalletAssetData] = useState([
+    { id: 1, name: "Bitcoin", quantity: "0.12", total: "2,100", pro: "65.36" },
+    { id: 21794, name: "Aptos", quantity: "4.432", total: "821", pro: "25.55" },
+    { id: 7278, name: "Aave", quantity: "748", total: "292", pro: "9.08" },
   ]);
   const [loader, setLoader] = useState(false);
   const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
@@ -148,7 +148,7 @@ const OKX = () => {
   };
 
   useEffect(() => {
-    const sortedWallets = walletData.sort((a, b) => {
+    const sortedWalletAssetData = walletAssetData.sort((a, b) => {
       let fieldA = a["rank"];
       let fieldB = b["rank"];
 
@@ -188,7 +188,7 @@ const OKX = () => {
       return 0;
     });
 
-    setWalletData(sortedWallets);
+    setWalletAssetData(sortedWalletAssetData);
   }, [order]);
 
   const doSort = (value) => {
@@ -342,7 +342,7 @@ const OKX = () => {
                 </th>
                 <th scope="col" className="cu-p" onClick={() => doSort("name")}>
                   <div className="d-flex">
-                    Wallet
+                    Cryptocurrency
                     {order.field === "name" && order.reversed === true && (
                       <span className="material-symbols-outlined align-self-center">
                         arrow_drop_up
@@ -353,6 +353,28 @@ const OKX = () => {
                         arrow_drop_down
                       </span>
                     )}
+                  </div>
+                </th>
+
+                <th
+                  scope="col"
+                  className="cu-p"
+                  onClick={() => doSort("quote.USD.volume_24h")}
+                >
+                  <div className="d-flex">
+                    Quantity
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === true && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_up
+                        </span>
+                      )}
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === false && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_down
+                        </span>
+                      )}
                   </div>
                 </th>
 
@@ -384,7 +406,7 @@ const OKX = () => {
                   onClick={() => doSort("quote.USD.volume_24h")}
                 >
                   <div className="d-flex">
-                    Agg.Wallet %
+                    Wallet %
                     {order.field === "quote.USD.volume_24h" &&
                       order.reversed === true && (
                         <span className="material-symbols-outlined align-self-center">
@@ -403,24 +425,25 @@ const OKX = () => {
             </thead>
             {loader === false && (
               <tbody>
-                {walletData.map((dta, index) => (
+                {walletAssetData.map((dta, index) => (
                   <tr key={index}>
-                    <td className="s-bld">{index + 1}</td>
+                    <td className="normal-td">{index + 1}</td>
                     <td className="font-weight-bold">
-                      <NavLink className="d-flex cu-p">
+                      <div className="d-flex cu-p">
                         <img
                           className="align-self-center"
                           loading="lazy"
-                          src={`https://s2.coinmarketcap.com/static/img/exchanges/64x64/${dta.id}.png`}
+                          src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${dta.id}.png`}
                           height={30}
                         />
                         <div className="align-self-center ml-2">
-                          <p className="mb-0 s-bld"> {dta.name}</p>
+                          <p className="mb-0 normal-td"> {dta.name}</p>
                         </div>
-                      </NavLink>
+                      </div>
                     </td>
-                    <td className="s-bld">{dta.total} USDT</td>
-                    <td className="s-bld">{dta.pro} %</td>
+                    <td className="normal-td">{dta.quantity}</td>
+                    <td className="normal-td">{dta.total} USDT</td>
+                    <td className="normal-td">{dta.pro} %</td>
                   </tr>
                 ))}
               </tbody>
@@ -524,7 +547,7 @@ const OKX = () => {
       >
         <div className="d-flex align-items-center mb-2">
           <div className="d-flex flex-column">
-            <h4 className="s-bld">OKX Trade</h4>
+            <h4 className="normal-td">OKX Trade</h4>
           </div>
         </div>
         <div
@@ -546,7 +569,7 @@ const OKX = () => {
                 </th>
                 <th scope="col" className="cu-p" onClick={() => doSort("name")}>
                   <div className="d-flex">
-                    Wallet
+                    Cryptocurrency
                     {order.field === "name" && order.reversed === true && (
                       <span className="material-symbols-outlined align-self-center">
                         arrow_drop_up
@@ -557,6 +580,28 @@ const OKX = () => {
                         arrow_drop_down
                       </span>
                     )}
+                  </div>
+                </th>
+
+                <th
+                  scope="col"
+                  className="cu-p"
+                  onClick={() => doSort("quote.USD.volume_24h")}
+                >
+                  <div className="d-flex">
+                    Quantity
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === true && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_up
+                        </span>
+                      )}
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === false && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_down
+                        </span>
+                      )}
                   </div>
                 </th>
 
@@ -588,7 +633,7 @@ const OKX = () => {
                   onClick={() => doSort("quote.USD.volume_24h")}
                 >
                   <div className="d-flex">
-                    Agg.Wallet %
+                    Wallet %
                     {order.field === "quote.USD.volume_24h" &&
                       order.reversed === true && (
                         <span className="material-symbols-outlined align-self-center">
@@ -607,24 +652,25 @@ const OKX = () => {
             </thead>
             {loader === false && (
               <tbody>
-                {walletData.map((dta, index) => (
+                {walletAssetData.map((dta, index) => (
                   <tr key={index}>
-                    <td className="s-bld">{index + 1}</td>
+                    <td className="normal-td">{index + 1}</td>
                     <td className="font-weight-bold">
-                      <NavLink className="d-flex cu-p">
+                      <div className="d-flex cu-p">
                         <img
                           className="align-self-center"
                           loading="lazy"
-                          src={`https://s2.coinmarketcap.com/static/img/exchanges/64x64/${dta.id}.png`}
+                          src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${dta.id}.png`}
                           height={30}
                         />
                         <div className="align-self-center ml-2">
-                          <p className="mb-0 s-bld"> {dta.name}</p>
+                          <p className="mb-0 normal-td"> {dta.name}</p>
                         </div>
-                      </NavLink>
+                      </div>
                     </td>
-                    <td className="s-bld">{dta.total} USDT</td>
-                    <td className="s-bld">{dta.pro} %</td>
+                    <td className="normal-td">{dta.quantity}</td>
+                    <td className="normal-td">{dta.total} USDT</td>
+                    <td className="normal-td">{dta.pro} %</td>
                   </tr>
                 ))}
               </tbody>

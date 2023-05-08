@@ -345,7 +345,7 @@ const WalletMain = () => {
             <tbody>
               {walletData.map((dta, index) => (
                 <tr key={index}>
-                  <td className="s-bld">{index + 1}</td>
+                  <td className="normal-td">{index + 1}</td>
                   <td className="font-weight-bold">
                     <NavLink className="d-flex cu-p">
                       <img
@@ -355,12 +355,12 @@ const WalletMain = () => {
                         height={30}
                       />
                       <div className="align-self-center ml-2">
-                        <p className="mb-0 s-bld"> {dta.name}</p>
+                        <p className="mb-0 normal-td"> {dta.name}</p>
                       </div>
                     </NavLink>
                   </td>
-                  <td className="s-bld">{dta.total} USDT</td>
-                  <td className="s-bld">{dta.pro} %</td>
+                  <td className="normal-td">{dta.total} USDT</td>
+                  <td className="normal-td">{dta.pro} %</td>
                 </tr>
               ))}
             </tbody>
