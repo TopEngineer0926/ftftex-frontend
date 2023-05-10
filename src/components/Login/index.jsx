@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import ApiService from "services/apiService";
 import CheckImg from "assets/images/check.svg";
+import LoginVisual from "assets/images/login_visual.png";
 import "./index.scss";
 import { FTFTexContext } from "App";
 import DialingCodes from "./DialingCodes";
@@ -22,7 +23,12 @@ const Login = () => {
     useState(false);
   const [showDialingCodesModal, setShowDialingCodesModal] = useState(false);
   const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
 
   useEffect(() => {
     setDialingCode(ftftexValue.DialingCode);
@@ -113,33 +119,71 @@ const Login = () => {
   return (
     <>
       <div className="bg-wt">
-        <div className="container fh-minus-100">
-          <div className="row">
-            <div className="col-lg-4 offset-lg-4">
-              <div className="wt-box p-4 mt-lg-5">
+        <div
+          className="container fh-minus-100"
+          style={{
+            maxWidth: "100%",
+            margin: "unset",
+            minHeight: isMobile ? "calc(100vh - 100px)" : 1000,
+          }}
+        >
+          <div className="row" style={{ height: "100%" }}>
+            <div
+              className="col-lg-5 login-visual"
+              style={{ height: isMobile ? "calc(100vh - 100px)" : "100%" }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  zIndex: 100,
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                <h1>Trade Wise, Trade Easy</h1>
+                <p>
+                  Access real-time crypto market data & Trade BTC, ETH
+                  <br />
+                  and more across exchanges on a single interface.
+                </p>
+              </div>
+              <img
+                src={LoginVisual}
+                width="100%"
+                style={{ position: "absolute", bottom: 0 }}
+              />
+            </div>
+            <div
+              className="col-lg-7"
+              style={{
+                display: isMobile ? "block" : "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                className="p-4 mt-lg-5"
+                style={{ margin: isMobile ? "auto" : "100px" }}
+              >
                 <h1 className="s-bld mb-4">{t("Login")}</h1>
                 <hr />
                 <div className="d-flex w-100 mb-5">
-                  <button
-                    className={
-                      loginType === "email"
-                        ? "btn sub-menu-btn flex-fill sub-menu-btn-activate"
-                        : "btn sub-menu-btn flex-fill"
-                    }
+                  <span
+                    className={loginType === "email" ? "selected mr-5" : "mr-5"}
+                    style={{ cursor: "pointer" }}
                     onClick={() => switchLoginType("email")}
                   >
                     {t("Email")}
-                  </button>
-                  <button
+                  </span>
+                  <span
                     className={
-                      loginType === "mobile"
-                        ? "btn sub-menu-btn flex-fill sub-menu-btn-activate"
-                        : "btn sub-menu-btn flex-fill"
+                      loginType === "mobile" ? "selected mr-5" : "mr-5"
                     }
+                    style={{ cursor: "pointer" }}
                     onClick={() => switchLoginType("mobile")}
                   >
                     {t("Mobile")}
-                  </button>
+                  </span>
                 </div>
 
                 <div>
@@ -195,9 +239,15 @@ const Login = () => {
                     value={Form.password}
                     onChange={(e) => handleChangeForm(e, "password")}
                   />
+                  <p className="mt-2 text-right " style={{ color: "gray" }}>
+                    <NavLink to={"/forgot-password"}>
+                      Forgot your password ?{" "}
+                    </NavLink>
+                  </p>
                   <p className="mt-4 text-center error-msg">{LoginErrors} </p>
                   <button
-                    className="btn btn-primary btn-lg mt-5 mx-auto d-block font-weight-bold px-5"
+                    className="btn btn-primary btn-lg mt-5 d-block font-weight-bold px-5"
+                    style={{ width: "100%" }}
                     disabled={
                       !Form.password ||
                       (loginType === "email" ? !Form.email : !Form.phone)
@@ -207,18 +257,12 @@ const Login = () => {
                     {t("Login")}
                   </button>
                 </div>
-                <p className="mt-4 text-center ">
-                  <NavLink to={"/forgot-password"}>
-                    Forgot your password ?{" "}
-                  </NavLink>
-                </p>
-                <hr />
-                <h5 className="text-center">
+                <p className="text-right">
                   {t("Don't have an account ?")}{" "}
-                  <NavLink to={"/register"}>
+                  <NavLink to={"/register"} className="selected">
                     <b>{t("Register here")}</b>
                   </NavLink>
-                </h5>
+                </p>
               </div>
             </div>
           </div>

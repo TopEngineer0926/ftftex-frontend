@@ -6,6 +6,7 @@ import ApiService from "services/apiService";
 import { NavLink, useNavigate } from "react-router-dom";
 import DialingCodes from "components/Login/DialingCodes";
 import "./index.scss";
+import LoginVisual from "assets/images/login_visual.png";
 
 const ForgotPassword = () => {
   const { t } = useTranslation();
@@ -24,8 +25,13 @@ const ForgotPassword = () => {
   const [OTPVerificationMessage, setOTPVerificationMessage] = useState("");
   const [showDialingCodesModal, setShowDialingCodesModal] = useState(false);
   const [RegisterResponse, setRegisterResponse] = useState({});
+  const [isMobile, setIsMobile] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
 
   useEffect(() => {
     setDialingCode(ftftexValue.DialingCode);
@@ -111,23 +117,62 @@ const ForgotPassword = () => {
   return (
     <>
       <div className="bg-wt">
-        <div className="container fh-minus-100">
-          <div className="row">
-            <div className="col-lg-4 offset-lg-4">
-              <div className="wt-box p-4 mt-lg-5">
+        <div
+          className="container fh-minus-100"
+          style={{
+            maxWidth: "100%",
+            margin: "unset",
+            minHeight: isMobile ? "calc(100vh - 100px)" : 1000,
+          }}
+        >
+          <div className="row" style={{ height: "100%" }}>
+            <div
+              className="col-lg-5 login-visual"
+              style={{ height: isMobile ? "calc(100vh - 100px)" : "100%" }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  zIndex: 100,
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                <h1>Trade Wise, Trade Easy</h1>
+                <p>
+                  Access real-time crypto market data & Trade BTC, ETH
+                  <br />
+                  and more across exchanges on a single interface.
+                </p>
+              </div>
+              <img
+                src={LoginVisual}
+                width="100%"
+                style={{ position: "absolute", bottom: 0 }}
+              />
+            </div>
+            <div
+              className="col-lg-7"
+              style={{
+                display: isMobile ? "block" : "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                className="p-4 mt-lg-5"
+                style={{ margin: isMobile ? "auto" : "100px" }}
+              >
                 <h1 className="s-bld mb-4">{t("Forgot Password")}</h1>
                 <hr />
                 <div className="d-flex w-100 mb-5">
-                  <button
-                    className={
-                      loginType === "email"
-                        ? "btn sub-menu-btn flex-fill sub-menu-btn-activate"
-                        : "btn sub-menu-btn flex-fill"
-                    }
+                  <span
+                    className={loginType === "email" ? "selected mr-5" : "mr-5"}
+                    style={{ cursor: "pointer" }}
                     onClick={() => switchLoginType("email")}
                   >
                     {t("Email")}
-                  </button>
+                  </span>
                   {/* <!--            <button className="btn sub-menu-btn flex-fill" [ngClass]="{'sub-menu-btn-activate' : loginType === 'mobile'}" onClick="switchLoginType('mobile')">{t("Mobile")}</button>--> */}
                 </div>
 

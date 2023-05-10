@@ -4,7 +4,9 @@ import CheckImg from "assets/images/check.svg";
 import { Modal } from "react-bootstrap";
 import "./index.scss";
 import ApiService from "services/apiService";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import LoginVisual from "assets/images/login_visual.png";
+import { FTFTexContext } from "App";
 
 const SetPassword = () => {
   const { t } = useTranslation();
@@ -14,9 +16,15 @@ const SetPassword = () => {
     password: "",
   });
   const [userId, setUserId] = useState("");
+  const [isMobile, setIsMobile] = useState(false);
+  const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    setIsMobile(ftftexValue.isMobile);
+  }, [ftftexValue.isMobile]);
 
   useEffect(() => {
     let tmpUserId = location?.state?.userId;
@@ -50,10 +58,52 @@ const SetPassword = () => {
   return (
     <>
       <div className="bg-wt">
-        <div className="container fh-minus-100">
-          <div className="row">
-            <div className="col-lg-4 offset-lg-4">
-              <div className="wt-box p-4 mt-lg-5">
+        <div
+          className="container fh-minus-100"
+          style={{
+            maxWidth: "100%",
+            margin: "unset",
+            minHeight: isMobile ? "calc(100vh - 100px)" : 1000,
+          }}
+        >
+          <div className="row" style={{ height: "100%" }}>
+            <div
+              className="col-lg-5 login-visual"
+              style={{ height: isMobile ? "calc(100vh - 100px)" : "100%" }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  zIndex: 100,
+                  width: "100%",
+                  textAlign: "center",
+                }}
+              >
+                <h1>Trade Wise, Trade Easy</h1>
+                <p>
+                  Access real-time crypto market data & Trade BTC, ETH
+                  <br />
+                  and more across exchanges on a single interface.
+                </p>
+              </div>
+              <img
+                src={LoginVisual}
+                width="100%"
+                style={{ position: "absolute", bottom: 0 }}
+              />
+            </div>
+            <div
+              className="col-lg-7"
+              style={{
+                display: isMobile ? "block" : "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <div
+                className="p-4 mt-lg-5"
+                style={{ margin: isMobile ? "auto" : "100px" }}
+              >
                 <h1 className="s-bld mb-4">{t("Set Password")}</h1>
                 <hr />
                 <div>
