@@ -1,11 +1,12 @@
 import { useEffect, useState, useContext } from "react";
 import "./index.scss";
-import { getLoggedIn } from "utils";
+import { getLoggedIn, getTheme } from "utils";
 import { NavLink, useNavigate, Outlet } from "react-router-dom";
 import ApiService from "services/apiService";
 import { useTranslation } from "react-i18next";
 import WalletImg from "assets/images/wallet.svg";
 import WalletAnimVid from "assets/videos/wallet_anim.mp4";
+import WalletAnimBlackVid from "assets/videos/wallet_anim_black.mp4";
 import SecurityImg from "assets/images/security.png";
 import TrendingUpImg from "assets/images/trending-up.png";
 import EaseOfUseImg from "assets/images/ease-of-use.png";
@@ -125,11 +126,24 @@ const Wallet = () => {
                 <div className="row pg-main-sec">
                   <div className="col-md-6">
                     <video width="100%" height="600" autoPlay muted loop>
-                      <source src={WalletAnimVid} type="video/mp4" />
+                      <source
+                        src={
+                          getTheme() === "dark"
+                            ? WalletAnimBlackVid
+                            : WalletAnimVid
+                        }
+                        type="video/mp4"
+                      />
                     </video>
                   </div>
                   <div className="col-md-5">
-                    <div className="card-d-b">
+                    <div
+                      className={
+                        getTheme() === "dark"
+                          ? "card-d-b card-d-b-black"
+                          : "card-d-b"
+                      }
+                    >
                       <img
                         src={SecurityImg}
                         className="img-fit "
@@ -140,7 +154,13 @@ const Wallet = () => {
                         <p className="mb-0">{t("Security TXT")}</p>
                       </div>
                     </div>
-                    <div className="card-d-b">
+                    <div
+                      className={
+                        getTheme() === "dark"
+                          ? "card-d-b card-d-b-black"
+                          : "card-d-b"
+                      }
+                    >
                       <img
                         src={TrendingUpImg}
                         className="img-fit "
@@ -151,7 +171,13 @@ const Wallet = () => {
                         <p className="mb-0">{t("Asset Management TXT")}</p>
                       </div>
                     </div>
-                    <div className="card-d-b">
+                    <div
+                      className={
+                        getTheme() === "dark"
+                          ? "card-d-b card-d-b-black"
+                          : "card-d-b"
+                      }
+                    >
                       <img
                         src={EaseOfUseImg}
                         className="img-fit "
