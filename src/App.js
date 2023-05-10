@@ -11,9 +11,12 @@ import Header from "components/Fragments/Header";
 import Footer from "components/Fragments/Footer";
 import { changeTheme, getLanguage, getTheme } from "utils";
 import { BrowserRouter as Router } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
 
 export const FTFTexContext = createContext();
-export const ColorModeContext = createContext({ toggleColorMode: () => {} });
+export const ColorModeContext = createContext({
+  toggleColorMode: () => {},
+});
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -116,7 +119,16 @@ function App() {
             <Router>
               <Header />
               <div className="main">
-                <RoutesComponent />
+                <SnackbarProvider
+                  maxSnack={3}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  autoHideDuration={3000}
+                >
+                  <RoutesComponent />
+                </SnackbarProvider>
               </div>
               <Footer />
             </Router>

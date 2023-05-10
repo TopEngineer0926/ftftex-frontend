@@ -34,8 +34,8 @@ class ApiService {
       fmData.userId = dialcode + data.phone;
     }
     return axios.post(
-      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/login`,
-      fmData
+        `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/login`,
+        fmData
     );
   }
 
@@ -51,21 +51,14 @@ class ApiService {
       userName: `username${Date.now()}`,
     };
     return axios.post(
-      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/saveUserInitially`,
-      DATA
+        `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/saveUserInitially`,
+        DATA
     );
   }
 
   VerifyUser(data) {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/varifyUser`,
-      data
-    );
-  }
-
-  VerifyEmail(data) {
-    return axios.post(
-      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/varifyEmail`,
       data
     );
   }
@@ -253,6 +246,14 @@ class ApiService {
     );
   }
 
+  GetNews(query) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/newsApi/news`, {
+      language: "en",
+      country: "us",
+      q: query,
+    });
+  }
+
   GainersAndLosers(sc, limit) {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/cmcApi/getGainersAndLosers`,
@@ -341,6 +342,43 @@ class ApiService {
       `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/verifyKyc`,
       params
     );
+  }
+
+  getUser(userId) {
+    return axios.post(
+        `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/getUserDetails`,
+        { userId }
+    );
+  }
+
+  deleteSubAccount(params) {
+    return axios.post(
+        `${process.env.REACT_APP_BASE_URL}ftftx/subAccAPI/cancelSubAccount`,
+        params
+    );
+  }
+
+  getAllCurrency() {
+    return axios.post(
+        `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getCurrencies`,
+        {"ccy":""}
+    );
+  }
+
+  uploadFile(data) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/filesApi/file/upload`, data);
+  }
+
+  changeAvatar(params) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/changeAvatar`, params);
+  }
+
+  editUserPhone(params) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/updatePhone`, params);
+  }
+
+  editUserEmail(params) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/updateEmail`, params);
   }
 }
 

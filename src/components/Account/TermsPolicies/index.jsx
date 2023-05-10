@@ -1,36 +1,50 @@
+import { useTranslation } from "react-i18next";
+import { Divider } from "@mui/material";
+
 const TermsPolicies = () => {
+  const { t } = useTranslation();
   return (
     <div className="container p-4">
-      <div className="pb-2 light-border-bottom mt-2">
-        <h4>Terms & Policies</h4>
+      <div className="pb-2 light-border-bottom mt-2 pointer">
+        <h4>{t("Terms & Policies")}</h4>
+        <Divider />
       </div>
-      <div className="d-flex justify-content-between align-items-center py-2 mt-2">
-        <p>Anti Money Laundering (AML)</p>
+      <a
+        href="/about/aml-policy"
+        className="d-flex justify-content-between align-items-center py-2 mt-2 pointer"
+      >
+        <p>{t("account.terms.Anti Money Laundering (AML)")}</p>
         <span
           className="material-symbols-outlined acc-box-i align-self-center ml-auto"
-          style={{ fontSize: 16, opacity: 0.6 }}
+          style={{ fontSize: 16, opacity: 0.4 }}
         >
           arrow_forward_ios
         </span>
-      </div>
-      <div className="d-flex justify-content-between align-items-center py-2">
-        <p>Privacy Policy</p>
+      </a>
+      <a
+        href="/about/privacy-policy"
+        className="d-flex justify-content-between align-items-center py-2 pointer"
+      >
+        <p>{t("account.terms.Privacy Policy")}</p>
         <span
           className="material-symbols-outlined acc-box-i align-self-center ml-auto"
-          style={{ fontSize: 16, opacity: 0.6 }}
+          style={{ fontSize: 16, opacity: 0.4 }}
         >
           arrow_forward_ios
         </span>
-      </div>
-      <div className="d-flex justify-content-between align-items-center py-2">
-        <p>Terms of Service</p>
+      </a>
+      <a
+        href="/about/service-terms"
+        className="d-flex justify-content-between align-items-center py-2 pointer"
+      >
+        <p>{t("account.terms.Terms of Service")}</p>
         <span
           className="material-symbols-outlined acc-box-i align-self-center ml-auto"
-          style={{ fontSize: 16, opacity: 0.6 }}
+          style={{ fontSize: 16, opacity: 0.4 }}
         >
           arrow_forward_ios
         </span>
-      </div>
+      </a>
     </div>
   );
 };

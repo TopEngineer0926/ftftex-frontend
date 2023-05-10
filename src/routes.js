@@ -24,9 +24,6 @@ import Login from "components/Login";
 import Register from "components/Login/Register";
 import ForgotPassword from "components/ForgotPassword";
 import SetPassword from "components/SetPassword";
-import Account from "components/Account";
-import Settings from "components/Account/MobileACPage/Settings";
-import MobileACPage from "components/Account/MobileACPage";
 import KYC from "components/Account/KYC";
 import WalletAsset from "components/Account/WalletAsset";
 import Deposite from "components/Account/Deposite";
@@ -46,7 +43,7 @@ import WalletDetails from "components/WalletDetails";
 import FundingAccount from "components/WalletDetails/FundingAccount";
 import TradingAccount from "components/WalletDetails/TradingAccount";
 import TradeHistory from "components/WalletDetails/TradeHistory";
-import TransactionHistory from "components/WalletDetails/TransactionHistory";
+import TransactionHistory from "./components/TransactionHistory";
 
 const RoutesComponent = () => {
   return (
@@ -95,14 +92,9 @@ const RoutesComponent = () => {
       <Route path="register" Component={Register} />
       <Route path="forgot-password" Component={ForgotPassword} />
       <Route path="set-password" Component={SetPassword} />
-      <Route path="account" Component={Account} />
-      <Route path="account/settings" Component={Settings} />
-      <Route path="/account-settings" Component={AccountSettings}>
-        <Route
-          path=""
-          element={<Navigate to="/account-settings/settings" replace />}
-        />
+      <Route path="/account" Component={AccountSettings}>
         <Route path="settings" Component={SettingsAccount} />
+        <Route path="transaction-history" Component={TransactionHistory} />
         <Route path="community-settings" Component={CommunitySettings} />
         <Route path="security" Component={Security} />
         <Route path="privacy" Component={Privacy} />
@@ -110,7 +102,6 @@ const RoutesComponent = () => {
         <Route path="support" Component={Support} />
         <Route path="terms-policies" Component={TermsPolicies} />
       </Route>
-      <Route path="account-m" Component={MobileACPage} />
       <Route path="account/verification" Component={KYC} />
       <Route path="spot-wallet" Component={WalletAsset} />
       <Route path="spot-wallet/deposit" Component={Deposite} />

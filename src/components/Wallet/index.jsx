@@ -88,7 +88,7 @@ const Wallet = () => {
 
   return (
     <>
-      {LogginIn[6] === "verified" && (
+      {LogginIn[6] !== "verified" && (
         <div className="bg-wt ">
           <div className="min-h-full">
             <section>
@@ -102,7 +102,7 @@ const Wallet = () => {
                     <p className="mt-2">{t("FTFTex WALLET TXT2")}</p>
                     <div>
                       <button className="btn btn-primary h-fit mb-auto w-fit  s-bld btn-lg px-2">
-                        <NavLink to={"/account-m"}>
+                        <NavLink to={"/account/verification"}>
                           {t("Verify Your Account")}
                         </NavLink>
                       </button>
@@ -210,7 +210,7 @@ const Wallet = () => {
           </div>
         </div>
       )}
-      {LogginIn[6] !== "verified" && (
+      {LogginIn[6] === "verified" && (
         <div className="container mt-4 mb-4" style={{ margin: "auto" }}>
           <div className="row">
             <div

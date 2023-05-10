@@ -1,0 +1,43 @@
+.drop-menu {
+  width: 260px;
+  padding: 0;
+}
+
+.menu-item:hover {
+  background-color: #8090ec !important;
+  color: whitesmoke !important;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.assets-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 5px 15px;
+  background-color: #1577FF;
+  color: whitesmoke;
+}
+
+.assets-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.overview {
+  margin-top: 8px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
+}
+
+.small-text {
+  font-size: 12px;
+}

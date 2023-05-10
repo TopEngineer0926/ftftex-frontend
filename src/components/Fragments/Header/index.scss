@@ -1,49 +1,69 @@
-.top-bar{
+.info-wrapper {
+  width: 100%;
+  margin-left: 25px;
+}
+
+.top-bar {
   background: #0563e5;
   padding-top: 7px;
   padding-bottom: 7px;
   color: rgba(255, 255, 255, 0.71);
   font-size: 13px;
   font-weight: 600;
+
   p {
-      font-size: 13px;
+    font-size: 13px;
     }
 }
-.nav-link{
+.nav-link {
   font-weight: 700;
   cursor: pointer;
   padding-left: 18px !important;
   padding-right: 18px !important;
 }
+.user-menu,
+.user-menu:hover,
+.user-menu:focus {
+  color: whitesmoke;
+}
+
+.user-header-settings {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
 @media only screen and (max-width: 990px) {
-  .nav-link{
+  .nav-link {
     padding-right: 0 !important;
   }
-  .navbar{
+    .navbar {
     position: fixed;
     top: 0;
     z-index: 4;
     width: 100%;
-    .navbar-brand img{
+.navbar-brand img {
       height: 28px !important;
     }
   }
-  .h-ticker{
+    .h-ticker {
     width: 1000px;
     min-width: 100%;
     display: block;
     font-size: 13px;
-  p{
+p {
     white-space: nowrap;
     margin-right: 40px;
   }
   }
-  .top-bar{
-    -ms-overflow-style: none;  /* IE and Edge */
+    .top-bar {
+      -ms-overflow-style: none;
+      /* IE and Edge */
     scrollbar-width: none; /* Firefox */
     ::-webkit-scrollbar {
       display: none !important;
     }
+
     position: fixed;
     top: 0;
     z-index: 4;
@@ -51,7 +71,7 @@
     width: 100%;
   }
 }
-.m-menu{
+.m-menu {
   position: fixed;
   bottom: 0;
   left: 0;
@@ -61,30 +81,76 @@
   color: #6d6d6d;
   box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.13);
   z-index: 99;
-  span{
+span {
     font-size: 26px;
     display: block;
   }
-  a{
+a {
     font-size: 12px;
     text-align: center;
     opacity: 1;
     font-weight: 600;
   }
 }
-.selected{
+.selected {
   color: #1000ff !important;
   opacity: 1 !important;
 }
 
-.custom-w{
+.custom-w {
   width: calc(100% - 110px);
 }
-.dropdown-content{
+.dropdown-content {
   padding: 0;
   color: black;
   overflow: hidden;
-  a{
+a {
     padding: 15px;
   }
+}
+
+.currency-dropdown,
+.notification-dropdown {
+  height: 300px;
+  overflow-y: scroll;
+}
+
+.dropdown-dark {
+  background-color: #181C30;
+  color: whitesmoke;
+}
+
+.currency-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.notification-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.notification-time {
+  margin-right: 20px;
+}
+
+.notification-title {
+  font-weight: 700;
+  font-size: 20px;
+  overflow: hidden;
+}
+
+.share-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.share-btn {
+  width: 200px
 }
