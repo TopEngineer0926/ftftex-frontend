@@ -22,7 +22,7 @@ const Home = () => {
 
   useEffect(() => {
     setIsMobile(ftftexValue.isMobile);
-  }, []);
+  }, [ftftexValue.isMobile]);
 
   return (
     <>
