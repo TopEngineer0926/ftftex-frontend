@@ -7,7 +7,7 @@ import ApiService from "services/apiService";
 import DialingCodes from "../DialingCodes";
 import { FTFTexContext } from "App";
 import { NavLink, useNavigate } from "react-router-dom";
-import LoginVisual from "assets/images/login_visual.png";
+import RegisterVisual from "assets/images/register_visual.png";
 
 const Register = () => {
   const { t } = useTranslation();
@@ -195,31 +195,33 @@ const Register = () => {
           }}
         >
           <div className="row" style={{ height: "100%" }}>
-            <div
-              className="col-lg-5 login-visual bg-dark"
-              style={{ height: isMobile ? "calc(100vh - 100px)" : "100%" }}
-            >
+            {!isMobile && (
               <div
-                style={{
-                  position: "absolute",
-                  zIndex: 100,
-                  width: "100%",
-                  textAlign: "center",
-                }}
+                className="col-lg-5 login-visual bg-dark"
+                style={{ height: isMobile ? "calc(100vh - 100px)" : "100%" }}
               >
-                <h1>Trade Wise, Trade Easy</h1>
-                <p>
-                  Access real-time crypto market data & Trade BTC, ETH
-                  <br />
-                  and more across exchanges on a single interface.
-                </p>
+                <div
+                  style={{
+                    position: "absolute",
+                    zIndex: 100,
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  <h1>Sign up & verify ONCE</h1>
+                  <p>
+                    to gain access to multiple
+                    <br />
+                    global exchanges
+                  </p>
+                </div>
+                <img
+                  src={RegisterVisual}
+                  width="100%"
+                  style={{ position: "absolute", bottom: 0 }}
+                />
               </div>
-              <img
-                src={LoginVisual}
-                width="100%"
-                style={{ position: "absolute", bottom: 0 }}
-              />
-            </div>
+            )}
             <div
               className="col-lg-7"
               style={{
@@ -232,7 +234,7 @@ const Register = () => {
                 className="p-4 mt-lg-5"
                 style={{ margin: isMobile ? "auto" : "100px" }}
               >
-                <h1 className="s-bld mb-4">{t("Register")}</h1>
+                <h1 className="s-bld mb-4">Registration</h1>
                 <hr />
                 {/* {<!-- <div className="d-flex w-100 mb-4">
         <button className="btn sub-menu-btn flex-fill" [ngClass]="{'sub-menu-btn-activate' : RegisterType === 'email'}" onClick="switchRegisterType('email')">Email</button>

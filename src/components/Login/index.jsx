@@ -128,31 +128,33 @@ const Login = () => {
           }}
         >
           <div className="row" style={{ height: "100%" }}>
-            <div
-              className="col-lg-5 login-visual bg-dark"
-              style={{ height: isMobile ? "calc(100vh - 100px)" : "100%" }}
-            >
+            {!isMobile && (
               <div
-                style={{
-                  position: "absolute",
-                  zIndex: 100,
-                  width: "100%",
-                  textAlign: "center",
-                }}
+                className="col-lg-5 login-visual bg-dark"
+                style={{ height: isMobile ? "calc(100vh - 100px)" : "100%" }}
               >
-                <h1>Trade Wise, Trade Easy</h1>
-                <p>
-                  Access real-time crypto market data & Trade BTC, ETH
-                  <br />
-                  and more across exchanges on a single interface.
-                </p>
+                <div
+                  style={{
+                    position: "absolute",
+                    zIndex: 100,
+                    width: "100%",
+                    textAlign: "center",
+                  }}
+                >
+                  <h1>Trade Wise, Trade Easy</h1>
+                  <p>
+                    Access real-time crypto market data & Trade BTC, ETH
+                    <br />
+                    and more across exchanges on a single interface.
+                  </p>
+                </div>
+                <img
+                  src={LoginVisual}
+                  width="100%"
+                  style={{ position: "absolute", bottom: 0 }}
+                />
               </div>
-              <img
-                src={LoginVisual}
-                width="100%"
-                style={{ position: "absolute", bottom: 0 }}
-              />
-            </div>
+            )}
             <div
               className="col-lg-7"
               style={{
