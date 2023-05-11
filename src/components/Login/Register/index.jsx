@@ -196,7 +196,7 @@ const Register = () => {
         >
           <div className="row" style={{ height: "100%" }}>
             <div
-              className="col-lg-5 login-visual"
+              className="col-lg-5 login-visual bg-dark"
               style={{ height: isMobile ? "calc(100vh - 100px)" : "100%" }}
             >
               <div
