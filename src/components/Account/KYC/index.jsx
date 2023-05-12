@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import ApiService from "services/apiService";
 import CountryDataService from "services/countryDataService";
-import { getLoggedIn } from "utils";
+import { getLoggedIn, getTheme } from "utils";
 import { FTFTexContext } from "App";
 import CheckedImg from "assets/images/checked.gif";
 import "./index.scss";
@@ -296,7 +296,7 @@ const KYC = () => {
                   <Dropdown.Toggle
                     className="form-control ddrop d-flex"
                     id="dropdownBasic1"
-                    onClick={() => setSearch("")}
+                    // onClick={() => setSearch("")}
                   >
                     {SelectedNationality === "" ? (
                       "-- Select --"
@@ -318,7 +318,11 @@ const KYC = () => {
                   </Dropdown.Toggle>
                   <Dropdown.Menu
                     aria-labelledby="dropdownBasic1"
-                    className="drop-down-cc"
+                    className={
+                      getTheme() === "dark"
+                        ? "bg-dark drop-down-cc"
+                        : "drop-down-cc"
+                    }
                   >
                     <div
                       className="wt-box p-2 rounded-0"
@@ -389,7 +393,7 @@ const KYC = () => {
 // <!--              <div className="un-filled ml-2 flex-fill" ></div>-->
 // <!--            </div>--> */}
                 <button
-                  className="btn btn-primary px-5  ml-auto"
+                  className="btn btn-primary px-5  ml-auto mt-4"
                   disabled={!SelectedNationality}
                   onClick={myContinue}
                 >
