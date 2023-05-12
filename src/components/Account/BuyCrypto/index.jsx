@@ -1,19 +1,27 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import "./index.scss";
 
 const BuyCrypto = () => {
+  const [isAppended, setIsAppended] = useState(false);
+
   useEffect(() => {
-    const m = document.createElement("script");
-    m.type = "text/javascript";
-    m.src = `https://iframe.sandbox.test-simplexcc.com/form.js`;
-    document.body.appendChild(m);
+    if (!isAppended) {
+      const m = document.createElement("script");
+      m.type = "text/javascript";
+      m.src = `https://iframe.sandbox.test-simplexcc.com/form.js`;
+      document.body.appendChild(m);
 
-    setTimeout(() => {
-      const s = document.createElement("script");
-      s.type = "text/javascript";
-      s.text = `window.simplex.createForm();window.simplex.updateCryptoCurrency("BTC");`;
+      m.onload = () => {
+        window.simplex.createForm();
+        window.simplex.updateCryptoCurrency("BTC");
+      };
 
-      document.body.appendChild(s);
-    }, 2000);
+      m.onerror = () => {
+        console.log("Could not load the Google API Script!");
+      };
+
+      setIsAppended(true);
+    }
   }, []);
 
   return (
@@ -21,10 +29,10 @@ const BuyCrypto = () => {
       <div className="container">
         <div className="row">
           <div className="col-lg-8 offset-lg-2">
-            <div className="wt-box mt-3 p-3">
+            <div className="simplexform wt-box mt-3 p-3">
               <h4 className="s-bld">Buy Crypto</h4>
               <hr />
-              <div id="simplex-form"></div>
+              <div id="simplex-form" className="dark-theme"></div>
             </div>
           </div>
         </div>

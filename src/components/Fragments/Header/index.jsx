@@ -57,6 +57,13 @@ const Header = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const res = ftftexValue.Loggedin;
+    if (res[0]) {
+      setLoggedIn(res);
+    }
+  }, [ftftexValue.Loggedin]);
+
   const numberWithCommas = (number) => {
     return number ? number.toLocaleString() : "";
   };

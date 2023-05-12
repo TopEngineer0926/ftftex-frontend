@@ -1,27 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./index.scss";
 
-window.simplex = window.simplexAsyncFunction;
-
 const PaymentGateway = () => {
+  const [isAppended, setIsAppended] = useState(false);
+
   useEffect(() => {
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = "https://iframe.simplex-affiliates.com/form-sdk.js";
+    if (!isAppended) {
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.src = "https://iframe.sandbox.test-simplexcc.com/form.js";
 
-    document.body.appendChild(script);
+      document.body.appendChild(script);
+      script.onload = () => {
+        window.simplex.createForm();
+      };
+      script.onerror = () => {
+        console.log("Could not load the Google API Script!");
+      };
 
-    script.onload = () => {
-      window.simplex.createForm();
-    };
-    script.onerror = () => {
-      console.log("Could not load the Google API Script!");
-    };
+      setIsAppended(true);
+    }
   }, []);
 
   return (
-    <div className="wt-box min-h-full">
+    <div className="wt-box min-h-full simplexform">
       <div id="simplex-wrapper">
         <form id="simplex-form">
           <div id="checkout-element"></div>

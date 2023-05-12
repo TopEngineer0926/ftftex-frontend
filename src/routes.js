@@ -44,6 +44,7 @@ import FundingAccount from "components/WalletDetails/FundingAccount";
 import TradingAccount from "components/WalletDetails/TradingAccount";
 import TradeHistory from "components/WalletDetails/TradeHistory";
 import TransactionHistory from "./components/TransactionHistory";
+import BuyCrypto from "components/Account/BuyCrypto";
 
 const RoutesComponent = () => {
   return (
@@ -78,6 +79,7 @@ const RoutesComponent = () => {
         <Route path="huobi" Component={Huobi} />
         <Route path="xt" Component={XT} />
       </Route>
+      <Route path="buy-crypto" Component={BuyCrypto} />
       <Route path="wallet/details" Component={WalletDetails}>
         <Route path="funding-account/:type" Component={FundingAccount} />
         <Route path="trading-account/:type" Component={TradingAccount} />

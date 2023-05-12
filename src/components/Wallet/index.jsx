@@ -108,7 +108,7 @@ const Wallet = () => {
                         </NavLink>
                       </button>
                       <button className="btn btn-primary h-fit mb-auto w-fit  s-bld btn-lg px-2 ml-2">
-                        <NavLink to={"/wallet/purchase-crypto"}>
+                        <NavLink to={"/buy-crypto"}>
                           {t("Purchase crypto")}
                         </NavLink>
                       </button>
