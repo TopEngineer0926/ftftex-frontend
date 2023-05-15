@@ -14,14 +14,16 @@ import SubscribeArtImg from "assets/images/subscribe-art.png";
 import { FTFTexContext } from "App";
 
 const Wallet = () => {
+  const loggedIn = JSON.parse(localStorage.getItem("usr"));
   const { t } = useTranslation();
   const [subEmail, setSubEmail] = useState("");
   const [message, setMessage] = useState("");
   const [LogginIn, setLogginIn] = useState({ 0: "" });
   const [walletInfo, setWalletInfo] = useState();
+  const [houbiWalletInfo, setHoubiWalletInfo] = useState();
+  const [xtWalletInfo, setXtWalletInfo] = useState();
   const [balance, setBalance] = useState();
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
-
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(false);
   const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
@@ -40,36 +42,79 @@ const Wallet = () => {
   }, []);
 
   useEffect(() => {
-    // if (this.LogginIn[6] === 'verified') {
-    const createSubAccountParams = {
-      subAcct: LogginIn[5],
-      label: "852422",
-      userId: userId,
-    };
-    ApiService.createSubAccount(createSubAccountParams).then((res) => {});
-    const params = {
-      subAcct: LogginIn[5],
-      page: 1,
-      limit: 100,
-    };
-    ApiService.getSubAccountList(params).then((res) => {
-      let tmpWalletInfo = JSON.parse(res.data["KYC Api resuult"]).data[0]
-        .details[0];
-      setWalletInfo(tmpWalletInfo);
-    });
+    if (loggedIn[6] === "verified") {
+      // okx start
+      const createSubAccountParams = {
+        subAcct: loggedIn[5],
+        label: "852422",
+        userId: userId,
+      };
+      ApiService.createSubAccount(createSubAccountParams).then((res) => {
+        const params = {
+          subAcct: loggedIn[5],
+          page: 1,
+          limit: 100,
+        };
+        ApiService.getSubAccountList(params).then((res) => {
+          if (JSON.parse(res.data["KYC Api resuult"]).data?.[0]) {
+            let tmpWalletInfo = JSON.parse(res.data["KYC Api resuult"]).data[0]
+              .details[0];
+            setWalletInfo(tmpWalletInfo);
+          }
+        });
+      });
 
-    const balanceParams = {
-      subAcct: LogginIn[5],
-    };
-    ApiService.getSubAccBalance(balanceParams).then((res) => {
-      console.log(
-        JSON.parse(res.data["KYC Api resuult"]),
-        "JSON.parse(res['KYC Api resuult'])"
+      // okx end
+
+      // xt start
+      const paramsXT = {
+        accountName: loggedIn[5],
+        userId: userId,
+      };
+      const getSubAccountXtParams = {
+        subAcct: loggedIn[5],
+      };
+      ApiService.getSubAccountXt(getSubAccountXtParams).then(
+        (res) => {
+          if (res.Error && res.Error === "Brokcer not found!") {
+            ApiService.createSubAccountXt(paramsXT).then((res) => {
+              setXtWalletInfo(res.data);
+            });
+          } else {
+            setXtWalletInfo(res.data);
+          }
+        },
+        (error) => {
+          ApiService.createSubAccountXt(paramsXT).then((res) => {
+            setXtWalletInfo(res.data);
+          });
+        }
       );
-      setBalance(res.data);
-    });
-    // }
-  }, [LogginIn]);
+      // xt end
+
+      // houbi start
+
+      // TODO need endpoint to get subAccount
+
+      const createSubAccountHoubi = {
+        userList: [
+          {
+            userName: loggedIn[5],
+            note: "huobi",
+          },
+        ],
+        userId: userId,
+      };
+      ApiService.createSubAccountHuobi(createSubAccountHoubi).then((res) => {});
+      const getSubUserParams = {
+        userId: userId,
+      };
+      ApiService.getSubAccountHuobi(getSubUserParams).then((res) => {
+        setHoubiWalletInfo(JSON.parse(res.data["API Result"]).data);
+      });
+      // houbi end
+    }
+  }, []);
 
   const Subscribe = () => {
     setMessage("");
@@ -272,83 +317,91 @@ const Wallet = () => {
                     <span>Assets</span>
                   </div>
                 </div>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive
-                      ? "btn sub-menu-btn w-100 radius-10 btn-primary"
-                      : "btn sub-menu-btn w-100 radius-10"
-                  }
-                  to={"/wallet/okx"}
-                >
-                  <img
-                    className="align-self-center"
-                    src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
-                    height={30}
-                  />
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      width: "100%",
-                    }}
+                {!!walletInfo && (
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "btn sub-menu-btn w-100 radius-10 btn-primary"
+                        : "btn sub-menu-btn w-100 radius-10"
+                    }
+                    to={"/wallet/okx"}
                   >
-                    <span className="ml-4">OKX</span>
-                    <span style={{ color: "green" }}>●</span>
-                  </div>
-                </NavLink>
+                    <img
+                      className="align-self-center"
+                      src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
+                      height={30}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <span className="ml-4">OKX</span>
+                      <span style={{ color: "green" }}>●</span>
+                    </div>
+                  </NavLink>
+                )}
+
                 <hr style={{ margin: "unset" }} />
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive
-                      ? "btn sub-menu-btn light-border-bottom w-100 radius-10 btn-primary"
-                      : "btn sub-menu-btn light-border-bottom w-100 radius-10"
-                  }
-                  to={"/wallet/huobi"}
-                >
-                  <img
-                    className="align-self-center"
-                    src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png"
-                    height={30}
-                  />
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      width: "100%",
-                    }}
+                {!!houbiWalletInfo && (
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "btn sub-menu-btn light-border-bottom w-100 radius-10 btn-primary"
+                        : "btn sub-menu-btn light-border-bottom w-100 radius-10"
+                    }
+                    to={"/wallet/huobi"}
                   >
-                    <span className="ml-4">Huobi</span>
-                    <span style={{ color: "green" }}>●</span>
-                  </div>
-                </NavLink>
+                    <img
+                      className="align-self-center"
+                      src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png"
+                      height={30}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <span className="ml-4">Huobi</span>
+                      <span style={{ color: "green" }}>●</span>
+                    </div>
+                  </NavLink>
+                )}
+
                 <hr style={{ margin: "unset" }} />
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive
-                      ? "btn sub-menu-btn light-border-bottom w-100 radius-10 btn-primary"
-                      : "btn sub-menu-btn light-border-bottom w-100 radius-10"
-                  }
-                  to={"/wallet/xt"}
-                >
-                  <img
-                    className="align-self-center"
-                    src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/525.png"
-                    height={30}
-                  />
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      width: "100%",
-                    }}
+                {!!xtWalletInfo && (
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "btn sub-menu-btn light-border-bottom w-100 radius-10 btn-primary"
+                        : "btn sub-menu-btn light-border-bottom w-100 radius-10"
+                    }
+                    to={"/wallet/xt"}
                   >
-                    <span className="ml-4">XT.com</span>
-                    <span style={{ color: "grey" }}>●</span>
-                  </div>
-                </NavLink>
+                    <img
+                      className="align-self-center"
+                      src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/525.png"
+                      height={30}
+                    />
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        width: "100%",
+                      }}
+                    >
+                      <span className="ml-4">XT.com</span>
+                      <span style={{ color: "grey" }}>●</span>
+                    </div>
+                  </NavLink>
+                )}
               </div>
               <p
                 className="tab-text m-0 mr-1"

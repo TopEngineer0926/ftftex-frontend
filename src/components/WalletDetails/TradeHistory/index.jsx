@@ -99,7 +99,7 @@ const TradeHistory = () => {
       subAcct: LogginIn[5],
     };
     ApiService.getSubAccTradeBalance(params).then((res) => {
-      let tmpTrading = JSON.parse(res.data["KYC Api resuult"])?.data[0].details;
+      let tmpTrading = JSON.parse(res.data["KYC Api resuult"])?.data[0]?.details;
       setTrading(tmpTrading);
     });
   };

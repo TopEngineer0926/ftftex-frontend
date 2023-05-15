@@ -322,6 +322,27 @@ class ApiService {
       params
     );
   }
+  getSubAccountXt(params) {
+    return axios.post(
+        `${process.env.REACT_APP_BASE_URL}ftftx/xtAPI/getLocalAccount`,
+        params
+    );
+  }
+
+  createSubAccountXt(params) {
+    return axios.post(
+        `${process.env.REACT_APP_BASE_URL}ftftx/xtAPI/createSubAccount`
+        , params
+    );
+  }
+
+  createSubAccountHuobi(params) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/createSubUser`, params);
+  }
+
+  getSubAccountHuobi(params) {
+    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/getUsers`, params);
+  }
 
   getSubAccBalance(params) {
     return axios.post(

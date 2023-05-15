@@ -22,38 +22,6 @@ const PurchaseCrypto = () => {
     }
   }, []);
 
-  useEffect(() => {
-    // if (this.LogginIn[6] === 'verified') {
-    const createSubAccountParams = {
-      subAcct: LogginIn[5],
-      label: "852422",
-      userId: userId,
-    };
-    ApiService.createSubAccount(createSubAccountParams).then((res) => {});
-    const params = {
-      subAcct: LogginIn[5],
-      page: 1,
-      limit: 100,
-    };
-    ApiService.getSubAccountList(params).then((res) => {
-      let tmpWalletInfo = JSON.parse(res.data["KYC Api resuult"]).data[0]
-        .details[0];
-      setWalletInfo(tmpWalletInfo);
-    });
-
-    const balanceParams = {
-      subAcct: LogginIn[5],
-    };
-    ApiService.getSubAccBalance(balanceParams).then((res) => {
-      console.log(
-        JSON.parse(res.data["KYC Api resuult"]),
-        "JSON.parse(res['KYC Api resuult'])"
-      );
-      setBalance(res.data);
-    });
-    // }
-  }, [LogginIn]);
-
   return (
     <div className="min-h-full wt-box">
       <section>

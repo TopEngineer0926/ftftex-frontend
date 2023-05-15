@@ -156,7 +156,7 @@ const Withdraw = ({ type, balances, onClose }) => {
 
     ApiService.createDepositAddressForSubAccount(params).then((res) => {
       console.log(res, "res");
-      setCreatedDeposit(JSON.parse(res.data["KYC Api resuult"]).data[0]);
+      setCreatedDeposit(JSON.parse(res.data["KYC Api resuult"]).data?.[0]);
     });
   };
 
