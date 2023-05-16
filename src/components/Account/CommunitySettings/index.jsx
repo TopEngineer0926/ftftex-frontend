@@ -100,7 +100,7 @@ const CommunitySettings = () => {
               </div>
             </div>
             <div className="col-5">
-              {userAvatar.length > 0 ? (
+              {/* {userAvatar.length > 0 ? (
                 <img
                   src={userAvatar}
                   alt="avatar"
@@ -108,14 +108,14 @@ const CommunitySettings = () => {
                   width={50}
                   height={50}
                 />
-              ) : (
-                <span
-                  className="material-symbols-outlined align-self-center"
-                  style={{ fontSize: 35 }}
-                >
-                  account_circle
-                </span>
-              )}
+              ) : ( */}
+              <span
+                className="material-symbols-outlined align-self-center"
+                style={{ fontSize: 35 }}
+              >
+                account_circle
+              </span>
+              {/* )} */}
             </div>
             <div className="col-4 d-flex justify-content-end">
               <input
