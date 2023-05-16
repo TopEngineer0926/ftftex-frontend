@@ -61,6 +61,7 @@ function App() {
       flag: "https://cdn.kcak11.com/CountryFlags/countries/ae.svg",
     },
     Loggedin: {},
+    avatar: "",
   });
 
   const [mode, setMode] = useState(getTheme());

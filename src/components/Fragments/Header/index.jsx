@@ -25,6 +25,7 @@ const Header = () => {
   const [GlobalData, setGlobalData] = useState({});
   const [LoggedIn, setLoggedIn] = useState({ 0: "" });
   const [userData, setUserData] = useState({});
+  const [avatar, setAvatar] = useState("");
 
   const navigate = useNavigate();
 
@@ -105,10 +106,15 @@ const Header = () => {
     getData();
   }, []);
 
+  useEffect(() => {
+    if (ftftexValue.avatar) setAvatar(ftftexValue.avatar);
+  }, [ftftexValue.avatar]);
+
   const getData = async () => {
     const response = await ApiService.getUser(localStorage.getItem("userId"));
     const userData = response.data.userDetails[0];
     setUserData(userData);
+    setAvatar(userData.avatar);
   };
   return (
     <>
@@ -213,7 +219,7 @@ const Header = () => {
                           {...stringAvatar(
                             userData?.firstName + " " + userData?.lastName
                           )}
-                          src={userData?.avatar}
+                          src={avatar}
                         />
                       ) : (
                         <span
@@ -307,7 +313,7 @@ const Header = () => {
                   userData?.firstName + " " + userData?.lastName
                 )}
                 style={{ width: 24, height: 24 }}
-                src={userData?.avatar}
+                src={avatar}
               />
             ) : (
               <span className="material-symbols-outlined">account_circle</span>
