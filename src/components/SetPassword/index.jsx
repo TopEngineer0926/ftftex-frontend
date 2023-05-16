@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useParams, useNavigate } from "react-router-dom";
 import CheckImg from "assets/images/check.svg";
 import { Modal } from "react-bootstrap";
 import "./index.scss";
@@ -20,20 +20,19 @@ const SetPassword = () => {
   const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
 
   const navigate = useNavigate();
-  const location = useLocation();
+  const param = useParams();
 
   useEffect(() => {
     setIsMobile(ftftexValue.isMobile);
   }, [ftftexValue.isMobile]);
 
   useEffect(() => {
-    let tmpUserId = location?.state?.userId;
-    setUserId(tmpUserId);
-
-    if (tmpUserId) {
+    if (!param.userId) {
       navigate("/login");
+    } else {
+      setUserId(param.userId);
     }
-  }, []);
+  }, [param.userId]);
 
   const setPassword = () => {
     ApiService.changePassword(Form, userId).then((res) => {
@@ -122,7 +121,7 @@ const SetPassword = () => {
                   {/* <p className="mt-4 text-center error-msg">{LoginErrors} </p> */}
                   <button
                     className="btn btn-primary btn-lg mt-5 mx-auto d-block font-weight-bold px-5"
-                    disabled="Form.invalid"
+                    disabled={!Form.password}
                     onClick={setPassword}
                   >
                     {t("Set")}

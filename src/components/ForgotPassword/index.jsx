@@ -75,7 +75,7 @@ const ForgotPassword = () => {
       (res) => {
         if (res.data.Message === "User verified successfully") {
           dismissAll();
-          navigate("/set-password", { userId: RegisterResponse.userId });
+          navigate(`/set-password/${RegisterResponse.userId}`);
         } else {
           setOTPVerificationMessage("Invalid !");
         }

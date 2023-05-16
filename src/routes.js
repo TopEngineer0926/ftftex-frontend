@@ -93,7 +93,7 @@ const RoutesComponent = () => {
       <Route path="login" Component={Login} />
       <Route path="register" Component={Register} />
       <Route path="forgot-password" Component={ForgotPassword} />
-      <Route path="set-password" Component={SetPassword} />
+      <Route path="set-password/:userId" Component={SetPassword} />
       <Route path="/account" Component={AccountSettings}>
         <Route path="settings" Component={SettingsAccount} />
         <Route path="transaction-history" Component={TransactionHistory} />
