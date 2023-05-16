@@ -8,7 +8,6 @@ import ApiService from "services/apiService";
 import LogoImage from "assets/images/logo.svg";
 import AccountMenu from "../AccountMenu";
 import { Dropdown } from "react-bootstrap";
-import Avatar from "@mui/material/Avatar";
 import {
   Currency,
   Language,
@@ -24,8 +23,6 @@ const Header = () => {
   const { t, i18n } = useTranslation();
   const [GlobalData, setGlobalData] = useState({});
   const [LoggedIn, setLoggedIn] = useState({ 0: "" });
-  const [userData, setUserData] = useState({});
-  const [avatar, setAvatar] = useState("");
 
   const navigate = useNavigate();
 
@@ -71,51 +68,6 @@ const Header = () => {
     return number ? number.toLocaleString() : "";
   };
 
-  function stringToColor(string) {
-    let hash = 0;
-    let i;
-
-    /* eslint-disable no-bitwise */
-    for (i = 0; i < string.length; i += 1) {
-      hash = string.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = "#";
-
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.slice(-2);
-    }
-    /* eslint-enable no-bitwise */
-
-    return color;
-  }
-
-  function stringAvatar(name) {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-        width: 24,
-        height: 24,
-      },
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-    };
-  }
-
-  useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    if (ftftexValue.avatar) setAvatar(ftftexValue.avatar);
-  }, [ftftexValue.avatar]);
-
-  const getData = async () => {
-    const response = await ApiService.getUser(localStorage.getItem("userId"));
-    const userData = response.data.userDetails[0];
-    setUserData(userData);
-    setAvatar(userData.avatar);
-  };
   return (
     <>
       {!isMobile && (
@@ -214,21 +166,12 @@ const Header = () => {
                       variant="none"
                       className="nav-item user-menu"
                     >
-                      {Object.keys(userData).length > 0 ? (
-                        <Avatar
-                          {...stringAvatar(
-                            userData?.firstName + " " + userData?.lastName
-                          )}
-                          src={avatar}
-                        />
-                      ) : (
-                        <span
-                          className="material-symbols-outlined align-self-center"
-                          style={{ fontSize: 35 }}
-                        >
-                          account_circle
-                        </span>
-                      )}
+                      <span
+                        className="material-symbols-outlined align-self-center"
+                        style={{ fontSize: 35 }}
+                      >
+                        account_circle
+                      </span>
                     </Dropdown.Toggle>
                     <AccountMenu />
                   </Dropdown>
@@ -302,22 +245,10 @@ const Header = () => {
             {t("Community")}
           </NavLink>
           <NavLink
-            className={({ isActive }) =>
-              isActive ? "avatar-panel mb-0 selected" : "avatar-panel mb-0"
-            }
+            className={({ isActive }) => (isActive ? "mb-0 selected" : "mb-0")}
             to="/account/settings"
           >
-            {Object.keys(userData).length > 0 ? (
-              <Avatar
-                {...stringAvatar(
-                  userData?.firstName + " " + userData?.lastName
-                )}
-                style={{ width: 24, height: 24 }}
-                src={avatar}
-              />
-            ) : (
-              <span className="material-symbols-outlined">account_circle</span>
-            )}
+            <span className="material-symbols-outlined">account_circle</span>
             {t("Account")}
           </NavLink>
         </div>

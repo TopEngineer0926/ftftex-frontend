@@ -12,13 +12,13 @@ const CommunitySettings = () => {
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const [userData, setUserData] = useState({});
+  const [userAvatar, setUserAvatar] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const inputRef = useRef(null);
   const [communityData, setCommunityData] = useState({
     nickname: "",
     bio: "",
   });
-  const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
 
   useEffect(() => {
     getData();
@@ -28,10 +28,7 @@ const CommunitySettings = () => {
     const response = await ApiService.getUser(localStorage.getItem("userId"));
     const userData = response.data.userDetails[0];
     setUserData(userData);
-    setFtftexValue({
-      ...ftftexValue,
-      avatar: userData.avatar,
-    });
+    setUserAvatar(userData.avatar);
     setCommunityData({ nickname: userData.userName, bio: "" });
     setIsLoading(false);
   };
@@ -54,26 +51,25 @@ const CommunitySettings = () => {
       formData.append("userId", localStorage.getItem("userId"));
       formData.append("name", JSON.stringify(name));
       const response = await ApiService.uploadFile(formData);
-
-      const data = {
-        userId: localStorage.getItem("userId"),
-        avatar: `https://staging-assets.ftftx.com/${file.name}`,
-      };
-      const response1 = await ApiService.changeAvatar(data);
-      if (response1.status === 200) {
-        if (response.data.url) {
-          setFtftexValue({
-            ...ftftexValue,
-            avatar: response.data.url,
-          });
-          enqueueSnackbar(
-            t("account.community.You successfully updated your avatar"),
-            {
-              variant: "success",
-            }
-          );
-        }
-      }
+      // const data = {
+      //   userId: localStorage.getItem("userId"),
+      //   avatar: `https://staging-assets.ftftx.com/${file.name}`,
+      // };
+      // const response1 = await ApiService.changeAvatar(data);
+      // if (response1.status === 200) {
+      //   if (response.data.url) {
+      //     setFtftexValue({
+      //       ...ftftexValue,
+      //       avatar: response.data.url,
+      //     });
+      //     enqueueSnackbar(
+      //       t("account.community.You successfully updated your avatar"),
+      //       {
+      //         variant: "success",
+      //       }
+      //     );
+      //   }
+      // }
     }
   };
 
@@ -104,9 +100,9 @@ const CommunitySettings = () => {
               </div>
             </div>
             <div className="col-5">
-              {ftftexValue.avatar.length > 0 ? (
+              {userAvatar.length > 0 ? (
                 <img
-                  src={ftftexValue.avatar}
+                  src={userAvatar}
                   alt="avatar"
                   className="avatar"
                   width={50}
