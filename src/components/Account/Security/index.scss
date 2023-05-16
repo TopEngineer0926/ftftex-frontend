@@ -1,7 +1,29 @@
-.small-txt {
-    font-size: 11px;
-}
 .loading {
     margin-top: 25%;
     margin-left: 50%;
+}
+.linked-text,
+.unlinked-text {
+    font-size: 14px;
+}
+
+.linked-text {
+    color: #00B050;
+}
+
+.unlinked-text {
+    color: #FF0000;
+}
+
+.save-btn,
+.save-btn:active {
+    background: rgb(0, 32, 212);
+    background: linear-gradient(261deg, rgba(0, 32, 212, 1) 65%, rgba(38, 114, 247, 1) 100%);
+    color: whitesmoke !important;
+}
+
+.save-btn:hover {
+    background: rgb(0, 32, 100);
+    background: linear-gradient(261deg, rgba(0, 32, 100) 65%, 100%);
+    color: whitesmoke !important;
 }

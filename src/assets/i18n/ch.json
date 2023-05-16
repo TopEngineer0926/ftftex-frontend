@@ -23,6 +23,10 @@
   "Balance": "平衡",
   "P&L": "盈亏",
   "Delete": "删除",
+  "Continue": "继续",
+  "Send": "发送",
+  "Required": "必需的",
+  "Back": "后退",
   "Date": "日期",
   "Type": "类型",
   "Amount": "数量",
@@ -36,7 +40,7 @@
       "Transaction History": "交易记录",
       "Trading History": "交易历史",
       "Color Reference": "颜色参考",
-      "Volume Unit (Trading)": "交易量单位（交易)"
+      "Coming Soon": "即将推出"
     },
     "community": {
       "Profile Picture": "头像",
@@ -62,7 +66,8 @@
       "You can change your password only after": "您只能在之后更改密码",
       "You successfully updated your password": "您已成功更新密码",
       "Please enter a valid phone number": "请输入一个有效的电话号码",
-      "Please enter a valid email": "请输入有效电子邮件"
+      "Please enter a valid email": "请输入有效电子邮件",
+      "Enter your current password": "输入当前密码"
     },
     "privacy": {
       "System Permissions": "系统权限",
@@ -92,7 +97,14 @@
     "support": {
       "Help Center": "帮助中心",
       "Contact Us": "联系我们",
-      "About Us": "关于我们"
+      "About Us": "关于我们",
+      "Get in touch with us!": "请与我们联系！",
+      "Our team": "我们的团队随时准备为您解决任何问题、疑虑或反馈。您可以联系我们 ",
+      "Leave message": "，或者您可以在这里留言。",
+      "Your Message": "您的留言",
+      "Maximum 1,500 characters": "最多 1,500 个字符",
+      "Message sent": "消息已发送",
+      "Thank you for": "感谢您与我们联系。我们会及时回复您"
     },
     "terms": {
       "Anti Money Laundering (AML)": "反洗钱 (AML)",

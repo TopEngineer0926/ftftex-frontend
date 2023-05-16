@@ -19,7 +19,6 @@ const Withdraw = ({ type, balances, onClose }) => {
   const [withdrawnWallet, setWithdrawnWallet] = useState("Trading Wallet");
   const [selectedCurrency, setSelectedCurrency] = useState("");
   const [currencies, setCurrencies] = useState([]);
-  const [createdDeposit, setCreatedDeposit] = useState();
   const [selectedChain, setSelectedChain] = useState({
     ccy: "",
     chain: "",
@@ -79,17 +78,44 @@ const Withdraw = ({ type, balances, onClose }) => {
       email: LogginIn[4],
       phone: "",
     };
-
-    ApiService.VerifyEmail(data)
-      .then((res) => {
-        setShowEmailVerifyPopModal(true);
-      })
-      .catch((err) => {
-        setShowEmailVerifyPopModal(true);
-        toast.error(
-          "Can't send the OTP to your email. Please try again later."
-        );
+    let params;
+    if (type === "okx") {
+      params = {
+        amt: amount,
+        fee: "0.0005",
+        dest: 4,
+        ccy: selectedChain.ccy,
+        chain: selectedChain.chain,
+        toAddr: address,
+        subAcct: LogginIn[5],
+      };
+      ApiService.createWithdrawal(params).then((res) => {
+        const result = JSON.parse(res.data["KYC Api resuult"]);
+        console.log(result, "result");
+        if (!result.data.length && result.msg) {
+          toast.error(result.msg);
+        } else if (!res.data.msg) {
+          dismissAll();
+          setWithdrawSuccessModal(true);
+        }
       });
+    } else if (type === "huobi") {
+      params = {
+        address: address,
+        currency: selectedChain.ccy.toLocaleLowerCase(),
+        amount,
+      };
+      ApiService.createWithdrawRequestHuobi(params).then((res) => {
+        const result = JSON.parse(res.data["API Result"]);
+        console.log(result, "result");
+        if (result["err-msg"]) {
+          toast.error(result["err-msg"]);
+        } else if (!result["err-msg"]) {
+          dismissAll();
+          setWithdrawSuccessModal(true);
+        }
+      });
+    }
   };
 
   const withdrawMoney = () => {
@@ -144,7 +170,6 @@ const Withdraw = ({ type, balances, onClose }) => {
 
   const selectNetwork = (network) => {
     setSelectedChain(network);
-    setCreatedDeposit({});
     setAddress("");
 
     const res = getLoggedIn();
@@ -153,11 +178,6 @@ const Withdraw = ({ type, balances, onClose }) => {
       subAcct: res[5],
       chain: network.chain,
     };
-
-    ApiService.createDepositAddressForSubAccount(params).then((res) => {
-      console.log(res, "res");
-      setCreatedDeposit(JSON.parse(res.data["KYC Api resuult"]).data?.[0]);
-    });
   };
 
   const handleCloseEmailVerifyPopModal = () => {
@@ -271,50 +291,54 @@ const Withdraw = ({ type, balances, onClose }) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-            paddingTop: 10,
-            paddingBottom: 10,
-          }}
-        >
-          <span>Network</span>
-          <Dropdown>
-            <Dropdown.Toggle
-              className="form-control ddrop d-flex"
-              id="dropdownBasic1"
-            >
-              {selectedChain.chain === "" ? (
-                <span className="align-self-center">-- Select --</span>
-              ) : (
-                <span className="align-self-center">{selectedChain.chain}</span>
-              )}
-              <span
-                className="material-symbols-outlined align-self-center mb-0 ml-auto mr-2"
-                style={{ fontSize: 24 }}
+        {type === "okx" && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+              paddingTop: 10,
+              paddingBottom: 10,
+            }}
+          >
+            <span>Network</span>
+            <Dropdown>
+              <Dropdown.Toggle
+                className="form-control ddrop d-flex"
+                id="dropdownBasic1"
               >
-                arrow_drop_down
-              </span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu
-              aria-labelledby="dropdownBasic1"
-              style={{ maxHeight: 200, overflowY: "auto" }}
-            >
-              {chains.map((chain, index) => (
-                <Dropdown.Item
-                  className="network-list-item"
-                  onClick={() => selectNetwork(chain)}
-                  key={index}
+                {selectedChain.chain === "" ? (
+                  <span className="align-self-center">-- Select --</span>
+                ) : (
+                  <span className="align-self-center">
+                    {selectedChain.chain}
+                  </span>
+                )}
+                <span
+                  className="material-symbols-outlined align-self-center mb-0 ml-auto mr-2"
+                  style={{ fontSize: 24 }}
                 >
-                  <span>{chain.chain}</span>
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+                  arrow_drop_down
+                </span>
+              </Dropdown.Toggle>
+              <Dropdown.Menu
+                aria-labelledby="dropdownBasic1"
+                style={{ maxHeight: 200, overflowY: "auto" }}
+              >
+                {chains.map((chain, index) => (
+                  <Dropdown.Item
+                    className="network-list-item"
+                    onClick={() => selectNetwork(chain)}
+                    key={index}
+                  >
+                    <span>{chain.chain}</span>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        )}
         <div
           style={{
             display: "flex",
@@ -351,46 +375,46 @@ const Withdraw = ({ type, balances, onClose }) => {
             placeholder="Enter Amount"
           />
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-            paddingTop: 10,
-            paddingBottom: 10,
-          }}
-        >
-          <span>Send From</span>
-          <Dropdown>
-            <Dropdown.Toggle
-              className="form-control ddrop d-flex"
-              id="dropdownBasic1"
-            >
-              <span className="align-self-center">{selectedWallet}</span>
-              <span
-                className="material-symbols-outlined align-self-center mb-0 ml-auto mr-2"
-                style={{ fontSize: 24 }}
-              >
-                arrow_drop_down
-              </span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu
-              aria-labelledby="dropdownBasic1"
-              style={{ maxHeight: 200, overflowY: "auto" }}
-            >
-              {WALLET_LIST.map((wallet, index) => (
-                <Dropdown.Item
-                  className="network-list-item"
-                  onClick={() => handleChangeWallet(wallet, "select")}
-                  key={index}
-                >
-                  <span>{wallet}</span>
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+        {/*<div*/}
+        {/*  style={{*/}
+        {/*    display: "flex",*/}
+        {/*    alignItems: "center",*/}
+        {/*    justifyContent: "space-between",*/}
+        {/*    width: "100%",*/}
+        {/*    paddingTop: 10,*/}
+        {/*    paddingBottom: 10,*/}
+        {/*  }}*/}
+        {/*>*/}
+        {/*  <span>Send From</span>*/}
+        {/*  <Dropdown>*/}
+        {/*    <Dropdown.Toggle*/}
+        {/*      className="form-control ddrop d-flex"*/}
+        {/*      id="dropdownBasic1"*/}
+        {/*    >*/}
+        {/*      <span className="align-self-center">{selectedWallet}</span>*/}
+        {/*      <span*/}
+        {/*        className="material-symbols-outlined align-self-center mb-0 ml-auto mr-2"*/}
+        {/*        style={{ fontSize: 24 }}*/}
+        {/*      >*/}
+        {/*        arrow_drop_down*/}
+        {/*      </span>*/}
+        {/*    </Dropdown.Toggle>*/}
+        {/*    <Dropdown.Menu*/}
+        {/*      aria-labelledby="dropdownBasic1"*/}
+        {/*      style={{ maxHeight: 200, overflowY: "auto" }}*/}
+        {/*    >*/}
+        {/*      {WALLET_LIST.map((wallet, index) => (*/}
+        {/*        <Dropdown.Item*/}
+        {/*          className="network-list-item"*/}
+        {/*          onClick={() => handleChangeWallet(wallet, "select")}*/}
+        {/*          key={index}*/}
+        {/*        >*/}
+        {/*          <span>{wallet}</span>*/}
+        {/*        </Dropdown.Item>*/}
+        {/*      ))}*/}
+        {/*    </Dropdown.Menu>*/}
+        {/*  </Dropdown>*/}
+        {/*</div>*/}
         <button
           class="btn btn-primary mt-1 mb-1 ml-auto d-block "
           onClick={sendOTPToEmail}

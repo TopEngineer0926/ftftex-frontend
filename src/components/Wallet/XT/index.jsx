@@ -264,7 +264,8 @@ const XT = () => {
               </div>
             </div>
             <span style={{ color: "gray", fontSize: 14 }}>
-              Information is updated every minute. Last update 14:43 GMT+4
+              Information is updated every minute. Last update{" "}
+              {new Date().toString()}
             </span>
           </div>
         </div>

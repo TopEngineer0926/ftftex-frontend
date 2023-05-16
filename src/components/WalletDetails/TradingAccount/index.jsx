@@ -16,6 +16,7 @@ const TradingAccount = () => {
   const [tab, setTab] = useState("deposit");
   const [deposits, setDeposits] = useState([]);
   const [trading, setTrading] = useState([]);
+  const [sum, setSum] = useState(0);
   const [showDipositModal, setShowDipositModal] = useState(false);
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
@@ -26,32 +27,7 @@ const TradingAccount = () => {
     field: "rank",
     reversed: false,
   });
-  const [walletData, setWalletData] = useState([
-    {
-      id: 294,
-      name: "Bitcoin",
-      amount: "0.12",
-      btc_value: "0.12",
-      available: "0.12",
-      frozen: "0.00",
-    },
-    {
-      id: 102,
-      name: "Aptos",
-      amount: "4.432",
-      btc_value: "0.003",
-      available: "4.432",
-      frozen: "0.00",
-    },
-    {
-      id: 525,
-      name: "Aave",
-      amount: "748",
-      btc_value: "0.34",
-      available: "748",
-      frozen: "0.00",
-    },
-  ]);
+  const [walletData, setWalletData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [items, setItems] = useState([]);
 
@@ -71,11 +47,39 @@ const TradingAccount = () => {
   }, []);
 
   useEffect(() => {
-    if (LogginIn[5]) {
+    if (LogginIn[5] && type === "okx") {
       getSubAccTradeBalance();
       getSubAccFoundBalance();
+    } else if (LogginIn[5] && type === "huobi") {
+      console.log("stexaa");
+      getSubAccountBalanceHuobi();
     }
   }, [LogginIn]);
+
+  const getSubAccountBalanceHuobi = () => {
+    const params = {
+      sub_uid: "436895311",
+    };
+    ApiService.getSubAccountBalanceHuobi(params).then((res) => {
+      console.log(res, "res");
+      const tempBalance = JSON.parse(res.data["API Result"])?.data;
+      if (tempBalance[0].list?.length) {
+        const data = tempBalance[0].list.map((el) => {
+          return {
+            ...el,
+            availBal: el.available,
+            bal: el.balance,
+            ccy: el.currency.toUpperCase(),
+            frozenBal: 0,
+          };
+        });
+        console.log(tempBalance, "tempBalance");
+        setWalletData(data);
+      }
+
+      // setTrading(tmpTrading);
+    });
+  };
 
   const getSubAccTradeBalance = () => {
     const params = {
@@ -83,7 +87,18 @@ const TradingAccount = () => {
     };
     ApiService.getSubAccTradeBalance(params).then((res) => {
       let tmpTrading = JSON.parse(res.data["KYC Api resuult"])?.data[0]?.details;
+      console.log(tmpTrading, "tmpTrading");
+      let sum = 0;
+      if (tmpTrading.length) {
+        tmpTrading.forEach((item) => {
+          console.log(item, "item");
+          sum += +item.eqUsd;
+        });
+      }
+      setSum(sum);
       setTrading(tmpTrading);
+      setWalletData(tmpTrading);
+      console.log(tmpTrading, "tmpTrading");
     });
   };
 
@@ -161,6 +176,14 @@ const TradingAccount = () => {
     setWalletData(sortedWallets);
   }, [order]);
 
+  const goToTrade = (ccy) => {
+    if (ccy !== "USDT") {
+      navigate(`/trade/${ccy.toUpperCase()}_USDT`);
+    } else {
+      navigate(`/trade/BTC_USDT`);
+    }
+  };
+
   const doSort = (value) => {
     if (order.field == value) {
       if (order.reversed) {
@@ -198,7 +221,7 @@ const TradingAccount = () => {
             <h4 style={{ fontWeight: "bold" }}>Trading Account</h4>
             <span>Estimated balance</span>
           </div>
-          <h5>1,231 = 0.01051 BTC</h5>
+          <h5>{sum} USD</h5>
           <input
             type="text"
             value={search}
@@ -207,23 +230,25 @@ const TradingAccount = () => {
           />
         </div>
         <div className="wallet-details-button-layout">
-          <div className="button-item">
-            <button
-              class={
-                type === "okx"
-                  ? "btn d-block okx-button"
-                  : type === "huobi"
-                  ? "btn d-block huobi-button"
-                  : type === "xt"
-                  ? "btn d-block xt-button"
-                  : "btn d-block"
-              }
-              onClick={openTransferModal}
-            >
-              <span class="material-symbols-outlined">east</span>
-            </button>
-            <span>{t("Transfer")}</span>
-          </div>
+          {type === "okx" && (
+            <div className="button-item">
+              <button
+                class={
+                  type === "okx"
+                    ? "btn d-block okx-button"
+                    : type === "huobi"
+                    ? "btn d-block huobi-button"
+                    : type === "xt"
+                    ? "btn d-block xt-button"
+                    : "btn d-block"
+                }
+                onClick={openTransferModal}
+              >
+                <span class="material-symbols-outlined">east</span>
+              </button>
+              <span>{t("Transfer")}</span>
+            </div>
+          )}
           <div className="button-item">
             <button
               class={
@@ -412,24 +437,27 @@ const TradingAccount = () => {
                   <td className="normal-td">{index + 1}</td>
                   <td className="font-weight-bold">
                     <span className="d-flex cu-p">
-                      <img
-                        className="align-self-center"
-                        loading="lazy"
-                        src={`https://s2.coinmarketcap.com/static/img/exchanges/64x64/${dta.id}.png`}
-                        height={30}
-                      />
+                      {/*<img*/}
+                      {/*  className="align-self-center"*/}
+                      {/*  loading="lazy"*/}
+                      {/*  src={`https://s2.coinmarketcap.com/static/img/exchanges/64x64/${dta.id}.png`}*/}
+                      {/*  height={30}*/}
+                      {/*/>*/}
                       <div className="align-self-center ml-2">
-                        <p className="mb-0 normal-td"> {dta.name}</p>
+                        <p className="mb-0 normal-td"> {dta.ccy}</p>
                       </div>
                     </span>
                   </td>
-                  <td className="normal-td">{dta.amount}</td>
-                  <td className="normal-td">{dta.btc_value}</td>
-                  <td className="normal-td">{dta.available}</td>
-                  <td className="normal-td">{dta.frozen}</td>
+                  <td className="normal-td">{dta.availBal}</td>
+                  <td className="normal-td">{dta.eqUsd}</td>
+                  <td className="normal-td">{dta.availBal}</td>
+                  <td className="normal-td">{dta.frozenBal}</td>
                   <td className="normal-td">
                     {" "}
-                    <button class="btn d-block filter-date filter-date-selected">
+                    <button
+                      class="btn d-block filter-date filter-date-selected"
+                      onClick={() => goToTrade(dta.ccy)}
+                    >
                       Buy/Sell
                     </button>
                   </td>

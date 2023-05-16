@@ -15,7 +15,7 @@ const SettingsAccount = () => {
   };
 
   return (
-    <div className="container p-4">
+    <div className="container mt-4 mb-4 p-4">
       <AccountSettings />
       <TradingSettings />
       <div
@@ -26,7 +26,12 @@ const SettingsAccount = () => {
           {t("account.settings.Delete Trading Account")}
         </a>
       </div>
-      <Modal show={isDeleteTradingAccount} onHide={handleCloseModal} centered>
+      <Modal
+        show={isDeleteTradingAccount}
+        onHide={handleCloseModal}
+        centered
+        size="lg"
+      >
         <DeleteTradingAccountModal onClose={handleCloseModal} />
       </Modal>
     </div>

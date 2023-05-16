@@ -23,6 +23,12 @@
   "Balance": "Balance",
   "P&L": "P&L",
   "Delete": "Delete",
+  "Continue": "Continue",
+  "Send": "Send",
+  "Required": "Required",
+  "Back": "Back",
+  "Try again": "Try again",
+  "Subject": "Subject:",
   "Date": "Date",
   "Type": "Type",
   "Amount": "Amount",
@@ -36,7 +42,8 @@
       "Transaction History": "Transaction History",
       "Trading History": "Trading History",
       "Color Reference": "Color Reference",
-      "Volume Unit (Trading)": "Volume Unit (Trading)"
+      "Volume Unit (Trading)": "Volume Unit (Trading)",
+      "Coming Soon": "Coming Soon"
     },
     "community": {
       "Profile Picture": "Profile Picture",
@@ -62,7 +69,14 @@
       "You can change your password only after": "You can change your password only after",
       "You successfully updated your password": "You successfully updated your password",
       "Please enter a valid phone number": "Please enter a valid phone number",
-      "Please enter a valid email": "Please enter a valid email"
+      "Please enter a valid email": "Please enter a valid email",
+      "Enter your current password": "Enter your current password",
+      "Password Change Failed": "Password Change Failed",
+      "Attempt": "Attempt",
+      "One or both entered OTPs are incorrect": "One or both entered OTPs are incorrect",
+      "Password Change": "Password Change",
+      "Your password has been changed successfully": "Your password has been changed successfully",
+      "Please Login Again": "Please Login Again"
     },
     "privacy": {
       "System Permissions": "System Permissions",
@@ -92,7 +106,14 @@
     "support": {
       "Help Center": "Help Center",
       "Contact Us": "Contact Us",
-      "About Us": "About Us"
+      "About Us": "About Us",
+      "Get in touch with us!": "Get in touch with us!",
+      "Our team": "Our team is ready to assist you with any questions, concerns or feedback you may have. You can contact us at ",
+      "Leave message": ", or you can leave a message here.",
+      "Your Message": "Your Message",
+      "Maximum 1,500 characters": "Maximum 1,500 characters",
+      "Message sent": "Message sent",
+      "Thank you for": "Thank you for contacting us. We will get back to you promptly."
     },
     "terms": {
       "Anti Money Laundering (AML)": "Anti Money Laundering (AML)",

@@ -2,7 +2,7 @@ import "./index.scss";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { Divider } from "@mui/material";
-
+import { getTheme } from "../../../utils";
 
 const Privacy = () => {
   const { t } = useTranslation();
@@ -53,53 +53,86 @@ const Privacy = () => {
 
   const requestFileSystemPermission = async () => {};
 
-
   return (
-    <div className="container p-4">
+    <div className="container mt-4 mb-4 p-4">
       <div className="pb-2 light-border-bottom">
-        <h4>{t("Privacy")}</h4>
+        <h4
+          className={`${
+            getTheme() === "dark" ? "sub-title-dark" : "sub-title"
+          }`}
+        >
+          {t("Privacy")}
+        </h4>
         <Divider />
       </div>
-      <h4 className="mt-4">{t("account.privacy.System Permissions")}</h4>
-      <div className="row py-2 mt-4">
+      <h4
+        className={`mt-3 ${
+          getTheme() === "dark" ? "sub-title-dark" : "sub-title"
+        }`}
+      >
+        {t("account.privacy.System Permissions")}
+      </h4>
+      <div className="row mt-3">
         <div className="col-10">
-          <div className="d-flex align-items-center">
-            <p className="mr-3">{t("Location")}</p>
-            <p className="small-txt">
+          <div className="d-flex align-items-center setting-block mt-2">
+            <div
+              className={`mr-3 ${
+                getTheme() === "dark" ? "sub-point-dark" : "sub-point"
+              }`}
+            >
+              {t("Location")}
+            </div>
+            <div className="small-txt">
               Lorem ipsum dolor sit amet,eiusmod tempor incididunt ut labore et
               dolore magna aliqua.
-            </p>
+            </div>
           </div>
         </div>
-        <div className="col-2">
-          <div className="d-flex justify-content-end">
-            <div
-              className={`switch-container ${isGetLocation ? "on" : "off"}`}
+        <div className="col-2 d-flex justify-content-end align-items-center">
+          <div className="custom-control custom-switch">
+            <input
+              type="checkbox"
+              className="custom-control-input form-control-lg"
+              id="customSwitch1"
+              checked={isGetLocation}
               onClick={requestLocationPermission}
-            >
-              <div className="switch-button" />
-            </div>
+            />
+            <label
+              className="custom-control-label"
+              htmlFor="customSwitch1"
+            ></label>
           </div>
         </div>
       </div>
-      <div className="row py-2 mt-2">
+      <div className="row mt-2">
         <div className="col-10">
-          <div className="d-flex align-items-center">
-            <p className="mr-3">{t("account.privacy.Camera")}</p>
-            <p className="small-txt">
+          <div className="d-flex align-items-center setting-block mt-2">
+            <div
+              className={`mr-3 ${
+                getTheme() === "dark" ? "sub-point-dark" : "sub-point"
+              }`}
+            >
+              {t("account.privacy.Camera")}
+            </div>
+            <div className="small-txt">
               Lorem ipsum dolor sit amet,eiusmod tempor incididunt ut labore et
               dolore magna aliqua.
-            </p>
+            </div>
           </div>
         </div>
-        <div className="col-2">
-          <div className="d-flex justify-content-end">
-            <div
-              className={`switch-container ${isGetCamera ? "on" : "off"}`}
+        <div className="col-2 col-2 d-flex justify-content-end align-items-center">
+          <div className="custom-control custom-switch">
+            <input
+              type="checkbox"
+              className="custom-control-input form-control-lg"
+              id="customSwitch1"
+              checked={isGetCamera}
               onClick={requestCameraPermission}
-            >
-              <div className="switch-button" />
-            </div>
+            />
+            <label
+              className="custom-control-label"
+              htmlFor="customSwitch1"
+            ></label>
           </div>
         </div>
       </div>

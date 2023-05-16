@@ -1,18 +1,23 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import ApiService from "../../../services/apiService";
-import { useSnackbar } from "notistack";
+import { Spinner } from "react-bootstrap";
 
-const ChangePasswordModal = ({ onClose }) => {
+const ChangePasswordModal = ({
+  onClose,
+  setShowOTPModal,
+  failedAttempts,
+  newPassword,
+  setNewPassword,
+}) => {
   const { t } = useTranslation();
-  const { enqueueSnackbar } = useSnackbar();
   const blockedTime = localStorage.getItem("blockPasswordTime");
   const now = new Date().getTime();
   const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [failedAttempts, setFailedAttempts] = useState(0);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [DialingCode, setDialingCode] = useState(ApiService.DialingCode);
   const date1 = new Date(parseInt(blockedTime));
   const date2 = new Date(now);
   const diffInMs = date1 - date2;
@@ -49,33 +54,33 @@ const ChangePasswordModal = ({ onClose }) => {
         "account.security.Password must contain at least one digit"
       );
     }
+    if (currentPassword.length === 0) {
+      passwordError = t("account.security.Enter your current password");
+    }
     setPasswordError(passwordError);
     return passwordError;
   };
 
   const changePassword = async () => {
     const error = checkPassword(newPassword);
-    const userId = localStorage.getItem("userId");
+    const email = JSON.parse(localStorage.getItem("usr"));
     if (failedAttempts === 3) {
       const oneHour = new Date(new Date().getTime() + 60 * 60 * 1000);
       localStorage.setItem("blockPasswordTime", oneHour.getTime().toString());
       setIsDisabled(true);
     } else {
       if (error.length === 0) {
-        const response = await ApiService.changePassword(
-          { password: newPassword },
-          userId
+        setIsLoading(true);
+        const sendEmailResponse = await ApiService.ForgotPassword(
+          { email: email[4] },
+          "email",
+          DialingCode.dialCode
         );
-        if (response.status === 200) {
-          enqueueSnackbar(
-            t("account.security.You successfully updated your password"),
-            {
-              variant: "success",
-            }
-          );
+        if (sendEmailResponse.status === 200) {
+          console.log(sendEmailResponse);
+          setIsLoading(false);
+          setShowOTPModal(true);
           onClose();
-        } else {
-          setFailedAttempts(failedAttempts + 1);
         }
       }
     }
@@ -137,8 +142,12 @@ const ChangePasswordModal = ({ onClose }) => {
             <div className="btn btn-outlined mr-2" onClick={onClose}>
               {t("Cancel")}
             </div>
-            <div className="btn btn-primary" onClick={changePassword}>
-              {t("Save")}
+            <div className="btn save-btn" onClick={changePassword}>
+              {isLoading ? (
+                <Spinner animation="border" variant="primary" />
+              ) : (
+                t("Save")
+              )}
             </div>
           </div>
         )}

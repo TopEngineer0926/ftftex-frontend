@@ -46,7 +46,7 @@ const TradingPortal = () => {
   const [history, setHistory] = useState([]);
   const [Pair, setPair] = useState({ Coin: "", Base: "" });
   const [currenttab, setCurrenttab] = useState("chart");
-  const [LoggedIn, setLoggedIn] = useState({ 0: "" });
+  const [LogginIn, setLogginIn] = useState({ 0: "" });
   const [buyBalance, setBuyBalance] = useState();
   const [sellBalance, setSellBalance] = useState();
   const [OrderBuy, setOrderBuy] = useState({
@@ -96,6 +96,15 @@ const TradingPortal = () => {
     return number.toLocaleString();
   };
 
+  useEffect(() => {
+    const data = getLoggedIn();
+    if (!data[0]) {
+      navigate("/login");
+    } else {
+      setLogginIn(data);
+    }
+  }, []);
+
   const handleChangeSellAmount = (e) => {
     setErrorMessageSell("");
     setSuccesMessageSell("");
@@ -123,8 +132,6 @@ const TradingPortal = () => {
   };
 
   useEffect(() => {
-    setLoggedIn(getLoggedIn());
-
     TradingDataService.getTradingPairs().then((res) => {
       setAllPairs(res.data.symbols);
     });
@@ -261,10 +268,14 @@ const TradingPortal = () => {
         });
       });
     }
-
-    getTradeAvailableBalance(tmpPair);
-    getTradeHistory();
   }, [param]);
+
+  useEffect(() => {
+    if (LogginIn[5] && Pair.Coin) {
+      getTradeAvailableBalance(Pair);
+      getTradeHistory();
+    }
+  }, [LogginIn, Pair]);
 
   useEffect(() => {
     setIsMobile(ftftexValue.isMobile);
@@ -281,7 +292,7 @@ const TradingPortal = () => {
   const getTradeAvailableBalance = (ccy) => {
     const params = {
       ccy: `${ccy.Coin},${ccy.Base}`,
-      subAcct: LoggedIn[5],
+      subAcct: LogginIn[5],
     };
     console.log(Pair, "");
     ApiService.getTradeAvailableBalance(params).then((res) => {
@@ -289,6 +300,7 @@ const TradingPortal = () => {
       const result = JSON.parse(d["Account avaibale balance"]).data[0];
       console.log(result, "result");
       if (result.details?.length) {
+        console.log(result, "result");
         result.details.forEach((bal) => {
           console.log(bal.ccy === Pair.Base, "bal.ccy === Pair.Base");
           if (bal.ccy === Pair.Coin) {
@@ -306,7 +318,7 @@ const TradingPortal = () => {
   const getTradeHistory = () => {
     const params = {
       instType: "SPOT",
-      subAcct: LoggedIn[5],
+      subAcct: LogginIn[5],
     };
     ApiService.getOrderHistory(params).then((res) => {
       let d = res.data;
@@ -410,7 +422,7 @@ const TradingPortal = () => {
         ordType: "market",
         // "px":lastPrice,
         sz: toFixed(BUY.Amount),
-        subAcct: LoggedIn[5],
+        subAcct: LogginIn[5],
       };
       ApiService.createTradeOrder(params).then((res) => {
         let d = res.data;
@@ -457,7 +469,7 @@ const TradingPortal = () => {
         side: "sell",
         ordType: "market",
         sz: toFixed(SELL.Amount),
-        subAcct: LoggedIn[5],
+        subAcct: LogginIn[5],
       };
       ApiService.createTradeOrder(params).then((res) => {
         let d = res.data;
@@ -681,8 +693,7 @@ const TradingPortal = () => {
                   <div className="col-lg-6">
                     <div className="px-3">
                       <p className="mt-2" style={{ fontSize: 14 }}>
-                        Avl. {numeral(buyBalance || 0).format("0,0.3-6")}{" "}
-                        <b>{Pair.Base}</b>
+                        Avl. {buyBalance || 0} <b>{Pair.Base}</b>
                       </p>
                       <input
                         className="form-control"
@@ -749,7 +760,7 @@ const TradingPortal = () => {
                       <p className="mt-4 text-center green-text">
                         {succesMessage}
                       </p>
-                      {LoggedIn[1] && (
+                      {LogginIn[1] && (
                         <button
                           className="btn btn-primary mt-4 w-100 buy-btn s-bld"
                           onClick={() =>
@@ -763,7 +774,7 @@ const TradingPortal = () => {
                           BUY {Pair.Coin}
                         </button>
                       )}
-                      {!LoggedIn[1] && (
+                      {!LogginIn[1] && (
                         <NavLink
                           className="btn btn-primary mt-4 w-100 buy-btn s-bld"
                           to={"/login"}
@@ -778,8 +789,7 @@ const TradingPortal = () => {
                       <p className="mt-2" style={{ fontSize: 14 }}>
                         Avl.{" "}
                         <b>
-                          {numeral(sellBalance || 0).format("0,0.3-6")}{" "}
-                          {Pair.Coin}
+                          {sellBalance || 0} {Pair.Coin}
                         </b>
                       </p>
                       <input
@@ -847,7 +857,7 @@ const TradingPortal = () => {
                       <p className="mt-4 text-center green-text">
                         {succesMessageSell}
                       </p>
-                      {LoggedIn[1] && (
+                      {LogginIn[1] && (
                         <button
                           className="btn btn-primary mt-4 w-100 sell-btn s-bld"
                           onClick={() =>
@@ -861,7 +871,7 @@ const TradingPortal = () => {
                           SELL {Pair.Base}
                         </button>
                       )}
-                      {!LoggedIn[1] && (
+                      {!LogginIn[1] && (
                         <NavLink
                           className="btn btn-primary mt-4 w-100 sell-btn s-bld"
                           to={"/login"}
@@ -1194,8 +1204,7 @@ const TradingPortal = () => {
                         <p className="mt-2" style={{ fontSize: 14 }}>
                           Avl.{" "}
                           <b>
-                            {numeral(buyBalance || 0).format("0,0.3-6")}{" "}
-                            {Pair.Base}
+                            {buyBalance || 0} {Pair.Base}
                           </b>
                         </p>
                         <input
@@ -1259,7 +1268,7 @@ const TradingPortal = () => {
                           ).format("0,0.4-8")}{" "}
                           {Pair.Coin}
                         </div>
-                        {LoggedIn[1] && (
+                        {LogginIn[1] && (
                           <button
                             className="btn btn-primary mt-4 w-100 buy-btn s-bld"
                             onClick={() =>
@@ -1273,7 +1282,7 @@ const TradingPortal = () => {
                             BUY {Pair.Coin}
                           </button>
                         )}
-                        {!LoggedIn[1] && (
+                        {!LogginIn[1] && (
                           <NavLink
                             className="btn btn-primary mt-4 w-100 buy-btn s-bld"
                             to={"/login"}
@@ -1288,8 +1297,7 @@ const TradingPortal = () => {
                         <p className="mt-2" style={{ fontSize: 14 }}>
                           Avl.{" "}
                           <b>
-                            {numeral(sellBalance || 0).format("0,0.3-6")}{" "}
-                            {Pair.Coin}
+                            {sellBalance || 0} {Pair.Coin}
                           </b>
                         </p>
                         <input
@@ -1356,7 +1364,7 @@ const TradingPortal = () => {
                         <p className="mt-4 text-center error-msg">
                           {errorMessageSell}
                         </p>
-                        {LoggedIn[1] && (
+                        {LogginIn[1] && (
                           <button
                             className="btn btn-primary mt-4 w-100 sell-btn s-bld"
                             onClick={() =>
@@ -1370,7 +1378,7 @@ const TradingPortal = () => {
                             SELL {Pair.Base}
                           </button>
                         )}
-                        {!LoggedIn[1] && (
+                        {!LogginIn[1] && (
                           <NavLink
                             className="btn btn-primary mt-4 w-100 sell-btn s-bld"
                             to={"/login"}

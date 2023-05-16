@@ -9,7 +9,7 @@ import ApiService from "../../../services/apiService";
 
 const AccountSettings = () => {
   const [currentCurrency, setCurrentCurrency] = useState(
-    localStorage.getItem("currency") || "USD"
+    localStorage.getItem("currency") || "USDT"
   );
   const [currencies, setCurrencies] = useState([]);
   const { t, i18n } = useTranslation();
@@ -38,11 +38,23 @@ const AccountSettings = () => {
   return (
     <>
       <div className="pb-2 light-border-bottom">
-        <h4>{t("Account Settings")}</h4>
+        <h4
+          className={`${
+            getTheme() === "dark" ? "sub-title-dark" : "sub-title"
+          }`}
+        >
+          {t("Account Settings")}
+        </h4>
         <Divider />
       </div>
-      <div className="d-flex justify-content-between align-items-center py-2 mt-2">
-        <p>{t("Language")}</p>
+      <div className="d-flex justify-content-between align-items-center setting-block mt-2">
+        <div
+          className={`${
+            getTheme() === "dark" ? "sub-point-dark" : "sub-point"
+          } align-content-center`}
+        >
+          {t("Language")}
+        </div>
         <Dropdown size="lg">
           <Dropdown.Toggle
             className={`${
@@ -52,7 +64,9 @@ const AccountSettings = () => {
             } d-flex align-items-center`}
           >
             <p className="m-0 mr-2">
-              {i18n.language === "en" ? "English" : "Chinese"}
+              {i18n.language === "en"
+                ? "English"
+                : "Simplified Chinese (中文) "}
             </p>
             <span
               className="material-symbols-outlined acc-box-i align-self-center ml-auto pointer"
@@ -61,24 +75,42 @@ const AccountSettings = () => {
               expand_more
             </span>
           </Dropdown.Toggle>
-          <Dropdown.Menu>
+          <Dropdown.Menu
+            className={`${
+              getTheme() === "dark" ? "dropdown-menu-dark" : "dropdown-menu"
+            }`}
+          >
             <Dropdown.Item
               onClick={() => changeLang("en")}
-              className={"dropdown-item"}
+              className={`${
+                getTheme() === "dark"
+                  ? "dropdown-menu-item-dark"
+                  : "dropdown-item"
+              }`}
             >
               English
             </Dropdown.Item>
             <Dropdown.Item
               onClick={() => changeLang("ch")}
-              className={"dropdown-item"}
+              className={`${
+                getTheme() === "dark"
+                  ? "dropdown-menu-item-dark"
+                  : "dropdown-item"
+              }`}
             >
-              Chinese
+              Simplified Chinese (中文)
             </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      <div className="d-flex justify-content-between align-items-center py-2">
-        <p>{t("Currency")}</p>
+      <div className="d-flex justify-content-between align-items-center setting-block mt-2">
+        <div
+          className={`${
+            getTheme() === "dark" ? "sub-point-dark" : "sub-point"
+          }`}
+        >
+          {t("Currency")}
+        </div>
         <Dropdown size="lg">
           <Dropdown.Toggle
             className={`${
@@ -96,11 +128,21 @@ const AccountSettings = () => {
               expand_more{" "}
             </span>
           </Dropdown.Toggle>
-          <Dropdown.Menu className="dropdown-currency-menu">
+          <Dropdown.Menu
+            className={`${
+              getTheme() === "dark"
+                ? "dropdown-menu-dark"
+                : "dropdown-currency-menu"
+            }`}
+          >
             {currencies &&
               currencies.map((item, index) => (
                 <Dropdown.Item
-                  className={"dropdown-item"}
+                  className={`${
+                    getTheme() === "dark"
+                      ? "dropdown-menu-item-dark"
+                      : "dropdown-item"
+                  }`}
                   key={index}
                   onClick={() => {
                     setCurrentCurrency(item);
@@ -113,18 +155,33 @@ const AccountSettings = () => {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-      <div className="d-flex justify-content-between align-items-center py-2">
-        <p>{t("account.settings.Mode")}</p>
+      <div className="d-flex justify-content-between align-items-center mt-2 setting-block">
+        <div
+          className={`${
+            getTheme() === "dark" ? "sub-point-dark" : "sub-point"
+          }`}
+        >
+          {t("account.settings.Mode")}
+        </div>
         <div className="d-flex align-items-center">
+          <span className="coming-soon">
+            {t("account.settings.Coming Soon")}
+          </span>
           <span className="material-symbols-outlined mr-4">sunny</span>
-          <div
-            className={`switch-container-mode ${
-              getTheme() !== "light" ? "on" : "off"
-            }`}
-            onClick={colorMode.toggleColorMode}
-          >
-            <div className="switch-button-mode" />
+          <div className="custom-control custom-switch">
+            <input
+              type="checkbox"
+              className="custom-control-input form-control-lg"
+              id="customSwitch1"
+              checked={false}
+              // onClick={colorMode.toggleColorMode}
+            />
+            <label
+              className="custom-control-label"
+              htmlFor="customSwitch1"
+            ></label>
           </div>
+          {/*</div>*/}
           <span className="material-symbols-outlined ml-3">dark_mode</span>
         </div>
       </div>

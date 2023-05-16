@@ -17,7 +17,9 @@ const Deposit = ({ type }) => {
     chain: "",
   });
   const [address, setAddress] = useState("");
+  const [huobiAddress, setHuobiAddress] = useState([]);
   const [depositErr, setDepositErr] = useState("");
+  const [loading, setLoading] = useState();
 
   useEffect(() => {
     const params = {
@@ -42,6 +44,25 @@ const Deposit = ({ type }) => {
   const selectCurrency = (ccy) => {
     setSelectedCurrency(ccy);
     setChains(currencies[ccy]);
+    console.log(type, "type");
+    if (type === "huobi") {
+      setLoading(true);
+      const depositAddressParams = {
+        currency: ccy.toLocaleLowerCase(),
+        subUid: "436895311",
+      };
+      ApiService.createDepositAddressForHuobi(depositAddressParams).then(
+        (res) => {
+          console.log(JSON.parse(res.data["API Result"]).data, "res");
+          const result = JSON.parse(res.data["API Result"]).data;
+          if (result) {
+            setHuobiAddress(result);
+          }
+          setLoading(false);
+        }
+      );
+      console.log("stexa");
+    }
   };
 
   const selectNetwork = (network) => {
@@ -57,11 +78,16 @@ const Deposit = ({ type }) => {
       chain: network.chain,
     };
 
-    ApiService.createDepositAddressForSubAccount(params).then((res) => {
-      console.log(res, "res");
-      setCreatedDeposit(JSON.parse(res.data["KYC Api resuult"]).data?.[0]);
-      setDepositErr(JSON.parse(res.data["KYC Api resuult"]).msg);
-    });
+    setLoading(true);
+    if (type === "okx") {
+      ApiService.createDepositAddressForSubAccount(params).then((res) => {
+        console.log(res, "res");
+        setCreatedDeposit(JSON.parse(res.data["KYC Api resuult"]).data?.[0]);
+        setDepositErr(JSON.parse(res.data["KYC Api resuult"]).msg);
+        setLoading(false);
+      });
+    } else if (type === "huobi") {
+    }
   };
 
   useEffect(() => {
@@ -167,50 +193,54 @@ const Deposit = ({ type }) => {
             </Dropdown.Menu>
           </Dropdown>
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            width: "100%",
-            paddingTop: 10,
-            paddingBottom: 10,
-          }}
-        >
-          <span>Network</span>
-          <Dropdown>
-            <Dropdown.Toggle
-              className="form-control ddrop d-flex"
-              id="dropdownBasic1"
-            >
-              {selectedChain.chain === "" ? (
-                <span className="align-self-center">-- Select --</span>
-              ) : (
-                <span className="align-self-center">{selectedChain.chain}</span>
-              )}
-              <span
-                className="material-symbols-outlined align-self-center mb-0 ml-auto mr-2"
-                style={{ fontSize: 24 }}
+        {type === "okx" && (
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              width: "100%",
+              paddingTop: 10,
+              paddingBottom: 10,
+            }}
+          >
+            <span>Network</span>
+            <Dropdown>
+              <Dropdown.Toggle
+                className="form-control ddrop d-flex"
+                id="dropdownBasic1"
               >
-                arrow_drop_down
-              </span>
-            </Dropdown.Toggle>
-            <Dropdown.Menu
-              aria-labelledby="dropdownBasic1"
-              style={{ maxHeight: 200, overflowY: "auto" }}
-            >
-              {chains.map((chain, index) => (
-                <Dropdown.Item
-                  className="network-list-item"
-                  onClick={() => selectNetwork(chain)}
-                  key={index}
+                {selectedChain.chain === "" ? (
+                  <span className="align-self-center">-- Select --</span>
+                ) : (
+                  <span className="align-self-center">
+                    {selectedChain.chain}
+                  </span>
+                )}
+                <span
+                  className="material-symbols-outlined align-self-center mb-0 ml-auto mr-2"
+                  style={{ fontSize: 24 }}
                 >
-                  <span>{chain.chain}</span>
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+                  arrow_drop_down
+                </span>
+              </Dropdown.Toggle>
+              <Dropdown.Menu
+                aria-labelledby="dropdownBasic1"
+                style={{ maxHeight: 200, overflowY: "auto" }}
+              >
+                {chains.map((chain, index) => (
+                  <Dropdown.Item
+                    className="network-list-item"
+                    onClick={() => selectNetwork(chain)}
+                    key={index}
+                  >
+                    <span>{chain.chain}</span>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
+        )}
         <div
           style={{
             display: "flex",
@@ -236,6 +266,8 @@ const Deposit = ({ type }) => {
                 </span>
               </div>
             </>
+          ) : loading ? (
+            <>Creating address ...</>
           ) : (
             <></>
           )}
@@ -243,6 +275,47 @@ const Deposit = ({ type }) => {
         {!address && depositErr && (
           <span style={{ color: "red" }}>{depositErr}</span>
         )}
+        {!!huobiAddress.length &&
+          huobiAddress.map((add) => (
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 5,
+              }}
+            >
+              <div>
+                <span>{add.chain.toUpperCase()}</span>
+                <div>
+                  {add.address.substring(0, 9)} ...{" "}
+                  {add.address.substring(
+                    add.address.length - 9,
+                    add.address.length - 1
+                  )}
+                  <span
+                    className="material-symbols-outlined"
+                    onClick={() => copy(add.address)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    &nbsp;content_copy
+                  </span>
+                </div>
+              </div>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <span style={{ marginRight: 10 }}>
+                  Scan the code to <br /> copy the address
+                </span>
+                <QRCode
+                  value={add.address}
+                  size={150}
+                  logoImage="/favicon.svg"
+                  logoWidth={35}
+                  logoHeight={35}
+                />
+              </div>
+            </div>
+          ))}
         {address && (
           <div
             style={{

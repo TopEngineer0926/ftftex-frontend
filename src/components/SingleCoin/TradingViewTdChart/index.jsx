@@ -4,6 +4,23 @@ import { getTheme } from "utils";
 let TradingView = window.TradingView;
 
 const TradingViewTdChart = ({ COIN, PAIR, EXCHANGE, chartType }) => {
+  const isColorReference = localStorage.getItem("colorReference") !== null;
+  const colorReference = isColorReference
+    ? localStorage.getItem("colorReference").split(",")
+    : ["Green Up", "Red Down"];
+  const override =
+    colorReference === ["Green Up", "Red Down"]
+      ? {
+          "mainSeriesProperties.candleStyle.upColor": "#0A9981",
+          "mainSeriesProperties.candleStyle.downColor": "#F23545",
+        }
+      : {
+          "mainSeriesProperties.candleStyle.upColor": "#F23545",
+          "mainSeriesProperties.candleStyle.borderUpColor": "#F23545",
+          "mainSeriesProperties.candleStyle.downColor": "#0A9981",
+          "mainSeriesProperties.candleStyle.borderDownColor": "#0A9981",
+        };
+
   let HideBar = false;
   let Height = 610;
   const coins = [
@@ -51,6 +68,7 @@ const TradingViewTdChart = ({ COIN, PAIR, EXCHANGE, chartType }) => {
           toolbar_bg: "#f1f3f6",
           enable_publishing: false,
           hide_side_toolbar: HideBar,
+          overrides: override,
         });
       }
 

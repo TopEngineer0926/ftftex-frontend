@@ -43,8 +43,13 @@ import WalletDetails from "components/WalletDetails";
 import FundingAccount from "components/WalletDetails/FundingAccount";
 import TradingAccount from "components/WalletDetails/TradingAccount";
 import TradeHistory from "components/WalletDetails/TradeHistory";
-import TransactionHistory from "./components/TransactionHistory";
+import TransactionHistory from "components/TransactionHistory";
 import BuyCrypto from "components/Account/BuyCrypto";
+import { AboutUsSupport } from "components/Account/Support/AboutUsSupport";
+import { ContactUs } from "components/Account/Support/ContactUs";
+import { AmlPolicyTP } from "components/Account/TermsPolicies/AmlPolicyTP";
+import { PrivacyPolicyTP } from "components/Account/TermsPolicies/PrivacyPolicyTP";
+import { TermsOfService } from "components/Account/TermsPolicies/TermsOfService";
 
 const RoutesComponent = () => {
   return (
@@ -102,7 +107,15 @@ const RoutesComponent = () => {
         <Route path="privacy" Component={Privacy} />
         <Route path="environment" Component={Environment} />
         <Route path="support" Component={Support} />
+        <Route path="support/about-us" Component={AboutUsSupport} />
+        <Route path="support/contact-us" Component={ContactUs} />
         <Route path="terms-policies" Component={TermsPolicies} />
+        <Route path="terms-policies/aml-policy" Component={AmlPolicyTP} />
+        <Route
+          path="terms-policies/privacy-policy"
+          Component={PrivacyPolicyTP}
+        />
+        <Route path="terms-policies/terms-service" Component={TermsOfService} />
       </Route>
       <Route path="account/verification" Component={KYC} />
       <Route path="spot-wallet" Component={WalletAsset} />

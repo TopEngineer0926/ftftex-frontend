@@ -18,6 +18,7 @@ const OKX = () => {
   const [showTransferModal, setShowTransferModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [deposits, setDeposits] = useState([]);
+  const [balance, setBalance] = useState(0);
   const [trading, setTrading] = useState([]);
   const [LogginIn, setLogginIn] = useState({ 0: "" });
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const OKX = () => {
   const seriesData = [
     {
       name: "Amount",
-      data: [30, 40, 45, 50, 49, 60, 70, 91, 125],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
   ];
 
@@ -98,10 +99,30 @@ const OKX = () => {
 
   useEffect(() => {
     if (LogginIn[5]) {
+      getSubAccBalance();
       getSubAccTradeBalance();
       getSubAccFoundBalance();
     }
   }, [LogginIn]);
+
+  const getSubAccBalance = () => {
+    const params = {
+      subAcct: LogginIn[5],
+    };
+    ApiService.getSubAccBalance(params).then((res) => {
+      let tmpTrading = JSON.parse(res.data["KYC Api resuult"])?.data[0]
+        ?.details;
+      console.log(tmpTrading, "tmpTrading");
+      let sum = 0;
+      if (tmpTrading.length) {
+        tmpTrading.forEach((item) => {
+          console.log(item, "item");
+          sum += +item.eqUsd;
+        });
+      }
+      setBalance(sum);
+    });
+  };
 
   const getSubAccTradeBalance = () => {
     const params = {
@@ -109,6 +130,7 @@ const OKX = () => {
     };
     ApiService.getSubAccTradeBalance(params).then((res) => {
       let tmpTrading = JSON.parse(res.data["KYC Api resuult"])?.data[0]?.details;
+      console.log(tmpTrading, "tmpTrading");
       setTrading(tmpTrading);
     });
   };
@@ -119,6 +141,7 @@ const OKX = () => {
     };
     ApiService.getSubAccFoundBalance(params).then((res) => {
       let tmpDeposits = JSON.parse(res.data["KYC Api resuult"])?.data;
+      console.log(tmpDeposits, "tmpDeposits");
       setDeposits(tmpDeposits);
     });
   };
@@ -242,7 +265,7 @@ const OKX = () => {
               height={50}
             />
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ color: "gray" }}>WID: 12345679</span>
+              <span style={{ color: "gray" }}>WID: {LogginIn[5]} </span>
               <span>OKX Wallet (62.5 %)</span>
             </div>
             <span className="okx-wallet-details">Wallet Details</span>
@@ -271,18 +294,22 @@ const OKX = () => {
             <div style={{ display: "flex", alignItems: "center" }}>
               <div style={{ width: "50%" }}>
                 <span style={{ color: "gray" }}>Balance</span>
-                <span style={{ marginLeft: 20 }}>2,000 USDT</span>
-              </div>
-              <div style={{ width: "50%" }}>
-                <span style={{ color: "gray" }}>P & L</span>
-                <span style={{ marginLeft: 20 }}>5 USDT</span>{" "}
-                <span style={{ color: "lightgreen", marginLeft: 10 }}>
-                  0.25%
+                <span style={{ marginLeft: 20 }}>
+                  {balance ? balance : "-"}
                 </span>
+                {!!balance && <span> USD</span>}
               </div>
+              {/*<div style={{ width: "50%" }}>*/}
+              {/*  <span style={{ color: "gray" }}>P & L</span>*/}
+              {/*  <span style={{ marginLeft: 20 }}>5 USDT</span>{" "}*/}
+              {/*  <span style={{ color: "lightgreen", marginLeft: 10 }}>*/}
+              {/*    0.25%*/}
+              {/*  </span>*/}
+              {/*</div>*/}
             </div>
             <span style={{ color: "gray", fontSize: 14 }}>
-              Information is updated every minute. Last update 14:43 GMT+4
+              Information is updated every minute. Last update{" "}
+              {new Date().toString()}
             </span>
           </div>
         </div>

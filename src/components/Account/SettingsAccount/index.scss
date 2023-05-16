@@ -1,3 +1,38 @@
+.sub-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #000;
+}
+
+.sub-title-dark {
+  font-size: 20px;
+  font-weight: 500;
+  color: whitesmoke;
+}
+
+.sub-point {
+  font-size: 16px;
+  font-weight: 400;
+  color: #585B5b;
+}
+
+.sub-point-dark {
+  font-size: 16px;
+  font-weight: 400;
+  color: whitesmoke;
+}
+
+.setting-block {
+  padding-bottom: 15px;
+  padding-top: 15px;
+  margin-top: 10px;
+}
+
+.btn-continue {
+  background: rgb(0, 32, 212);
+  background: linear-gradient(261deg, rgba(0, 32, 212, 1) 65%, rgba(38, 114, 247, 1) 100%);
+  color: whitesmoke !important;
+}
 .dropdown-account {
   background-color: transparent;
   border: none;
@@ -48,40 +83,26 @@
   overflow-y: scroll;
 }
 
-.switch-container-mode {
-  width: 80px;
-  height: 40px;
-  background-color: whitesmoke;
-  border: solid 1px #1e253d;
-  border-radius: 5px;
-  position: relative;
-  cursor: pointer;
+.dropdown-menu {
+  background: whitesmoke;
+  color: #000000;
 }
 
-.switch-button-mode {
-  width: 32px;
-  height: 32px;
-  background-color: rgb(0, 32, 212);
-  border-radius: 5px;
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  transition: transform 0.3s ease;
+.dropdown-menu-dark,
+.dropdown-menu-dark:hover,
+.dropdown-menu-dark:focus,
+.dropdown-menu-dark:active {
+  background: #1D253D;
+  color: whitesmoke;
 }
 
-.switch-container-mode.on {
-  border: solid 1px whitesmoke;
-  background-color: #1e253d;
+.dropdown-menu-item-dark,
+.dropdown-menu-item-dark:hover,
+.dropdown-menu-item-dark:focus,
+.dropdown-menu-item-dark:active {
+  background: #1D253D;
+  color: whitesmoke;
 }
 
-.switch-container-mode.on .switch-button-mode {
-  transform: translateX(32px);
-}
 
-.switch-container-mode.off {
-  background-color: whitesmoke;
-}
 
-.switch-container-mode.off .switch-button-mode {
-  transform: translateX(0);
-}

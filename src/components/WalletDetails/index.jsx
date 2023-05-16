@@ -1,15 +1,18 @@
 import { useEffect, useState, useContext } from "react";
 import "./index.scss";
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FTFTexContext } from "App";
+import { getLoggedIn } from "../../utils";
 
 const WalletDetails = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [type, setType] = useState("");
   const param = useParams();
   const [isMobile, setIsMobile] = useState(false);
   const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
+  const [LogginIn, setLogginIn] = useState({ 0: "" });
 
   useEffect(() => {
     setIsMobile(ftftexValue.isMobile);
@@ -18,6 +21,15 @@ const WalletDetails = () => {
   useEffect(() => {
     setType(param.type);
   }, [param]);
+
+  useEffect(() => {
+    const data = getLoggedIn();
+    if (!data[0]) {
+      navigate("/login");
+    } else {
+      setLogginIn(data);
+    }
+  }, []);
 
   return (
     <div className="container mt-4 mb-4" style={{ margin: "auto" }}>
@@ -61,7 +73,7 @@ const WalletDetails = () => {
               />
             )}
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ color: "gray" }}>WID: 12345679</span>
+              <span style={{ color: "gray" }}>WID: {LogginIn[5]}</span>
               {type === "okx" && <span>OKX Wallet</span>}
               {type === "huobi" && <span>Huobi Wallet</span>}
               {type === "xt" && <span>XT.com Wallet</span>}
@@ -72,16 +84,18 @@ const WalletDetails = () => {
             className="d-flex d-lg-block"
             style={{ minHeight: isMobile ? 150 : 600, marginTop: 20 }}
           >
-            <NavLink
-              className={({ isActive }) =>
-                isActive
-                  ? "btn sub-menu-btn w-100 radius-10 btn-primary"
-                  : "btn sub-menu-btn w-100 radius-10"
-              }
-              to={`/wallet/details/funding-account/${type}`}
-            >
-              Funding Account
-            </NavLink>
+            {type === "okx" && (
+              <NavLink
+                className={({ isActive }) =>
+                  isActive
+                    ? "btn sub-menu-btn w-100 radius-10 btn-primary"
+                    : "btn sub-menu-btn w-100 radius-10"
+                }
+                to={`/wallet/details/funding-account/${type}`}
+              >
+                Funding Account
+              </NavLink>
+            )}
             <hr style={{ margin: "unset" }} />
             <NavLink
               className={({ isActive }) =>

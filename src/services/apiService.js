@@ -34,8 +34,8 @@ class ApiService {
       fmData.userId = dialcode + data.phone;
     }
     return axios.post(
-        `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/login`,
-        fmData
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/login`,
+      fmData
     );
   }
 
@@ -51,8 +51,8 @@ class ApiService {
       userName: `username${Date.now()}`,
     };
     return axios.post(
-        `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/saveUserInitially`,
-        DATA
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/saveUserInitially`,
+      DATA
     );
   }
 
@@ -309,6 +309,27 @@ class ApiService {
     );
   }
 
+  createDepositAddressForHuobi(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/getDepositAddress`,
+      params
+    );
+  }
+
+  getSubAccountBalanceHuobi(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/getSubAccountBalance`,
+      params
+    );
+  }
+
+  createWithdrawRequestHuobi(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/createWithdrawRequest`,
+      params
+    );
+  }
+
   createSubAccount(params) {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/createSubAccount`,
@@ -324,24 +345,30 @@ class ApiService {
   }
   getSubAccountXt(params) {
     return axios.post(
-        `${process.env.REACT_APP_BASE_URL}ftftx/xtAPI/getLocalAccount`,
-        params
+      `${process.env.REACT_APP_BASE_URL}ftftx/xtAPI/getLocalAccount`,
+      params
     );
   }
 
   createSubAccountXt(params) {
     return axios.post(
-        `${process.env.REACT_APP_BASE_URL}ftftx/xtAPI/createSubAccount`
-        , params
+      `${process.env.REACT_APP_BASE_URL}ftftx/xtAPI/createSubAccount`,
+      params
     );
   }
 
   createSubAccountHuobi(params) {
-    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/createSubUser`, params);
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/createSubUser`,
+      params
+    );
   }
 
   getSubAccountHuobi(params) {
-    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/getUsers`, params);
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/getUsers`,
+      params
+    );
   }
 
   getSubAccBalance(params) {
@@ -367,40 +394,66 @@ class ApiService {
 
   getUser(userId) {
     return axios.post(
-        `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/getUserDetails`,
-        { userId }
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/getUserDetails`,
+      { userId }
     );
   }
 
   deleteSubAccount(params) {
     return axios.post(
-        `${process.env.REACT_APP_BASE_URL}ftftx/subAccAPI/cancelSubAccount`,
-        params
+      `${process.env.REACT_APP_BASE_URL}ftftx/subAccAPI/cancelSubAccount`,
+      params
     );
   }
 
   getAllCurrency() {
     return axios.post(
-        `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getCurrencies`,
-        {"ccy":""}
+      `${process.env.REACT_APP_BASE_URL}ftftx/kyxAPI/getCurrencies`,
+      { ccy: "" }
     );
   }
 
   uploadFile(data) {
-    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/filesApi/file/upload`, data);
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/filesApi/file/upload`,
+      data
+    );
   }
 
   changeAvatar(params) {
-    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/changeAvatar`, params);
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/changeAvatar`,
+      params
+    );
   }
 
   editUserPhone(params) {
-    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/updatePhone`, params);
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/updatePhone`,
+      params
+    );
   }
 
   editUserEmail(params) {
-    return axios.post(`${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/updateEmail`, params);
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/updateEmail`,
+      params
+    );
   }
+
+  savePost = (data) => {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/communityApi/savePost`,
+      data
+    );
+  };
+
+  getAllPostsByUser = (data) => {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/communityApi/getAllPosts`,
+      data
+    );
+  };
 }
 
 export default new ApiService();

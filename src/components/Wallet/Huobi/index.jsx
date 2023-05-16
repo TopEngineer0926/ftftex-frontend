@@ -42,7 +42,7 @@ const Huobi = () => {
   const seriesData = [
     {
       name: "Amount",
-      data: [30, 40, 45, 50, 49, 60, 70, 91, 125],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
   ];
 
@@ -98,18 +98,21 @@ const Huobi = () => {
 
   useEffect(() => {
     if (LogginIn[5]) {
-      getSubAccTradeBalance();
-      getSubAccFoundBalance();
+      getSubAccountBalanceHuobi();
+      // getSubAccTradeBalance();
+      // getSubAccFoundBalance();
     }
   }, [LogginIn]);
 
-  const getSubAccTradeBalance = () => {
+  const getSubAccountBalanceHuobi = () => {
     const params = {
-      subAcct: LogginIn[5],
+      sub_uid: "436895311",
     };
-    ApiService.getSubAccTradeBalance(params).then((res) => {
-      let tmpTrading = JSON.parse(res.data["KYC Api resuult"])?.data[0]?.details;
-      setTrading(tmpTrading);
+    ApiService.getSubAccountBalanceHuobi(params).then((res) => {
+      console.log(res, "res");
+      let tempBalance = JSON.parse(res.data["API Result"]);
+      console.log(tempBalance, "tempBalance");
+      // setTrading(tmpTrading);
     });
   };
 
@@ -136,7 +139,7 @@ const Huobi = () => {
   };
 
   const goToDetails = (event) => {
-    navigate("/wallet/details/funding-account/huobi");
+    navigate("/wallet/details/trading-account/huobi");
   };
 
   const stopPropagation = (event) => {
@@ -242,7 +245,7 @@ const Huobi = () => {
               height={50}
             />
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ color: "gray" }}>WID: 12345679</span>
+              <span style={{ color: "gray" }}>WID: {LogginIn[5]}</span>
               <span>Huobi Wallet (37.5 %)</span>
             </div>
             <span className="huobi-wallet-details">Wallet Details</span>
@@ -282,7 +285,8 @@ const Huobi = () => {
               </div>
             </div>
             <span style={{ color: "gray", fontSize: 14 }}>
-              Information is updated every minute. Last update 14:43 GMT+4
+              Information is updated every minute. Last update{" "}
+              {new Date().toString()}
             </span>
           </div>
         </div>
@@ -296,15 +300,15 @@ const Huobi = () => {
         </div>
         <div className="wallet-button-layout">
           <div className="wallet-button-group">
-            <div className="button-item">
-              <button
-                class="btn d-block huobi-button"
-                onClick={openTransferModal}
-              >
-                <span class="material-symbols-outlined">east</span>
-              </button>
-              <span>{t("Transfer")}</span>
-            </div>
+            {/*<div className="button-item">*/}
+            {/*  <button*/}
+            {/*    class="btn d-block huobi-button"*/}
+            {/*    onClick={openTransferModal}*/}
+            {/*  >*/}
+            {/*    <span class="material-symbols-outlined">east</span>*/}
+            {/*  </button>*/}
+            {/*  <span>{t("Transfer")}</span>*/}
+            {/*</div>*/}
             <div className="button-item">
               <button
                 class="btn d-block huobi-button"
@@ -325,189 +329,189 @@ const Huobi = () => {
             </div>
           </div>
         </div>
-        <div
-          className="wt-box p-3"
-          style={{ minHeight: 200, display: "grid", gap: 20 }}
-        >
-          Huobi Wallet Assets
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col" className="cu-p" onClick={() => doSort("rank")}>
-                  <div className="d-flex">
-                    #
-                    {order.field === "rank" && order.reversed === true && (
-                      <span className="material-symbols-outlined align-self-center">
-                        arrow_drop_up
-                      </span>
-                    )}
-                  </div>
-                </th>
-                <th scope="col" className="cu-p" onClick={() => doSort("name")}>
-                  <div className="d-flex">
-                    Cryptocurrency
-                    {order.field === "name" && order.reversed === true && (
-                      <span className="material-symbols-outlined align-self-center">
-                        arrow_drop_up
-                      </span>
-                    )}
-                    {order.field === "name" && order.reversed === false && (
-                      <span className="material-symbols-outlined align-self-center">
-                        arrow_drop_down
-                      </span>
-                    )}
-                  </div>
-                </th>
+        {/*<div*/}
+        {/*  className="wt-box p-3"*/}
+        {/*  style={{ minHeight: 200, display: "grid", gap: 20 }}*/}
+        {/*>*/}
+        {/*  Huobi Wallet Assets*/}
+        {/*  <table className="table">*/}
+        {/*    <thead>*/}
+        {/*      <tr>*/}
+        {/*        <th scope="col" className="cu-p" onClick={() => doSort("rank")}>*/}
+        {/*          <div className="d-flex">*/}
+        {/*            #*/}
+        {/*            {order.field === "rank" && order.reversed === true && (*/}
+        {/*              <span className="material-symbols-outlined align-self-center">*/}
+        {/*                arrow_drop_up*/}
+        {/*              </span>*/}
+        {/*            )}*/}
+        {/*          </div>*/}
+        {/*        </th>*/}
+        {/*        <th scope="col" className="cu-p" onClick={() => doSort("name")}>*/}
+        {/*          <div className="d-flex">*/}
+        {/*            Cryptocurrency*/}
+        {/*            {order.field === "name" && order.reversed === true && (*/}
+        {/*              <span className="material-symbols-outlined align-self-center">*/}
+        {/*                arrow_drop_up*/}
+        {/*              </span>*/}
+        {/*            )}*/}
+        {/*            {order.field === "name" && order.reversed === false && (*/}
+        {/*              <span className="material-symbols-outlined align-self-center">*/}
+        {/*                arrow_drop_down*/}
+        {/*              </span>*/}
+        {/*            )}*/}
+        {/*          </div>*/}
+        {/*        </th>*/}
 
-                <th
-                  scope="col"
-                  className="cu-p"
-                  onClick={() => doSort("quote.USD.volume_24h")}
-                >
-                  <div className="d-flex">
-                    Quantity
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === true && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_up
-                        </span>
-                      )}
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === false && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_down
-                        </span>
-                      )}
-                  </div>
-                </th>
+        {/*        <th*/}
+        {/*          scope="col"*/}
+        {/*          className="cu-p"*/}
+        {/*          onClick={() => doSort("quote.USD.volume_24h")}*/}
+        {/*        >*/}
+        {/*          <div className="d-flex">*/}
+        {/*            Quantity*/}
+        {/*            {order.field === "quote.USD.volume_24h" &&*/}
+        {/*              order.reversed === true && (*/}
+        {/*                <span className="material-symbols-outlined align-self-center">*/}
+        {/*                  arrow_drop_up*/}
+        {/*                </span>*/}
+        {/*              )}*/}
+        {/*            {order.field === "quote.USD.volume_24h" &&*/}
+        {/*              order.reversed === false && (*/}
+        {/*                <span className="material-symbols-outlined align-self-center">*/}
+        {/*                  arrow_drop_down*/}
+        {/*                </span>*/}
+        {/*              )}*/}
+        {/*          </div>*/}
+        {/*        </th>*/}
 
-                <th
-                  scope="col"
-                  className="cu-p"
-                  onClick={() => doSort("quote.USD.volume_24h")}
-                >
-                  <div className="d-flex">
-                    Total
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === true && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_up
-                        </span>
-                      )}
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === false && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_down
-                        </span>
-                      )}
-                  </div>
-                </th>
+        {/*        <th*/}
+        {/*          scope="col"*/}
+        {/*          className="cu-p"*/}
+        {/*          onClick={() => doSort("quote.USD.volume_24h")}*/}
+        {/*        >*/}
+        {/*          <div className="d-flex">*/}
+        {/*            Total*/}
+        {/*            {order.field === "quote.USD.volume_24h" &&*/}
+        {/*              order.reversed === true && (*/}
+        {/*                <span className="material-symbols-outlined align-self-center">*/}
+        {/*                  arrow_drop_up*/}
+        {/*                </span>*/}
+        {/*              )}*/}
+        {/*            {order.field === "quote.USD.volume_24h" &&*/}
+        {/*              order.reversed === false && (*/}
+        {/*                <span className="material-symbols-outlined align-self-center">*/}
+        {/*                  arrow_drop_down*/}
+        {/*                </span>*/}
+        {/*              )}*/}
+        {/*          </div>*/}
+        {/*        </th>*/}
 
-                <th
-                  scope="col"
-                  className="cu-p"
-                  onClick={() => doSort("quote.USD.volume_24h")}
-                >
-                  <div className="d-flex">
-                    Wallet %
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === true && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_up
-                        </span>
-                      )}
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === false && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_down
-                        </span>
-                      )}
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            {loader === false && (
-              <tbody>
-                {walletAssetData.map((dta, index) => (
-                  <tr key={index}>
-                    <td className="normal-td">{index + 1}</td>
-                    <td className="font-weight-bold">
-                      <div className="d-flex cu-p">
-                        <img
-                          className="align-self-center"
-                          loading="lazy"
-                          src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${dta.id}.png`}
-                          height={30}
-                        />
-                        <div className="align-self-center ml-2">
-                          <p className="mb-0 normal-td"> {dta.name}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="normal-td">{dta.quantity}</td>
-                    <td className="normal-td">{dta.total} USDT</td>
-                    <td className="normal-td">{dta.pro} %</td>
-                  </tr>
-                ))}
-              </tbody>
-            )}
-          </table>
-          {loader === true && (
-            <table className="table">
-              <tbody>
-                {items.map((item, index) => (
-                  <tr key={index}>
-                    <td>
-                      <ContentLoader
-                        backgroundColor="rgba(217,217,217,0.24)"
-                        foregroundColor="rgba(187,187,187,0.06)"
-                      >
-                        <rect
-                          x="0"
-                          y="0"
-                          rx="3"
-                          ry="3"
-                          width="250"
-                          height="60"
-                        />
-                      </ContentLoader>
-                    </td>
-                    <td>
-                      <ContentLoader
-                        backgroundColor="rgba(217,217,217,0.24)"
-                        foregroundColor="rgba(187,187,187,0.06)"
-                      >
-                        <rect
-                          x="0"
-                          y="0"
-                          rx="3"
-                          ry="3"
-                          width="500"
-                          height="60"
-                        />
-                      </ContentLoader>
-                    </td>
-                    <td>
-                      <ContentLoader
-                        backgroundColor="rgba(217,217,217,0.24)"
-                        foregroundColor="rgba(187,187,187,0.06)"
-                      >
-                        <rect
-                          x="0"
-                          y="0"
-                          rx="3"
-                          ry="3"
-                          width="500"
-                          height="60"
-                        />
-                      </ContentLoader>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+        {/*        <th*/}
+        {/*          scope="col"*/}
+        {/*          className="cu-p"*/}
+        {/*          onClick={() => doSort("quote.USD.volume_24h")}*/}
+        {/*        >*/}
+        {/*          <div className="d-flex">*/}
+        {/*            Wallet %*/}
+        {/*            {order.field === "quote.USD.volume_24h" &&*/}
+        {/*              order.reversed === true && (*/}
+        {/*                <span className="material-symbols-outlined align-self-center">*/}
+        {/*                  arrow_drop_up*/}
+        {/*                </span>*/}
+        {/*              )}*/}
+        {/*            {order.field === "quote.USD.volume_24h" &&*/}
+        {/*              order.reversed === false && (*/}
+        {/*                <span className="material-symbols-outlined align-self-center">*/}
+        {/*                  arrow_drop_down*/}
+        {/*                </span>*/}
+        {/*              )}*/}
+        {/*          </div>*/}
+        {/*        </th>*/}
+        {/*      </tr>*/}
+        {/*    </thead>*/}
+        {/*    {loader === false && (*/}
+        {/*      <tbody>*/}
+        {/*        {walletAssetData.map((dta, index) => (*/}
+        {/*          <tr key={index}>*/}
+        {/*            <td className="normal-td">{index + 1}</td>*/}
+        {/*            <td className="font-weight-bold">*/}
+        {/*              <div className="d-flex cu-p">*/}
+        {/*                <img*/}
+        {/*                  className="align-self-center"*/}
+        {/*                  loading="lazy"*/}
+        {/*                  src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${dta.id}.png`}*/}
+        {/*                  height={30}*/}
+        {/*                />*/}
+        {/*                <div className="align-self-center ml-2">*/}
+        {/*                  <p className="mb-0 normal-td"> {dta.name}</p>*/}
+        {/*                </div>*/}
+        {/*              </div>*/}
+        {/*            </td>*/}
+        {/*            <td className="normal-td">{dta.quantity}</td>*/}
+        {/*            <td className="normal-td">{dta.total} USDT</td>*/}
+        {/*            <td className="normal-td">{dta.pro} %</td>*/}
+        {/*          </tr>*/}
+        {/*        ))}*/}
+        {/*      </tbody>*/}
+        {/*    )}*/}
+        {/*  </table>*/}
+        {/*  {loader === true && (*/}
+        {/*    <table className="table">*/}
+        {/*      <tbody>*/}
+        {/*        {items.map((item, index) => (*/}
+        {/*          <tr key={index}>*/}
+        {/*            <td>*/}
+        {/*              <ContentLoader*/}
+        {/*                backgroundColor="rgba(217,217,217,0.24)"*/}
+        {/*                foregroundColor="rgba(187,187,187,0.06)"*/}
+        {/*              >*/}
+        {/*                <rect*/}
+        {/*                  x="0"*/}
+        {/*                  y="0"*/}
+        {/*                  rx="3"*/}
+        {/*                  ry="3"*/}
+        {/*                  width="250"*/}
+        {/*                  height="60"*/}
+        {/*                />*/}
+        {/*              </ContentLoader>*/}
+        {/*            </td>*/}
+        {/*            <td>*/}
+        {/*              <ContentLoader*/}
+        {/*                backgroundColor="rgba(217,217,217,0.24)"*/}
+        {/*                foregroundColor="rgba(187,187,187,0.06)"*/}
+        {/*              >*/}
+        {/*                <rect*/}
+        {/*                  x="0"*/}
+        {/*                  y="0"*/}
+        {/*                  rx="3"*/}
+        {/*                  ry="3"*/}
+        {/*                  width="500"*/}
+        {/*                  height="60"*/}
+        {/*                />*/}
+        {/*              </ContentLoader>*/}
+        {/*            </td>*/}
+        {/*            <td>*/}
+        {/*              <ContentLoader*/}
+        {/*                backgroundColor="rgba(217,217,217,0.24)"*/}
+        {/*                foregroundColor="rgba(187,187,187,0.06)"*/}
+        {/*              >*/}
+        {/*                <rect*/}
+        {/*                  x="0"*/}
+        {/*                  y="0"*/}
+        {/*                  rx="3"*/}
+        {/*                  ry="3"*/}
+        {/*                  width="500"*/}
+        {/*                  height="60"*/}
+        {/*                />*/}
+        {/*              </ContentLoader>*/}
+        {/*            </td>*/}
+        {/*          </tr>*/}
+        {/*        ))}*/}
+        {/*      </tbody>*/}
+        {/*    </table>*/}
+        {/*  )}*/}
+        {/*</div>*/}
         <Modal
           show={showDipositModal}
           onHide={() => setShowDipositModal(false)}

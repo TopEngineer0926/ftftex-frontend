@@ -80,8 +80,17 @@
   margin-right: 10px;
 }
 
-.back-btn {
+.back-btn,
+.back-btn:active {
   background: linear-gradient(261deg, rgba(0, 32, 212, 1) 65%, rgba(38, 114, 247, 1) 100%);
 }
 
+.back-btn:hover {
+  background: rgba(0, 32, 100);
+}
+
+.coming-soon {
+  margin-right: 10px;
+  color: #1000ff;
+}
 

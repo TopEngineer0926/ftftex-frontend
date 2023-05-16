@@ -8,8 +8,8 @@ export const getTheme = () => {
     let mode = localStorage.getItem("mode");
     return mode;
   } else {
-    localStorage.setItem("mode", "dark");
-    return "dark";
+    localStorage.setItem("mode", "light");
+    return "light";
   }
 };
 

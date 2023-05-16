@@ -1,0 +1,84 @@
+.icon-social g {
+  fill: #0020CE;
+}
+
+.email {
+  color: #0020CE !important;
+}
+
+.category-title {
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+  color: #C5C8C9 !important;
+}
+
+.category-name {
+  color: #000000;
+}
+
+.category-dropdown {
+  border: 1px solid #C5C8C9 !important;
+  padding: 8px 10px;
+  border-radius: 3px;
+  margin-top: 10px;
+}
+
+.category-dropdown-menu,
+.category-dropdown-menu-dark {
+  width: 210px;
+}
+
+.category-dropdown-menu-dark {
+  background-color: #1D253D;
+  color: whitesmoke !important;
+}
+
+.category-dropdown-item {
+  font-size: 16px;
+  font-weight: 600 !important;
+}
+
+.category-dropdown-item:hover,
+.category-dropdown-item:focus,
+.category-dropdown-item:active {
+  background-color: #0020CE;
+  color: whitesmoke !important;
+}
+
+.message-area,
+.message-area-dark {
+  position: relative;
+  max-width: 700px;
+  min-width: 400px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.message-area-dark {
+  background-color: #1D253D;
+  color: whitesmoke !important;
+}
+
+.sent-btn,
+.sent-btn-disable {
+  max-width: 700px;
+  min-width: 400px;
+}
+
+.sent-btn-disable {
+  background-color: #C5C8C9;
+  color: whitesmoke !important;
+}
+
+
+.textarea-message {
+  position: absolute;
+  color: #C5C8C9;
+  font-size: 14px;
+  right: 10px;
+}
+
+.blue-text {
+  color: #0020CE;
+}

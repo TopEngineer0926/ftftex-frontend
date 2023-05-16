@@ -59,6 +59,7 @@ const Transfer = ({ type, balances, tradings, onClose }) => {
   }, []);
 
   const handleChangeAmount = (e) => {
+    console.log(e.target.value, "e.target.value");
     setErrorMessage("");
     setAmount(e.target.value);
   };
@@ -89,11 +90,13 @@ const Transfer = ({ type, balances, tradings, onClose }) => {
       return;
     }
 
+    console.log(selectedFrom, "selectdFrom");
+
     const params = {
       ccy: selectedCurrency,
       amt: amount,
-      from: fromMain ? "18" : "6",
-      to: fromMain ? "6" : "18",
+      from: selectedFrom !== "Funding Wallet" ? "18" : "6",
+      to: selectedFrom !== "Funding Wallet" ? "6" : "18",
       type: "0",
       clientId: "ftftex20230223testtransfer",
       subAcct: LogginIn[5],
@@ -192,11 +195,11 @@ const Transfer = ({ type, balances, tradings, onClose }) => {
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-            {balances && (
-              <p style={{ textAlign: "right" }}>
-                Available {balances} {selectedCurrency}
-              </p>
-            )}
+            {/*{balances && (*/}
+            {/*  <p style={{ textAlign: "right" }}>*/}
+            {/*    Available {balances} {selectedCurrency}*/}
+            {/*  </p>*/}
+            {/*)}*/}
             <div
               style={{
                 display: "flex",
@@ -344,11 +347,11 @@ const Transfer = ({ type, balances, tradings, onClose }) => {
                 </Dropdown.Menu>
               </Dropdown>
             </div>
-            {tradings && (
-              <p style={{ textAlign: "right" }}>
-                Available {tradings} {selectedCurrency}
-              </p>
-            )}
+            {/*{tradings && (*/}
+            {/*  <p style={{ textAlign: "right" }}>*/}
+            {/*    Available {tradings} {selectedCurrency}*/}
+            {/*  </p>*/}
+            {/*)}*/}
             <button
               class="btn btn-primary mt-1 mb-1 ml-auto d-block "
               onClick={transfer}
@@ -369,7 +372,7 @@ const Transfer = ({ type, balances, tradings, onClose }) => {
             <p style={{ textAlign: "center" }}>
               You have successfully transfered{" "}
               <span style={{ color: "blue" }}>
-                0.3{" "}
+                {amount}{" "}
                 <img
                   src={currencies[selectedCurrency]?.[0]?.logoLink}
                   alt=""
@@ -377,7 +380,7 @@ const Transfer = ({ type, balances, tradings, onClose }) => {
                   width={25}
                   height={25}
                 />
-                &nbsp;{selectedCurrency} ($ 1000)
+                &nbsp;{selectedCurrency}
               </span>
             </p>
             <p style={{ textAlign: "center" }}>
@@ -385,10 +388,10 @@ const Transfer = ({ type, balances, tradings, onClose }) => {
               your <span style={{ color: "blue" }}>{selectedTo}</span>.
             </p>
             <br />
-            <p style={{ textAlign: "center" }}>
-              Total Balance {selectedTo} = 0.3 + 1.0 ={" "}
-              <span style={{ color: "blue" }}>1.3 BTC</span>{" "}
-            </p>
+            {/*<p style={{ textAlign: "center" }}>*/}
+            {/*  Total Balance {selectedTo} = 0.3 + 1.0 ={" "}*/}
+            {/*  <span style={{ color: "blue" }}>1.3 BTC</span>{" "}*/}
+            {/*</p>*/}
             <button
               class="btn btn-primary mt-5 mb-3 mx-auto d-block font-weight-bold px-5"
               onClick={myContinue}

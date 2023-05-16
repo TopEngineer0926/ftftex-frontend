@@ -101,10 +101,7 @@ export const Share = () => {
       >
         <Dropdown.Item>
           <div className="share-wrapper">
-            <QRCodeWithLogo
-              value="https://example.com"
-              logo="../../../assets/images/logo.svg"
-            />
+            <QRCodeWithLogo value="https://example.com" />
             <Button variant="primary" href="#" className="share-btn mt-2">
               Share
             </Button>
@@ -118,9 +115,10 @@ export const Share = () => {
 export const Notification = () => {
   const [data, setData] = useState([
     {
-      time: "10:00",
-      title: "New order",
-      description: "You have received a new order from user",
+      time: "30s",
+      title: "New login attempt",
+      description:
+        "The system has detected a new login attempt from a new device. Please verify your identity.",
     },
   ]);
   return (
@@ -145,7 +143,7 @@ export const Notification = () => {
               <div className="notification-time">{item.time}</div>
               <div>
                 <div className="notification-title">{item.title}</div>
-                <div>{item.description}</div>
+                <div className="notification-message">{item.description}</div>
               </div>
             </div>
           </Dropdown.Item>
@@ -155,20 +153,15 @@ export const Notification = () => {
   );
 };
 
-const QRCodeWithLogo = ({ value, logo }) => {
+const QRCodeWithLogo = ({ value }) => {
   const qrCodeSize = 256;
-  const logoSize = qrCodeSize / 3;
-
   return (
     <QRCode
       value={value}
       size={qrCodeSize}
-      imageSettings={{
-        src: logo,
-        height: logoSize,
-        width: logoSize,
-        excavate: true,
-      }}
+      logoImage="/favicon.svg"
+      logoWidth={35}
+      logoHeight={35}
     />
   );
 };
@@ -177,18 +170,17 @@ export const Theme = () => {
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <ul className="navbar-nav d-lg-flex flex-row d-none">
-      <li
-        className="nav-item dropdown cu-p"
-        onClick={colorMode.toggleColorMode}
+    <div
+      className="nav-item dropdown cu-p"
+      onClick={colorMode.toggleColorMode}
+      style={{ display: "flex" }}
+    >
+      <span
+        className="material-symbols-outlined align-self-center"
+        style={{ fontSize: 25 }}
       >
-        <span
-          className="material-symbols-outlined align-self-center"
-          style={{ fontSize: 25 }}
-        >
-          {getTheme() === "light" ? "dark_mode" : "light_mode"}
-        </span>
-      </li>
-    </ul>
+        {getTheme() === "light" ? "dark_mode" : "light_mode"}
+      </span>
+    </div>
   );
 };
