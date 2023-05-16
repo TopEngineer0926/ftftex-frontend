@@ -11,6 +11,8 @@ import Withdraw from "components/Wallet/Withdraw";
 import { useTranslation } from "react-i18next";
 import { FTFTexContext } from "App";
 import ContentLoader from "react-content-loader";
+import numeral from "numeral";
+import TradingDataService from "services/tradingDataService";
 
 const XT = () => {
   const { t } = useTranslation();
@@ -20,6 +22,8 @@ const XT = () => {
   const [deposits, setDeposits] = useState([]);
   const [trading, setTrading] = useState([]);
   const [LogginIn, setLogginIn] = useState({ 0: "" });
+  const [CoinData, setCoinData] = useState([]);
+  const [AlowedPairs, setAlowedPairs] = useState(TradingDataService.Pairs);
   const [isMobile, setIsMobile] = useState(false);
   const [ftftexValue, setFtftexValue] = useContext(FTFTexContext);
   const [order, setOrder] = useState({
@@ -32,6 +36,7 @@ const XT = () => {
     { id: 7278, name: "Aave", quantity: "748", total: "292", pro: "9.08" },
   ]);
   const [loader, setLoader] = useState(false);
+  const [tradeLoader, setTradeLoader] = useState(false);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -84,7 +89,7 @@ const XT = () => {
   };
 
   useEffect(() => {
-    const tempItems = Array(10)
+    const tempItems = Array(3)
       .fill(0)
       .map((x, i) => i + 1);
     setItems(tempItems);
@@ -101,6 +106,7 @@ const XT = () => {
     if (LogginIn[5]) {
       getSubAccTradeBalance();
       getSubAccFoundBalance();
+      syncData("all");
     }
   }, [LogginIn]);
 
@@ -109,7 +115,8 @@ const XT = () => {
       subAcct: LogginIn[5],
     };
     ApiService.getSubAccTradeBalance(params).then((res) => {
-      let tmpTrading = JSON.parse(res.data["KYC Api resuult"])?.data[0]?.details;
+      let tmpTrading = JSON.parse(res.data["KYC Api resuult"])?.data[0]
+        ?.details;
       setTrading(tmpTrading);
     });
   };
@@ -213,6 +220,58 @@ const XT = () => {
     }
   };
 
+  useEffect(() => {
+    const sortedCoins = CoinData.sort((a, b) => {
+      let fieldA = a["cmc_rank"];
+      let fieldB = b["cmc_rank"];
+
+      switch (order.field) {
+        case "name":
+          fieldA = a.name;
+          fieldB = b.name;
+          break;
+        case "quote.USD.price":
+          fieldA = a.quote.USD.price;
+          fieldB = b.quote.USD.price;
+          break;
+        case "quote.USD.percent_change_1h":
+          fieldA = a.quote.USD.percent_change_1h;
+          fieldB = b.quote.USD.percent_change_1h;
+          break;
+      }
+
+      if (fieldA < fieldB) {
+        return order.reversed ? 1 : -1;
+      }
+      if (fieldA > fieldB) {
+        return order.reversed ? -1 : 1;
+      }
+      return 0;
+    });
+
+    setCoinData(sortedCoins);
+  }, [order]);
+
+  const navigationCheck = (url, coin) => {
+    if (AlowedPairs.includes(coin + "USDT")) {
+      // setPopData({ url, coin });
+      navigate(`/trade/${coin}_USDT`);
+    }
+  };
+
+  const syncData = (tag) => {
+    setTradeLoader(true);
+    const page = 1;
+    const limit = 8;
+    const sort = "market_cap";
+    const sort_dir = "desc";
+    ApiService.getCoinData(page, limit, tag, sort, sort_dir)
+      .then((res) => {
+        let tmpCoinData = JSON.parse(res.data.response["Result: "])?.data;
+        setCoinData(tmpCoinData);
+      })
+      .finally(() => setTradeLoader(false));
+  };
   return (
     <div
       className="row"
@@ -534,107 +593,102 @@ const XT = () => {
           className="d-flex d-lg-block mb-4"
           style={{ minHeight: 600, overflow: "auto" }}
         >
-          <table className="table">
-            <thead>
-              <tr>
-                <th scope="col" className="cu-p" onClick={() => doSort("rank")}>
-                  <div className="d-flex">
-                    #
-                    {order.field === "rank" && order.reversed === true && (
-                      <span className="material-symbols-outlined align-self-center">
-                        arrow_drop_up
-                      </span>
-                    )}
-                  </div>
-                </th>
-                <th scope="col" className="cu-p" onClick={() => doSort("name")}>
-                  <div className="d-flex">
-                    Cryptocurrency
-                    {order.field === "name" && order.reversed === true && (
-                      <span className="material-symbols-outlined align-self-center">
-                        arrow_drop_up
-                      </span>
-                    )}
-                    {order.field === "name" && order.reversed === false && (
-                      <span className="material-symbols-outlined align-self-center">
-                        arrow_drop_down
-                      </span>
-                    )}
-                  </div>
-                </th>
-
-                <th
-                  scope="col"
-                  className="cu-p"
-                  onClick={() => doSort("quote.USD.volume_24h")}
-                >
-                  <div className="d-flex">
-                    Quantity
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === true && (
+          {tradeLoader === false && (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th
+                    scope="col"
+                    className="cu-p"
+                    onClick={() => doSort("cmc_rank")}
+                  >
+                    <div className="d-flex">
+                      #
+                      {order.field === "cmc_rank" &&
+                        order.reversed === true && (
+                          <span className="material-symbols-outlined align-self-center">
+                            arrow_drop_down
+                          </span>
+                        )}
+                    </div>
+                  </th>
+                  <th
+                    scope="col"
+                    className="cu-p"
+                    onClick={() => doSort("name")}
+                  >
+                    <div className="d-flex">
+                      {" "}
+                      {t("Name")}
+                      {order.field === "name" && order.reversed === true && (
                         <span className="material-symbols-outlined align-self-center">
                           arrow_drop_up
                         </span>
                       )}
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === false && (
+                      {order.field === "name" && order.reversed === false && (
                         <span className="material-symbols-outlined align-self-center">
                           arrow_drop_down
                         </span>
                       )}
-                  </div>
-                </th>
+                    </div>
+                  </th>
 
-                <th
-                  scope="col"
-                  className="cu-p"
-                  onClick={() => doSort("quote.USD.volume_24h")}
-                >
-                  <div className="d-flex">
-                    Total
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === true && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_up
-                        </span>
-                      )}
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === false && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_down
-                        </span>
-                      )}
-                  </div>
-                </th>
-
-                <th
-                  scope="col"
-                  className="cu-p"
-                  onClick={() => doSort("quote.USD.volume_24h")}
-                >
-                  <div className="d-flex">
-                    Wallet %
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === true && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_up
-                        </span>
-                      )}
-                    {order.field === "quote.USD.volume_24h" &&
-                      order.reversed === false && (
-                        <span className="material-symbols-outlined align-self-center">
-                          arrow_drop_down
-                        </span>
-                      )}
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            {loader === false && (
+                  <th
+                    scope="col"
+                    className="cu-p"
+                    onClick={() => doSort("quote.USD.price")}
+                  >
+                    <div className="d-flex">
+                      {" "}
+                      {t("Price")}
+                      {order.field === "quote.USD.price" &&
+                        order.reversed === true && (
+                          <span className="material-symbols-outlined align-self-center">
+                            arrow_drop_up
+                          </span>
+                        )}
+                      {order.field === "quote.USD.price" &&
+                        order.reversed === false && (
+                          <span className="material-symbols-outlined align-self-center">
+                            arrow_drop_down
+                          </span>
+                        )}
+                    </div>
+                  </th>
+                  <th
+                    scope="col"
+                    className="cu-p"
+                    onClick={() => doSort("quote.USD.percent_change_1h")}
+                  >
+                    <div className="d-flex">
+                      {" "}
+                      {t("1h")}
+                      {order.field === "quote.USD.percent_change_1h" &&
+                        order.reversed === true && (
+                          <span className="material-symbols-outlined align-self-center">
+                            arrow_drop_up
+                          </span>
+                        )}
+                      {order.field === "quote.USD.percent_change_1h" &&
+                        order.reversed === false && (
+                          <span className="material-symbols-outlined align-self-center">
+                            arrow_drop_down
+                          </span>
+                        )}
+                    </div>
+                  </th>
+                </tr>
+              </thead>
               <tbody>
-                {walletAssetData.map((dta, index) => (
-                  <tr key={index}>
-                    <td className="normal-td">{index + 1}</td>
+                {CoinData.map((dta, index) => (
+                  <tr
+                    className="cu-p"
+                    onClick={() =>
+                      navigationCheck(dta.id + "/" + dta.slug, dta.symbol)
+                    }
+                    key={index}
+                  >
+                    <td className="s-bld td-rank">{dta.cmc_rank}</td>
                     <td className="font-weight-bold">
                       <div className="d-flex cu-p">
                         <img
@@ -644,23 +698,129 @@ const XT = () => {
                           height={30}
                         />
                         <div className="align-self-center ml-2">
-                          <p className="mb-0 normal-td"> {dta.name}</p>
+                          <p className="mb-0 s-bld c-symb"> {dta.symbol}</p>
+                          <p className="mb-0 c-name "> {dta.name}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="normal-td">{dta.quantity}</td>
-                    <td className="normal-td">{dta.total} USDT</td>
-                    <td className="normal-td">{dta.pro} %</td>
+                    {dta.quote.USD.price > 1.1 && (
+                      <td className="s-bld">
+                        $ {numberWithCommas(dta.quote.USD.price)}
+                        {isMobile && (
+                          <span
+                            className={
+                              dta?.quote.USD.percent_change_24h < 0
+                                ? "txt-green txt-red"
+                                : "txt-green"
+                            }
+                          >
+                            <span className="d-flex">
+                              {dta?.quote.USD.percent_change_24h < 0 && (
+                                <span className="material-symbols-outlined align-self-center">
+                                  arrow_drop_down
+                                </span>
+                              )}
+                              {dta?.quote.USD.percent_change_24h > 0 && (
+                                <span className="material-symbols-outlined align-self-center">
+                                  arrow_drop_up
+                                </span>
+                              )}
+                              <span className="align-self-center">
+                                {numeral(
+                                  Math.abs(dta.quote.USD.percent_change_24h)
+                                ).format("0,0.0-2")}{" "}
+                                %
+                              </span>
+                            </span>
+                          </span>
+                        )}
+                      </td>
+                    )}
+                    {dta.quote.USD.price < 1.1 && (
+                      <td className="s-bld">
+                        $ {numeral(dta.quote.USD.price).format("0,0.0-8")}
+                        {isMobile && (
+                          <span
+                            className={
+                              dta?.quote.USD.percent_change_24h < 0
+                                ? "txt-green txt-red"
+                                : "txt-green"
+                            }
+                          >
+                            <span className="d-flex">
+                              {dta?.quote.USD.percent_change_24h < 0 && (
+                                <span className="material-symbols-outlined align-self-center">
+                                  arrow_drop_down
+                                </span>
+                              )}
+                              {dta?.quote.USD.percent_change_24h > 0 && (
+                                <span className="material-symbols-outlined align-self-center">
+                                  arrow_drop_up
+                                </span>
+                              )}
+                              <span className="align-self-center">
+                                {numeral(
+                                  Math.abs(dta.quote.USD.percent_change_24h)
+                                ).format("0,0.0-2")}{" "}
+                                %
+                              </span>
+                            </span>
+                          </span>
+                        )}
+                      </td>
+                    )}
+                    {dta.quote.USD.price === 0 && <td className="s-bld">--</td>}
+                    <td
+                      className={
+                        dta?.quote.USD.percent_change_1h < 0
+                          ? "txt-green txt-red"
+                          : "txt-green"
+                      }
+                    >
+                      <div className="d-flex">
+                        {dta?.quote.USD.percent_change_1h < 0 && (
+                          <span className="material-symbols-outlined align-self-center">
+                            arrow_drop_down
+                          </span>
+                        )}
+                        {dta?.quote.USD.percent_change_1h > 0 && (
+                          <span className="material-symbols-outlined align-self-center">
+                            arrow_drop_up
+                          </span>
+                        )}
+                        <span className="align-self-center">
+                          {numeral(
+                            Math.abs(dta.quote.USD.percent_change_1h)
+                          ).format("0,0.0-2")}{" "}
+                          %
+                        </span>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>
-            )}
-          </table>
-          {loader === true && (
+            </table>
+          )}
+          {tradeLoader === true && (
             <table className="table">
               <tbody>
                 {items.map((item, index) => (
                   <tr key={index}>
+                    <td>
+                      <ContentLoader
+                        backgroundColor="rgba(217,217,217,0.24)"
+                        foregroundColor="rgba(187,187,187,0.06)"
+                      >
+                        <rect
+                          x="0"
+                          y="0"
+                          rx="3"
+                          ry="3"
+                          width="400"
+                          height="60"
+                        />
+                      </ContentLoader>
+                    </td>
                     <td>
                       <ContentLoader
                         backgroundColor="rgba(217,217,217,0.24)"
@@ -686,26 +846,121 @@ const XT = () => {
                           y="0"
                           rx="3"
                           ry="3"
-                          width="500"
+                          width="250"
                           height="60"
                         />
                       </ContentLoader>
                     </td>
-                    <td>
-                      <ContentLoader
-                        backgroundColor="rgba(217,217,217,0.24)"
-                        foregroundColor="rgba(187,187,187,0.06)"
-                      >
-                        <rect
-                          x="0"
-                          y="0"
-                          rx="3"
-                          ry="3"
-                          width="500"
-                          height="60"
-                        />
-                      </ContentLoader>
-                    </td>
+
+                    {isMobile === false && (
+                      <>
+                        <td>
+                          <ContentLoader
+                            backgroundColor="rgba(217,217,217,0.24)"
+                            foregroundColor="rgba(187,187,187,0.06)"
+                          >
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="3"
+                              ry="3"
+                              width="250"
+                              height="60"
+                            />
+                          </ContentLoader>
+                        </td>
+                        <td>
+                          <ContentLoader
+                            backgroundColor="rgba(217,217,217,0.24)"
+                            foregroundColor="rgba(187,187,187,0.06)"
+                          >
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="3"
+                              ry="3"
+                              width="250"
+                              height="60"
+                            />
+                          </ContentLoader>
+                        </td>
+                        <td>
+                          <ContentLoader
+                            backgroundColor="rgba(217,217,217,0.24)"
+                            foregroundColor="rgba(187,187,187,0.06)"
+                          >
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="3"
+                              ry="3"
+                              width="250"
+                              height="60"
+                            />
+                          </ContentLoader>
+                        </td>
+                        <td>
+                          <ContentLoader
+                            backgroundColor="rgba(217,217,217,0.24)"
+                            foregroundColor="rgba(187,187,187,0.06)"
+                          >
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="3"
+                              ry="3"
+                              width="250"
+                              height="60"
+                            />
+                          </ContentLoader>
+                        </td>
+                        <td>
+                          <ContentLoader
+                            backgroundColor="rgba(217,217,217,0.24)"
+                            foregroundColor="rgba(187,187,187,0.06)"
+                          >
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="3"
+                              ry="3"
+                              width="250"
+                              height="60"
+                            />
+                          </ContentLoader>
+                        </td>
+                        <td>
+                          <ContentLoader
+                            backgroundColor="rgba(217,217,217,0.24)"
+                            foregroundColor="rgba(187,187,187,0.06)"
+                          >
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="3"
+                              ry="3"
+                              width="250"
+                              height="60"
+                            />
+                          </ContentLoader>
+                        </td>
+                        <td>
+                          <ContentLoader
+                            backgroundColor="rgba(217,217,217,0.24)"
+                            foregroundColor="rgba(187,187,187,0.06)"
+                          >
+                            <rect
+                              x="0"
+                              y="0"
+                              rx="3"
+                              ry="3"
+                              width="400"
+                              height="60"
+                            />
+                          </ContentLoader>
+                        </td>
+                      </>
+                    )}
                   </tr>
                 ))}
               </tbody>
