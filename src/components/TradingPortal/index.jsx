@@ -2,7 +2,7 @@ import TradingViewTdChart from "components/SingleCoin/TradingViewTdChart";
 import numeral from "numeral";
 import { useTranslation } from "react-i18next";
 import { NavLink, useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import moment from "moment";
 import { Modal } from "react-bootstrap";
 import CoinSelect from "./CoinSelect";
@@ -14,6 +14,7 @@ import "./index.scss";
 
 const TradingPortal = () => {
   const { t } = useTranslation();
+  const bottomRef = useRef(null);
   const [Symbol, setSymbol] = useState("");
   const [SymbolOkx, setSymbolOkx] = useState("");
   const [SymbolSeperated, setSymbolSeperated] = useState("");
@@ -94,6 +95,17 @@ const TradingPortal = () => {
 
   const numberWithCommas = (number) => {
     return number.toLocaleString();
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
+  const scrollToBottom = () => {
+    const isFromHistory = window.location.href.split("?")[1];
+    if (isFromHistory) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   useEffect(() => {
@@ -602,7 +614,7 @@ const TradingPortal = () => {
                         </tr>
                       ))}
                       {/* <ng-container *ngFor="let dta of bidsAndAsks?.asks | orderBy: 0: true; let i = index">
-              
+
             </ng-container> */}
                     </tbody>
                   </table>
@@ -958,7 +970,7 @@ const TradingPortal = () => {
                         </tr>
                       ))}
                       {/* <ng-container *ngFor="let dta of LatestTrade | orderBy: 'time' : true">
-              
+
             </ng-container> */}
                     </tbody>
                   </table>
@@ -969,7 +981,7 @@ const TradingPortal = () => {
         </div>
       )}
       {!isMobile && (
-        <div className="card">
+        <div className="card" ref={bottomRef}>
           <p className="mb-0 card-title">Trade History</p>
           <div className="card-pair">
             <table className="table">
@@ -1138,7 +1150,7 @@ const TradingPortal = () => {
                               </tr>
                             ))}
                             {/* <ng-container *ngFor="let dta of bidsAndAsks?.asks | orderBy: 0: true; let i = index">
-                        
+
                       </ng-container> */}
                           </tbody>
                         </table>
@@ -1174,7 +1186,7 @@ const TradingPortal = () => {
                               </tr>
                             ))}
                             {/* <ng-container *ngFor="let dta of bidsAndAsks?.bids | orderBy: 0: true; let i = index">
-                        
+
                       </ng-container> */}
                           </tbody>
                         </table>
@@ -1428,7 +1440,7 @@ const TradingPortal = () => {
                           </tr>
                         ))}
                         {/* <ng-container *ngFor="let dta of LatestTrade | orderBy: 'time' : true">
-                    
+
                   </ng-container> */}
                       </tbody>
                     </table>

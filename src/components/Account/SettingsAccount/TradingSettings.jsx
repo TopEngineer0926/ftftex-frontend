@@ -37,26 +37,14 @@ const TradingSettings = () => {
         </h4>
         <Divider />
       </div>
+      {/*<a href={isVerified ? "/account/transaction-history" : "/wallet"}*/}
+      {/*   className="d-flex justify-content-between align-items-center mt-2 pointer setting-block">*/}
+      {/*  <div className={`${getTheme() === 'dark' ? 'sub-point-dark' : 'sub-point'}`}>{t("account.settings.Transaction History")}</div>*/}
+      {/*  <span className="material-symbols-outlined acc-box-i align-self-center ml-auto"*/}
+      {/*        style={{fontSize: 26, opacity: 0.4}}>chevron_right</span>*/}
+      {/*</a>*/}
       <a
-        href={isVerified ? "/account/transaction-history" : "/wallet"}
-        className="d-flex justify-content-between align-items-center mt-2 pointer setting-block"
-      >
-        <div
-          className={`${
-            getTheme() === "dark" ? "sub-point-dark" : "sub-point"
-          }`}
-        >
-          {t("account.settings.Transaction History")}
-        </div>
-        <span
-          className="material-symbols-outlined acc-box-i align-self-center ml-auto"
-          style={{ fontSize: 26, opacity: 0.4 }}
-        >
-          chevron_right
-        </span>
-      </a>
-      <a
-        href={isVerified ? "" : "/wallet"}
+        href={isVerified ? "/trade/BTC_USDT?history" : "/wallet"}
         className="d-flex justify-content-between align-items-center mt-2 pointer setting-block"
       >
         <div

@@ -2,12 +2,19 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLoggedIn } from "utils";
 import EmptyAvatar from "assets/images/empty-avatar.png";
+import ApiService from "../../../services/apiService";
+import Post from "../Post";
+import { refactorData } from "../../../utils/refactorPostData";
+import { Spinner } from "react-bootstrap";
 
 const Profile = () => {
   const [LoggedIn, setLoggedIn] = useState({ 0: "" });
+  const [userPosts, setUserPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
+    getAllPosts();
     const data = getLoggedIn();
     if (!data[0]) {
       navigate("/login");
@@ -15,6 +22,18 @@ const Profile = () => {
       setLoggedIn(data);
     }
   }, []);
+
+  const getAllPosts = async () => {
+    setIsLoading(true);
+    const data = {
+      userId: localStorage.getItem("userId"),
+    };
+    const response = await ApiService.getAllPostsByUser(data);
+    if (response.status === 200) {
+      setIsLoading(false);
+      setUserPosts(refactorData(response.data.postsList));
+    }
+  };
 
   return (
     <>
@@ -33,9 +52,21 @@ const Profile = () => {
           </div>
         </div>
       )}
-      <div className="d-flex post-cont">
-        <p className="my-4 text-center w-100">Nothing Here</p>
-      </div>
+      {isLoading ? (
+        <Spinner
+          animation="border"
+          variant="primary"
+          className="d-flex align-items-center m-auto mt-2"
+        />
+      ) : (
+        <div className="d-flex post-cont flex-column">
+          {userPosts.length === 0 ? (
+            <p className="my-4 text-center w-100">No posts yet</p>
+          ) : (
+            <Post posts={userPosts} />
+          )}
+        </div>
+      )}
     </>
   );
 };

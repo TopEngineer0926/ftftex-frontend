@@ -134,7 +134,7 @@ const Wallet = () => {
 
   return (
     <>
-      {LogginIn[6] === "verified" && (
+      {LogginIn[6] !== "verified" && (
         <div className="bg-wt ">
           <div className="min-h-full">
             <section>
@@ -281,7 +281,7 @@ const Wallet = () => {
           </div>
         </div>
       )}
-      {LogginIn[6] !== "verified" && (
+      {LogginIn[6] === "verified" && (
         <div className="container mt-4 mb-4" style={{ margin: "auto" }}>
           <div className="row">
             <div

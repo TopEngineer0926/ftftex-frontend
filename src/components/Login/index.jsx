@@ -169,24 +169,24 @@ const Login = () => {
               >
                 <h1 className="s-bld mb-4">{t("Login")}</h1>
                 <hr />
-                <div className="d-flex w-100 mb-5">
-                  <span
-                    className={loginType === "email" ? "selected mr-5" : "mr-5"}
-                    style={{ cursor: "pointer" }}
-                    onClick={() => switchLoginType("email")}
-                  >
-                    {t("Email")}
-                  </span>
-                  <span
-                    className={
-                      loginType === "mobile" ? "selected mr-5" : "mr-5"
-                    }
-                    style={{ cursor: "pointer" }}
-                    onClick={() => switchLoginType("mobile")}
-                  >
-                    {t("Mobile")}
-                  </span>
-                </div>
+                {/*<div className="d-flex w-100 mb-5">*/}
+                {/*  <span*/}
+                {/*    className={loginType === "email" ? "selected mr-5" : "mr-5"}*/}
+                {/*    style={{ cursor: "pointer" }}*/}
+                {/*    onClick={() => switchLoginType("email")}*/}
+                {/*  >*/}
+                {/*    {t("Email")}*/}
+                {/*  </span>*/}
+                {/*  <span*/}
+                {/*    className={*/}
+                {/*      loginType === "mobile" ? "selected mr-5" : "mr-5"*/}
+                {/*    }*/}
+                {/*    style={{ cursor: "pointer" }}*/}
+                {/*    onClick={() => switchLoginType("mobile")}*/}
+                {/*  >*/}
+                {/*    {t("Mobile")}*/}
+                {/*  </span>*/}
+                {/*</div>*/}
 
                 <div>
                   {loginType === "email" && (

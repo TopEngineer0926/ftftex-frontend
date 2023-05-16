@@ -50,6 +50,7 @@ import { ContactUs } from "components/Account/Support/ContactUs";
 import { AmlPolicyTP } from "components/Account/TermsPolicies/AmlPolicyTP";
 import { PrivacyPolicyTP } from "components/Account/TermsPolicies/PrivacyPolicyTP";
 import { TermsOfService } from "components/Account/TermsPolicies/TermsOfService";
+import { PostDetails } from "./components/Community/PostDetails";
 
 const RoutesComponent = () => {
   return (
@@ -65,7 +66,7 @@ const RoutesComponent = () => {
         <Route path="" element={<Navigate to="/community/feed" replace />} />
         <Route path="feed" Component={Feed} />
         <Route path="notifications" Component={Notifications} />
-        <Route path="post/:id" Component={Post} />
+        <Route path="post/:id" Component={PostDetails} />
         <Route path="profile" Component={Profile} />
       </Route>
       <Route path="news" Component={News} />

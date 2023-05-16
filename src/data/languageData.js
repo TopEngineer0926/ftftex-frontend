@@ -6,7 +6,7 @@ export const languageData = [
   },
   {
     id: 2,
-    name: "Chinese (中国人)",
+    name: "Simplified Chinese (中文)",
     code: "ch",
   },
 ];

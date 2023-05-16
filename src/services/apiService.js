@@ -446,11 +446,32 @@ class ApiService {
       `${process.env.REACT_APP_BASE_URL}ftftx/communityApi/savePost`,
       data
     );
-  };
+  }
 
   getAllPostsByUser = (data) => {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/communityApi/getAllPosts`,
+      data
+    );
+  };
+
+  likePost = (data) => {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/communityApi/saveLike`,
+      data
+    );
+  };
+
+  commentPost = (data) => {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/communityApi/saveComment`,
+      data
+    );
+  };
+
+  getPostDetails = (data) => {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/communityApi/getPostDetails`,
       data
     );
   };

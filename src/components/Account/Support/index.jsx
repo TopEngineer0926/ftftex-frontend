@@ -58,8 +58,8 @@ const Support = () => {
         </span>
       </a>
       <a
-        href={"support/about-us"}
         className="d-flex justify-content-between align-items-center mt-2 setting-block"
+        onClick={() => setIsAboutUsOpen(!isAboutUsOpen)}
       >
         <div
           className={`${
@@ -68,12 +68,21 @@ const Support = () => {
         >
           {t("account.support.About Us")}
         </div>
-        <span
-          className="material-symbols-outlined acc-box-i align-self-center ml-auto"
-          style={{ fontSize: 26, opacity: 0.4 }}
-        >
-          chevron_right
-        </span>
+        {!isAboutUsOpen ? (
+          <span
+            className="material-symbols-outlined acc-box-i align-self-center ml-auto"
+            style={{ fontSize: 26, opacity: 0.4 }}
+          >
+            chevron_right
+          </span>
+        ) : (
+          <span
+            className="material-symbols-outlined acc-box-i align-self-center ml-auto"
+            style={{ fontSize: 26, opacity: 0.4 }}
+          >
+            expand_more
+          </span>
+        )}
       </a>
       {isAboutUsOpen && <AboutUsSupport />}
     </div>

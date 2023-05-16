@@ -7,15 +7,15 @@ import {Modal, Spinner} from "react-bootstrap";
 import ChangePasswordModal from "./ChangePasswordModal";
 import {useSnackbar} from "notistack";
 import {useNavigate} from "react-router-dom";
-import { getTheme } from "../../../utils";
+import { getLoggedIn, getTheme } from "../../../utils";
 import { FTFTexContext } from "../../../App";
 import { InputOTPModal } from "./InputOTPModal";
 import { FaildAttemptModal } from "./FaildAttemptModal";
 import { SuccessfullChangeModal } from "../Support/SuccessfullChangeModal";
 
 const Security = () => {
-  const {enqueueSnackbar} = useSnackbar();
-  const {t} = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const ftftexValue = useContext(FTFTexContext);
   const [failedAttempts, setFailedAttempts] = useState(0);
@@ -31,7 +31,7 @@ const Security = () => {
   const [showOTPModal, setShowOTPModal] = useState(false);
   const [showFaildAttemptModal, setShowFaildAttemptModal] = useState(false);
   const [suceessfullChangeModal, setSuceessfullChangeModal] = useState(false);
-
+  const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
     getUser();
@@ -48,57 +48,68 @@ const Security = () => {
     setNewPhone(userData.phone);
     setNewEmail(userData.email);
     setIsLoading(false);
-  }
+    const data = getLoggedIn();
+    setIsVerified(data[6] === "verified");
+  };
 
   const userHiddenEmail = (email) => {
-    const emailArr = email.split('@');
-    return email.slice(0, 2) + '*'.repeat(emailArr[0].slice(2).length) + '@' + emailArr[1];
-  }
+    const emailArr = email.split("@");
+    return (
+      email.slice(0, 2) +
+      "*".repeat(emailArr[0].slice(2).length) +
+      "@" +
+      emailArr[1]
+    );
+  };
 
   const userHiddenPhone = (phone) => {
-    return phone.slice(0, 4) + '*'.repeat(phone.slice(4, 9).length) + phone.slice(9);
-  }
+    return (
+      phone.slice(0, 4) + "*".repeat(phone.slice(4, 9).length) + phone.slice(9)
+    );
+  };
 
   const handleCloseModal = () => {
     setIsChangePassword(false);
-  }
+  };
 
   const editUserPhone = async () => {
-    const checkPhone = newPhone.match(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im);
+    const checkPhone = newPhone.match(
+      /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im
+    );
     if (checkPhone !== null) {
       const data = {
         id: localStorage.getItem("userId"),
-        phone: newPhone
-      }
+        phone: newPhone,
+      };
       const response = await ApiService.editUserPhone(data);
       if (response.status === 200) {
         getUser();
         const result = response.data.Success;
         enqueueSnackbar(t(result), {
-          variant: 'success'
+          variant: "success",
         });
         setIsChangePhone(false);
       }
     } else {
-      enqueueSnackbar(t('account.security.Please enter a valid phone number'), {
-        variant: 'error'
+      enqueueSnackbar(t("account.security.Please enter a valid phone number"), {
+        variant: "error",
       });
     }
-  }
+  };
 
   const editUserEmail = async () => {
     const checkEmail = newEmail.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
     if (checkEmail !== null) {
       const data = {
         id: localStorage.getItem("userId"),
-        email: newEmail
-      }
+        email: newEmail,
+      };
       const response = await ApiService.editUserEmail(data);
       if (response.status === 200) {
         getUser();
         const result = response.data.Success;
         enqueueSnackbar(t(result), {
-          variant: 'success'
+          variant: "success",
         });
         setIsChangeEmail(false);
         localStorage.clear();
@@ -107,11 +118,11 @@ const Security = () => {
         navigate(0);
       }
     } else {
-      enqueueSnackbar(t('account.security.Please enter a valid email'), {
-        variant: 'error'
+      enqueueSnackbar(t("account.security.Please enter a valid email"), {
+        variant: "error",
       });
     }
-  }
+  };
 
   const handleChangePassword = () => {
     localStorage.clear();
@@ -230,110 +241,80 @@ const Security = () => {
               </>
             )}
           </div>
-          <div className="row mt-2 align-items-center pointer setting-block">
-            <div className="col-2">
-              <div
-                className={`mr-4 ${
-                  getTheme() === "dark" ? "sub-point-dark" : "sub-point"
-                }`}
-              >
-                {t("Phone")}
+          {/*<div className="row mt-2 align-items-center pointer setting-block">*/}
+          {/*    <div className="col-4">*/}
+          {/*        <div*/}
+          {/*            className={`mr-4 ${getTheme() === 'dark' ? 'sub-point-dark' : 'sub-point'}`}>{t("Phone")}</div>*/}
+          {/*    </div>*/}
+          {/*    <div className="col-2 unlinked-text">Unlinked</div>*/}
+          {/*    {!isChangePhone ? (*/}
+          {/*        <>*/}
+          {/*            <div className="col-4">*/}
+          {/*                <span className="font-weight-bold">{userHiddenPhone(user.phone)}</span>*/}
+          {/*            </div>*/}
+          {/*            <div className="col-4" onClick={() => setIsChangePhone(true)}>*/}
+          {/*                <div className="d-flex justify-content-end">*/}
+          {/*        <span className="material-symbols-outlined acc-box-i align-self-center ml-auto"*/}
+          {/*              style={{fontSize: 26, opacity: 0.4}}>expand_more</span>*/}
+          {/*                </div>*/}
+          {/*            </div>*/}
+          {/*        </>*/}
+          {/*    ) : (*/}
+          {/*        <>*/}
+          {/*            <div className={isMobile ? "col-8" : "col-5"}>*/}
+          {/*                <div className="d-flex flex-column">*/}
+          {/*                    <input className="form-control w-100" value={newPhone}*/}
+          {/*                           onChange={e => setNewPhone(e.target.value)}/>*/}
+          {/*                </div>*/}
+          {/*            </div>*/}
+          {/*            <div className={isMobile ? "mt-3 wt-box mx-auto" : "col-3"}>*/}
+          {/*                <div*/}
+          {/*                    className={isMobile ? "d-flex align-items-center" : "d-flex justify-content-end"}>*/}
+          {/*                    <button className="btn btn-outlined ml-2"*/}
+          {/*                            onClick={() => setIsChangePhone(false)}>{t("Cancel")}</button>*/}
+          {/*                    <a className="btn save-btn ml-3"*/}
+          {/*                       onClick={editUserPhone}>{t("account.community.Save")}</a>*/}
+          {/*                </div>*/}
+          {/*            </div>*/}
+          {/*        </>*/}
+          {/*    )*/}
+          {/*    }*/}
+          {/*</div>*/}
+          {/*      <div className="row py-2 mt-2 pointer setting-block">*/}
+          {/*        <div className="col-3">*/}
+          {/*          <div*/}
+          {/*              className={`mr-4 ${getTheme() === 'dark' ? 'sub-point-dark' : 'sub-point'}`}>{t("2FA")}</div>*/}
+          {/*        </div>*/}
+          {/*        <div className="col-9">*/}
+          {/*          <div className="d-flex justify-content-end">*/}
+          {/*<span className="material-symbols-outlined acc-box-i align-self-center ml-auto"*/}
+          {/*      style={{fontSize: 26, opacity: 0.4}}>chevron_right</span>*/}
+          {/*          </div>*/}
+          {/*        </div>*/}
+          {/*      </div>*/}
+          {!isVerified && (
+            <a href="/account/verification" className="row mt-2 setting-block">
+              <div className="col-3">
+                <div
+                  className={`mr-4 ${
+                    getTheme() === "dark" ? "sub-point-dark" : "sub-point"
+                  }`}
+                >
+                  {t("Account Verification")}
+                </div>
               </div>
-            </div>
-            <div className="col-2 unlinked-text">Unlinked</div>
-            {!isChangePhone ? (
-              <>
-                <div className="col-5">
-                  <span className="font-weight-bold">
-                    {userHiddenPhone(user.phone)}
+              <div className="col-9">
+                <div className="d-flex justify-content-end">
+                  <span
+                    className="material-symbols-outlined acc-box-i align-self-center ml-auto"
+                    style={{ fontSize: 26, opacity: 0.4 }}
+                  >
+                    chevron_right
                   </span>
                 </div>
-                <div className="col-3" onClick={() => setIsChangePhone(true)}>
-                  <div className="d-flex justify-content-end">
-                    <span
-                      className="material-symbols-outlined acc-box-i align-self-center ml-auto"
-                      style={{ fontSize: 26, opacity: 0.4 }}
-                    >
-                      expand_more
-                    </span>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className={isMobile ? "col-8" : "col-5"}>
-                  <div className="d-flex flex-column">
-                    <input
-                      className="form-control w-100"
-                      value={newPhone}
-                      onChange={(e) => setNewPhone(e.target.value)}
-                    />
-                  </div>
-                </div>
-                <div className={isMobile ? "mt-3 wt-box mx-auto" : "col-3"}>
-                  <div
-                    className={
-                      isMobile
-                        ? "d-flex align-items-center"
-                        : "d-flex justify-content-end"
-                    }
-                  >
-                    <button
-                      className="btn btn-outlined ml-2"
-                      onClick={() => setIsChangePhone(false)}
-                    >
-                      {t("Cancel")}
-                    </button>
-                    <a className="btn save-btn ml-3" onClick={editUserPhone}>
-                      {t("account.community.Save")}
-                    </a>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-          <div className="row py-2 mt-2 pointer setting-block">
-            <div className="col-3">
-              <div
-                className={`mr-4 ${
-                  getTheme() === "dark" ? "sub-point-dark" : "sub-point"
-                }`}
-              >
-                {t("2FA")}
               </div>
-            </div>
-            <div className="col-9">
-              <div className="d-flex justify-content-end">
-                <span
-                  className="material-symbols-outlined acc-box-i align-self-center ml-auto"
-                  style={{ fontSize: 26, opacity: 0.4 }}
-                >
-                  chevron_right
-                </span>
-              </div>
-            </div>
-          </div>
-          <a href="/account/verification" className="row mt-2 setting-block">
-            <div className="col-3">
-              <div
-                className={`mr-4 ${
-                  getTheme() === "dark" ? "sub-point-dark" : "sub-point"
-                }`}
-              >
-                {t("Account Verification")}
-              </div>
-            </div>
-            <div className="col-9">
-              <div className="d-flex justify-content-end">
-                <span
-                  className="material-symbols-outlined acc-box-i align-self-center ml-auto"
-                  style={{ fontSize: 26, opacity: 0.4 }}
-                >
-                  chevron_right
-                </span>
-              </div>
-            </div>
-          </a>
+            </a>
+          )}
         </div>
       )}
       <Modal

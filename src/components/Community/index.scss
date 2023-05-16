@@ -64,6 +64,37 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+.post-cont-comment {
+  padding-top: 30px;
+
+  .post {
+    .profile {
+      display: flex;
+      font-size: 17px;
+
+      .display-name {
+        color: black;
+        font-weight: 900;
+      }
+
+      .user-name,
+      .posted-time {
+        color: #939393;
+        margin-left: 10px;
+      }
+    }
+
+    .post-img {
+      width: 100%;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .post-content {
+      white-space: pre-wrap;
+    }
+  }
+}
 .post-comments {
   display: flex;
   justify-content: space-between;
