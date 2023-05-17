@@ -39,7 +39,6 @@ const TradingViewTdChart = ({ COIN, PAIR, EXCHANGE, chartType }) => {
 
     const SYMBOL = EXCHANGE + ":" + COIN?.toUpperCase() + PAIR?.toUpperCase();
 
-    console.log(SYMBOL, "SYMBOL");
     if (coins.includes(COIN)) {
       if (chartType === "candle-chart") {
         new TradingView.widget({

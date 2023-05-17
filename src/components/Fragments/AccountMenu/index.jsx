@@ -10,20 +10,20 @@ const AccountMenu = () => {
 
   return (
     <Dropdown.Menu size="lg" className="drop-menu">
-      <div className="assets-wrapper">
-        <div className="assets-header">
-          <span className="font-weight-bold">{t("Assets Overview")}</span>
-          <span className="material-symbols-outlined">visibility_off</span>
-        </div>
-        <div className="overview">
-          <span className="small-text">{t("Balance")}</span>
-          <span>102.3 USDT</span>
-          <span></span>
-          <span className="small-text">{t("P&L")}</span>
-          <span>+10.4 USDT</span>
-          <span>9.83%</span>
-        </div>
-      </div>
+      {/*<div className="assets-wrapper">*/}
+      {/*  <div className="assets-header">*/}
+      {/*    <span className="font-weight-bold">{t("Assets Overview")}</span>*/}
+      {/*    <span className="material-symbols-outlined">visibility_off</span>*/}
+      {/*  </div>*/}
+      {/*  <div className="overview">*/}
+      {/*    <span className="small-text">{t("Balance")}</span>*/}
+      {/*    <span>102.3 USDT</span>*/}
+      {/*    <span></span>*/}
+      {/*    <span className="small-text">{t("P&L")}</span>*/}
+      {/*    <span>+10.4 USDT</span>*/}
+      {/*    <span>9.83%</span>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
       {accountMenuItems.map((item, index) => (
         <Dropdown.Item
           className={getTheme() === "dark" ? "bg-dark menu-item" : "menu-item"}

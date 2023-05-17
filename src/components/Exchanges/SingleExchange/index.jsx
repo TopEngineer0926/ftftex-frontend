@@ -56,11 +56,9 @@ const SingleExchange = () => {
       (res) => {
         const Allpairs = JSON.parse(res.data.response["Result: "]).data
           .market_pairs;
-        console.log(Allpairs);
         let tempPairs = [];
         for (let dta of Allpairs) {
           if (dta.market_pair_quote.currency_symbol === "USDT") {
-            console.log("==", AvailablePairs);
             if (AvailablePairs.includes(dta.market_pair.replace("/", ""))) {
               tempPairs.push(dta);
             }

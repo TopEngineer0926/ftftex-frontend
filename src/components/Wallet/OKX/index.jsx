@@ -276,7 +276,7 @@ const OKX = () => {
 
   const navigationCheck = (url, coin) => {
     if (AlowedPairs.includes(coin + "USDT")) {
-      navigate(`/trade/${coin}_USDT`)
+      navigate(`/trade/${coin}_USDT/okx`);
     }
   };
 
@@ -324,7 +324,10 @@ const OKX = () => {
             />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <span style={{ color: "gray" }}>WID: {LogginIn[5]} </span>
-              <span>OKX Wallet (62.5 %)</span>
+              <span>
+                OKX Wallet
+                {/*(62.5 %)*/}
+              </span>
             </div>
             <span className="okx-wallet-details">Wallet Details</span>
             <div

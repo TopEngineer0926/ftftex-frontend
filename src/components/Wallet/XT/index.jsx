@@ -255,7 +255,7 @@ const XT = () => {
   const navigationCheck = (url, coin) => {
     if (AlowedPairs.includes(coin + "USDT")) {
       // setPopData({ url, coin });
-      navigate(`/trade/${coin}_USDT`);
+      navigate(`/trade/${coin}_USDT/xt`);
     }
   };
 

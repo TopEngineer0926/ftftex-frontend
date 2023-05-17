@@ -44,7 +44,6 @@ const Deposit = ({ type }) => {
   const selectCurrency = (ccy) => {
     setSelectedCurrency(ccy);
     setChains(currencies[ccy]);
-    console.log(type, "type");
     if (type === "huobi") {
       setLoading(true);
       const depositAddressParams = {
@@ -61,7 +60,6 @@ const Deposit = ({ type }) => {
           setLoading(false);
         }
       );
-      console.log("stexa");
     }
   };
 

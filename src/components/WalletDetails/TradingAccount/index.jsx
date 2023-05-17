@@ -51,7 +51,6 @@ const TradingAccount = () => {
       getSubAccTradeBalance();
       getSubAccFoundBalance();
     } else if (LogginIn[5] && type === "huobi") {
-      console.log("stexaa");
       getSubAccountBalanceHuobi();
     }
   }, [LogginIn]);

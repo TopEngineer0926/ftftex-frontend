@@ -323,6 +323,13 @@ class ApiService {
     );
   }
 
+  getAccountBalanceHuobi(params) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/getAccountBalance`,
+      params
+    );
+  }
+
   createWithdrawRequestHuobi(params) {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/hupiAPI/createWithdrawRequest`,
@@ -446,7 +453,7 @@ class ApiService {
       `${process.env.REACT_APP_BASE_URL}ftftx/communityApi/savePost`,
       data
     );
-  }
+  };
 
   getAllPostsByUser = (data) => {
     return axios.post(

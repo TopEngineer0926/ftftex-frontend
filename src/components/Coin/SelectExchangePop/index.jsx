@@ -1,15 +1,16 @@
 import "./index.scss";
 import { NavLink, useNavigate } from "react-router-dom";
+
 const SelectExchangePop = ({ data, onClose }) => {
   const navigate = useNavigate();
 
-  const myNavigate = () => {
+  const myNavigate = (exchange) => {
     if (data.coin !== "USDT") {
       onClose();
-      navigate(`/trade/${data?.coin}_USDT`);
+      navigate(`/trade/${data?.coin}_USDT/${exchange}`);
     } else {
       onClose();
-      navigate(`/trade/BTC_USDT`);
+      navigate(`/trade/BTC_USDT/${exchange}`);
     }
   };
 
@@ -19,18 +20,30 @@ const SelectExchangePop = ({ data, onClose }) => {
         <h5 className="s-bld text-center">Aggregate Trading Options </h5>
         <hr />
       </div>
-      <NavLink
-        className="select-box"
-        onClick={myNavigate}
-        to={"/trade/" + data?.coin + "_USDT"}
-      >
+      <div className="select-box" onClick={() => myNavigate("okx")}>
         <img
           className="align-self-center"
           src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/294.png"
           height={30}
         />
         <h6 className="mb-0 align-self-center ml-2 s-bld"> OKX</h6>
-      </NavLink>
+      </div>
+      <div className="select-box" onClick={() => myNavigate("huobi")}>
+        <img
+          className="align-self-center"
+          src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png"
+          height={30}
+        />
+        <h6 className="mb-0 align-self-center ml-2 s-bld"> Huobi</h6>
+      </div>
+      <div className="select-box" onClick={() => myNavigate("xt")}>
+        <img
+          className="align-self-center"
+          src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/525.png"
+          height={30}
+        />
+        <h6 className="mb-0 align-self-center ml-2 s-bld"> XT.com</h6>
+      </div>
       <div className="select-box disabled">
         <img
           className="align-self-center"
@@ -38,28 +51,6 @@ const SelectExchangePop = ({ data, onClose }) => {
           height={30}
         />
         <h6 className="mb-0 align-self-center ml-2 s-bld">Binance</h6>
-        <p className="mb-0 align-self-center ml-auto" style={{ fontSize: 12 }}>
-          Coming soon
-        </p>
-      </div>
-      <div className="select-box disabled">
-        <img
-          className="align-self-center"
-          src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/102.png"
-          height={30}
-        />
-        <h6 className="mb-0 align-self-center ml-2 s-bld"> Huobi Global</h6>
-        <p className="mb-0 align-self-center ml-auto" style={{ fontSize: 12 }}>
-          Coming soon
-        </p>
-      </div>
-      <div className="select-box disabled">
-        <img
-          className="align-self-center"
-          src="https://s2.coinmarketcap.com/static/img/exchanges/64x64/525.png"
-          height={30}
-        />
-        <h6 className="mb-0 align-self-center ml-2 s-bld"> XT</h6>
         <p className="mb-0 align-self-center ml-auto" style={{ fontSize: 12 }}>
           Coming soon
         </p>

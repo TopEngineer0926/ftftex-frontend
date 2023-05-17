@@ -105,6 +105,7 @@ const Huobi = () => {
     if (LogginIn[5]) {
       getSubAccountBalanceHuobi();
       syncData("all");
+      // getAccountBalanceHuobi();
       // getSubAccTradeBalance();
       // getSubAccFoundBalance();
     }
@@ -122,13 +123,14 @@ const Huobi = () => {
     });
   };
 
-  const getSubAccFoundBalance = () => {
+  const getAccountBalanceHuobi = () => {
     const params = {
-      subAcct: LogginIn[5],
+      subAcct: "52563518",
     };
-    ApiService.getSubAccFoundBalance(params).then((res) => {
-      let tmpDeposits = JSON.parse(res.data["KYC Api resuult"])?.data;
-      setDeposits(tmpDeposits);
+    ApiService.getAccountBalanceHuobi(params).then((res) => {
+      let tmpDeposits = JSON.parse(res.data["API Result"]);
+      console.log("getAccountBalanceHuobi", tmpDeposits);
+      // setDeposits(tmpDeposits);
     });
   };
 
@@ -256,7 +258,7 @@ const Huobi = () => {
   const navigationCheck = (url, coin) => {
     if (AlowedPairs.includes(coin + "USDT")) {
       // setPopData({ url, coin });
-      navigate(`/trade/${coin}_USDT`)
+      navigate(`/trade/${coin}_USDT/huobi`);
     }
   };
 
@@ -304,7 +306,10 @@ const Huobi = () => {
             />
             <div style={{ display: "flex", flexDirection: "column" }}>
               <span style={{ color: "gray" }}>WID: {LogginIn[5]}</span>
-              <span>Huobi Wallet (37.5 %)</span>
+              <span>
+                Huobi Wallet
+                {/*(37.5 %)*/}
+              </span>
             </div>
             <span className="huobi-wallet-details">Wallet Details</span>
             <div
@@ -332,15 +337,15 @@ const Huobi = () => {
             <div style={{ display: "flex", alignItems: "center" }}>
               <div style={{ width: "50%" }}>
                 <span style={{ color: "gray" }}>Balance</span>
-                <span style={{ marginLeft: 20 }}>1,000 USDT</span>
+                <span style={{ marginLeft: 20 }}>-</span>
               </div>
-              <div style={{ width: "50%" }}>
-                <span style={{ color: "gray" }}>P & L</span>
-                <span style={{ marginLeft: 20 }}>0.38 USDT</span>{" "}
-                <span style={{ color: "lightgreen", marginLeft: 10 }}>
-                  0.03%
-                </span>
-              </div>
+              {/*<div style={{ width: "50%" }}>*/}
+              {/*  <span style={{ color: "gray" }}>P & L</span>*/}
+              {/*  <span style={{ marginLeft: 20 }}>0.38 USDT</span>{" "}*/}
+              {/*  <span style={{ color: "lightgreen", marginLeft: 10 }}>*/}
+              {/*    0.03%*/}
+              {/*  </span>*/}
+              {/*</div>*/}
             </div>
             <span style={{ color: "gray", fontSize: 14 }}>
               Information is updated every minute. Last update{" "}
@@ -358,15 +363,15 @@ const Huobi = () => {
         </div>
         <div className="wallet-button-layout">
           <div className="wallet-button-group">
-            <div className="button-item">
-             <button
-               class="btn d-block huobi-button"
-               onClick={openTransferModal}
-             >
-               <span class="material-symbols-outlined">east</span>
-             </button>
-             <span>{t("Transfer")}</span>
-            </div>
+            {/*<div className="button-item">*/}
+            {/* <button*/}
+            {/*   class="btn d-block huobi-button"*/}
+            {/*   onClick={openTransferModal}*/}
+            {/* >*/}
+            {/*   <span class="material-symbols-outlined">east</span>*/}
+            {/* </button>*/}
+            {/* <span>{t("Transfer")}</span>*/}
+            {/*</div>*/}
             <div className="button-item">
               <button
                 class="btn d-block huobi-button"
@@ -388,187 +393,187 @@ const Huobi = () => {
           </div>
         </div>
         <div
-         className="wt-box p-3"
-         style={{ minHeight: 200, display: "grid", gap: 20 }}
+          className="wt-box p-3"
+          style={{ minHeight: 200, display: "grid", gap: 20 }}
         >
-         Huobi Wallet Assets
-         <table className="table">
-           <thead>
-             <tr>
-               <th scope="col" className="cu-p" onClick={() => doSort("rank")}>
-                 <div className="d-flex">
-                   #
-                   {order.field === "rank" && order.reversed === true && (
-                     <span className="material-symbols-outlined align-self-center">
-                       arrow_drop_up
-                     </span>
-                   )}
-                 </div>
-               </th>
-               <th scope="col" className="cu-p" onClick={() => doSort("name")}>
-                 <div className="d-flex">
-                   Cryptocurrency
-                   {order.field === "name" && order.reversed === true && (
-                     <span className="material-symbols-outlined align-self-center">
-                       arrow_drop_up
-                     </span>
-                   )}
-                   {order.field === "name" && order.reversed === false && (
-                     <span className="material-symbols-outlined align-self-center">
-                       arrow_drop_down
-                     </span>
-                   )}
-                 </div>
-               </th>
+          Huobi Wallet Assets
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col" className="cu-p" onClick={() => doSort("rank")}>
+                  <div className="d-flex">
+                    #
+                    {order.field === "rank" && order.reversed === true && (
+                      <span className="material-symbols-outlined align-self-center">
+                        arrow_drop_up
+                      </span>
+                    )}
+                  </div>
+                </th>
+                <th scope="col" className="cu-p" onClick={() => doSort("name")}>
+                  <div className="d-flex">
+                    Cryptocurrency
+                    {order.field === "name" && order.reversed === true && (
+                      <span className="material-symbols-outlined align-self-center">
+                        arrow_drop_up
+                      </span>
+                    )}
+                    {order.field === "name" && order.reversed === false && (
+                      <span className="material-symbols-outlined align-self-center">
+                        arrow_drop_down
+                      </span>
+                    )}
+                  </div>
+                </th>
 
-               <th
-                 scope="col"
-                 className="cu-p"
-                 onClick={() => doSort("quote.USD.volume_24h")}
-               >
-                 <div className="d-flex">
-                   Quantity
-                   {order.field === "quote.USD.volume_24h" &&
-                     order.reversed === true && (
-                       <span className="material-symbols-outlined align-self-center">
-                         arrow_drop_up
-                       </span>
-                     )}
-                   {order.field === "quote.USD.volume_24h" &&
-                     order.reversed === false && (
-                       <span className="material-symbols-outlined align-self-center">
-                         arrow_drop_down
-                       </span>
-                     )}
-                 </div>
-               </th>
+                <th
+                  scope="col"
+                  className="cu-p"
+                  onClick={() => doSort("quote.USD.volume_24h")}
+                >
+                  <div className="d-flex">
+                    Quantity
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === true && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_up
+                        </span>
+                      )}
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === false && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_down
+                        </span>
+                      )}
+                  </div>
+                </th>
 
-               <th
-                 scope="col"
-                 className="cu-p"
-                 onClick={() => doSort("quote.USD.volume_24h")}
-               >
-                 <div className="d-flex">
-                   Total
-                   {order.field === "quote.USD.volume_24h" &&
-                     order.reversed === true && (
-                       <span className="material-symbols-outlined align-self-center">
-                         arrow_drop_up
-                       </span>
-                     )}
-                   {order.field === "quote.USD.volume_24h" &&
-                     order.reversed === false && (
-                       <span className="material-symbols-outlined align-self-center">
-                         arrow_drop_down
-                       </span>
-                     )}
-                 </div>
-               </th>
+                <th
+                  scope="col"
+                  className="cu-p"
+                  onClick={() => doSort("quote.USD.volume_24h")}
+                >
+                  <div className="d-flex">
+                    Total
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === true && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_up
+                        </span>
+                      )}
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === false && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_down
+                        </span>
+                      )}
+                  </div>
+                </th>
 
-               <th
-                 scope="col"
-                 className="cu-p"
-                 onClick={() => doSort("quote.USD.volume_24h")}
-               >
-                 <div className="d-flex">
-                   Wallet %
-                   {order.field === "quote.USD.volume_24h" &&
-                     order.reversed === true && (
-                       <span className="material-symbols-outlined align-self-center">
-                         arrow_drop_up
-                       </span>
-                     )}
-                   {order.field === "quote.USD.volume_24h" &&
-                     order.reversed === false && (
-                       <span className="material-symbols-outlined align-self-center">
-                         arrow_drop_down
-                       </span>
-                     )}
-                 </div>
-               </th>
-             </tr>
-           </thead>
-           {loader === false && (
-             <tbody>
-               {walletAssetData.map((dta, index) => (
-                 <tr key={index}>
-                   <td className="normal-td">{index + 1}</td>
-                   <td className="font-weight-bold">
-                     <div className="d-flex cu-p">
-                       <img
-                         className="align-self-center"
-                         loading="lazy"
-                         src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${dta.id}.png`}
-                         height={30}
-                       />
-                       <div className="align-self-center ml-2">
-                         <p className="mb-0 normal-td"> {dta.name}</p>
-                       </div>
-                     </div>
-                   </td>
-                   <td className="normal-td">{dta.quantity}</td>
-                   <td className="normal-td">{dta.total} USDT</td>
-                   <td className="normal-td">{dta.pro} %</td>
-                 </tr>
-               ))}
-             </tbody>
-           )}
-         </table>
-         {loader === true && (
-           <table className="table">
-             <tbody>
-               {items.map((item, index) => (
-                 <tr key={index}>
-                   <td>
-                     <ContentLoader
-                       backgroundColor="rgba(217,217,217,0.24)"
-                       foregroundColor="rgba(187,187,187,0.06)"
-                     >
-                       <rect
-                         x="0"
-                         y="0"
-                         rx="3"
-                         ry="3"
-                         width="250"
-                         height="60"
-                       />
-                     </ContentLoader>
-                   </td>
-                   <td>
-                     <ContentLoader
-                       backgroundColor="rgba(217,217,217,0.24)"
-                       foregroundColor="rgba(187,187,187,0.06)"
-                     >
-                       <rect
-                         x="0"
-                         y="0"
-                         rx="3"
-                         ry="3"
-                         width="500"
-                         height="60"
-                       />
-                     </ContentLoader>
-                   </td>
-                   <td>
-                     <ContentLoader
-                       backgroundColor="rgba(217,217,217,0.24)"
-                       foregroundColor="rgba(187,187,187,0.06)"
-                     >
-                       <rect
-                         x="0"
-                         y="0"
-                         rx="3"
-                         ry="3"
-                         width="500"
-                         height="60"
-                       />
-                     </ContentLoader>
-                   </td>
-                 </tr>
-               ))}
-             </tbody>
-           </table>
-         )}
+                <th
+                  scope="col"
+                  className="cu-p"
+                  onClick={() => doSort("quote.USD.volume_24h")}
+                >
+                  <div className="d-flex">
+                    Wallet %
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === true && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_up
+                        </span>
+                      )}
+                    {order.field === "quote.USD.volume_24h" &&
+                      order.reversed === false && (
+                        <span className="material-symbols-outlined align-self-center">
+                          arrow_drop_down
+                        </span>
+                      )}
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            {loader === false && (
+              <tbody>
+                {walletAssetData.map((dta, index) => (
+                  <tr key={index}>
+                    <td className="normal-td">{index + 1}</td>
+                    <td className="font-weight-bold">
+                      <div className="d-flex cu-p">
+                        <img
+                          className="align-self-center"
+                          loading="lazy"
+                          src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${dta.id}.png`}
+                          height={30}
+                        />
+                        <div className="align-self-center ml-2">
+                          <p className="mb-0 normal-td"> {dta.name}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="normal-td">{dta.quantity}</td>
+                    <td className="normal-td">{dta.total} USDT</td>
+                    <td className="normal-td">{dta.pro} %</td>
+                  </tr>
+                ))}
+              </tbody>
+            )}
+          </table>
+          {loader === true && (
+            <table className="table">
+              <tbody>
+                {items.map((item, index) => (
+                  <tr key={index}>
+                    <td>
+                      <ContentLoader
+                        backgroundColor="rgba(217,217,217,0.24)"
+                        foregroundColor="rgba(187,187,187,0.06)"
+                      >
+                        <rect
+                          x="0"
+                          y="0"
+                          rx="3"
+                          ry="3"
+                          width="250"
+                          height="60"
+                        />
+                      </ContentLoader>
+                    </td>
+                    <td>
+                      <ContentLoader
+                        backgroundColor="rgba(217,217,217,0.24)"
+                        foregroundColor="rgba(187,187,187,0.06)"
+                      >
+                        <rect
+                          x="0"
+                          y="0"
+                          rx="3"
+                          ry="3"
+                          width="500"
+                          height="60"
+                        />
+                      </ContentLoader>
+                    </td>
+                    <td>
+                      <ContentLoader
+                        backgroundColor="rgba(217,217,217,0.24)"
+                        foregroundColor="rgba(187,187,187,0.06)"
+                      >
+                        <rect
+                          x="0"
+                          y="0"
+                          rx="3"
+                          ry="3"
+                          width="500"
+                          height="60"
+                        />
+                      </ContentLoader>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
         <Modal
           show={showDipositModal}

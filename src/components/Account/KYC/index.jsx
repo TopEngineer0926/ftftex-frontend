@@ -65,7 +65,6 @@ const KYC = () => {
           if (data.event === "verification.accepted") {
             verifyKyc();
           }
-          console.log(data, "data");
           return data;
         });
     };

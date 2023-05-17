@@ -21,6 +21,7 @@ const TradingPortal = () => {
   const [AllPairs, setAllPairs] = useState([]);
   const [AllPairsPrice, setAllPairsPrice] = useState({});
   const [LatestTrade, setLatestTrade] = useState([]);
+  const [exchange, setExchange] = useState([]);
   const s_tableFilter = "";
   const [bidsAndAsks, setBidsAndAsks] = useState({
     bids: [],
@@ -279,6 +280,9 @@ const TradingPortal = () => {
           }
         });
       });
+    }
+    if (param["type"]) {
+      setExchange(param["type"]);
     }
   }, [param]);
 
@@ -693,7 +697,7 @@ const TradingPortal = () => {
                 <TradingViewTdChart
                   COIN={Pair.Coin}
                   chartType={"candle-chart"}
-                  EXCHANGE={"OKX"}
+                  EXCHANGE={exchange ? exchange : "OKX"}
                   PAIR={Pair.Base}
                 />
                 <div className="row">
@@ -1202,7 +1206,7 @@ const TradingPortal = () => {
                   <TradingViewTdChart
                     COIN={Pair.Coin}
                     chartType={"candle-chart"}
-                    EXCHANGE={"OKX"}
+                    EXCHANGE={exchange ? exchange : "OKX"}
                     PAIR={Pair.Base}
                   />
                 )}

@@ -76,6 +76,7 @@ const RoutesComponent = () => {
       <Route path="exchange/:id/:slug" Component={SingleExchange} />
       <Route path="trade" Component={TradingPortal} />
       <Route path="trade/:symbol" Component={TradingPortal} />
+      <Route path="trade/:symbol/:type" Component={TradingPortal} />
       <Route path="wallet" Component={Wallet}>
         <Route path="" element={<Navigate to="/wallet/main" replace />} />
         <Route path="main" Component={WalletMain} />

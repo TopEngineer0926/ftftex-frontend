@@ -134,7 +134,7 @@ const Wallet = () => {
 
   return (
     <>
-      {LogginIn[6] !== "verified" && (
+      {LogginIn[6] === "verified" && (
         <div className="bg-wt ">
           <div className="min-h-full">
             <section>
@@ -281,7 +281,7 @@ const Wallet = () => {
           </div>
         </div>
       )}
-      {LogginIn[6] === "verified" && (
+      {LogginIn[6] !== "verified" && (
         <div className="container mt-4 mb-4" style={{ margin: "auto" }}>
           <div className="row">
             <div
@@ -314,7 +314,7 @@ const Wallet = () => {
                     }}
                   >
                     <span className="ml-5">Name</span>
-                    <span>Assets</span>
+                    {/*<span>Assets</span>*/}
                   </div>
                 </div>
                 {!!walletInfo && (
@@ -340,7 +340,7 @@ const Wallet = () => {
                       }}
                     >
                       <span className="ml-4">OKX</span>
-                      <span style={{ color: "green" }}>●</span>
+                      {/*<span style={{ color: "green" }}>●</span>*/}
                     </div>
                   </NavLink>
                 )}
@@ -369,7 +369,7 @@ const Wallet = () => {
                       }}
                     >
                       <span className="ml-4">Huobi</span>
-                      <span style={{ color: "green" }}>●</span>
+                      {/*<span style={{ color: "green" }}>●</span>*/}
                     </div>
                   </NavLink>
                 )}
@@ -398,7 +398,7 @@ const Wallet = () => {
                       }}
                     >
                       <span className="ml-4">XT.com</span>
-                      <span style={{ color: "grey" }}>●</span>
+                      {/*<span style={{ color: "grey" }}>●</span>*/}
                     </div>
                   </NavLink>
                 )}
