@@ -63,6 +63,13 @@ class ApiService {
     );
   }
 
+  VerifyEmail(data) {
+    return axios.post(
+      `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/varifyEmail`,
+      data
+    );
+  }
+
   getUser(userId) {
     return axios.post(
       `${process.env.REACT_APP_BASE_URL}ftftx/usersAPI/getUserDetails`,

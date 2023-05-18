@@ -4,13 +4,11 @@ import { useTranslation } from "react-i18next";
 import { useContext, useEffect, useRef, useState } from "react";
 import ApiService from "../../../services/apiService";
 import { Spinner } from "react-bootstrap";
-import { useSnackbar } from "notistack";
 import { getTheme } from "../../../utils";
 import { FTFTexContext } from "App";
 
 const CommunitySettings = () => {
   const { t } = useTranslation();
-  const { enqueueSnackbar } = useSnackbar();
   const [userData, setUserData] = useState({});
   const [userAvatar, setUserAvatar] = useState("");
   const [isLoading, setIsLoading] = useState(true);

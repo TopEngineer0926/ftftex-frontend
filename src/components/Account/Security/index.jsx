@@ -5,16 +5,16 @@ import ApiService from "../../../services/apiService";
 import {Divider} from "@mui/material";
 import {Modal, Spinner} from "react-bootstrap";
 import ChangePasswordModal from "./ChangePasswordModal";
-import {useSnackbar} from "notistack";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getLoggedIn, getTheme } from "../../../utils";
 import { FTFTexContext } from "../../../App";
 import { InputOTPModal } from "./InputOTPModal";
 import { FaildAttemptModal } from "./FaildAttemptModal";
 import { SuccessfullChangeModal } from "../Support/SuccessfullChangeModal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Security = () => {
-  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const ftftexValue = useContext(FTFTexContext);
@@ -85,15 +85,11 @@ const Security = () => {
       if (response.status === 200) {
         getUser();
         const result = response.data.Success;
-        enqueueSnackbar(t(result), {
-          variant: "success",
-        });
+        toast.success(t(result));
         setIsChangePhone(false);
       }
     } else {
-      enqueueSnackbar(t("account.security.Please enter a valid phone number"), {
-        variant: "error",
-      });
+      toast.error(t("account.security.Please enter a valid phone number"));
     }
   };
 
@@ -108,9 +104,7 @@ const Security = () => {
       if (response.status === 200) {
         getUser();
         const result = response.data.Success;
-        enqueueSnackbar(t(result), {
-          variant: "success",
-        });
+        toast.success(t(result));
         setIsChangeEmail(false);
         localStorage.clear();
         window.location.reload();
@@ -118,9 +112,7 @@ const Security = () => {
         navigate(0);
       }
     } else {
-      enqueueSnackbar(t("account.security.Please enter a valid email"), {
-        variant: "error",
-      });
+      toast.error(t("account.security.Please enter a valid email"));
     }
   };
 
@@ -360,6 +352,7 @@ const Security = () => {
       >
         <SuccessfullChangeModal handleClose={handleChangePassword} />
       </Modal>
+      <ToastContainer position="top-right" />
     </>
   );
 };

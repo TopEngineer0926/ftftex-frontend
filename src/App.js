@@ -11,7 +11,6 @@ import Header from "components/Fragments/Header";
 import Footer from "components/Fragments/Footer";
 import { changeTheme, getLanguage, getTheme } from "utils";
 import { BrowserRouter as Router } from "react-router-dom";
-import { SnackbarProvider } from "notistack";
 
 export const FTFTexContext = createContext();
 export const ColorModeContext = createContext({
@@ -120,16 +119,7 @@ function App() {
             <Router>
               <Header />
               <div className="main">
-                <SnackbarProvider
-                  maxSnack={3}
-                  anchorOrigin={{
-                    vertical: "bottom",
-                    horizontal: "right",
-                  }}
-                  autoHideDuration={3000}
-                >
-                  <RoutesComponent />
-                </SnackbarProvider>
+                <RoutesComponent />
               </div>
               <Footer />
             </Router>
