@@ -352,7 +352,7 @@ const Security = () => {
       >
         <SuccessfullChangeModal handleClose={handleChangePassword} />
       </Modal>
-      <ToastContainer position="top-right" />
+      <ToastContainer position="top-right" theme="colored" />
     </>
   );
 };

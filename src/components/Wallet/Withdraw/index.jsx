@@ -422,7 +422,7 @@ const Withdraw = ({ type, balances, onClose }) => {
           {t("Transfer")}
         </button>
       </div>
-      <ToastContainer position="top-right" />
+      <ToastContainer position="top-right" theme="colored" />
       <Modal
         show={showEmailVerifyPopModal}
         onHide={handleCloseEmailVerifyPopModal}

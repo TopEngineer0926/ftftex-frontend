@@ -359,7 +359,7 @@ const Transfer = ({ type, balances, tradings, onClose }) => {
               {t("Transfer")}
             </button>
           </div>
-          <ToastContainer position="top-right" />
+          <ToastContainer position="top-right" theme="colored" />
         </>
       ) : (
         <>
